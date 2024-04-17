@@ -1,0 +1,8 @@
+body{
+    margin: 0 auto;
+}
+
+.sidebar{
+    display: flex;
+    justify-content: space-between;
+}
