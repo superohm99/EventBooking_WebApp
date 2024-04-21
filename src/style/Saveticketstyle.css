@@ -1,0 +1,375 @@
+.ticketinformation {
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(166,0,0,1) 100%);
+    /* background: #640E0E; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 72px;
+    box-sizing: border-box;
+    height: 100vh; /* Set height to full viewport height */
+    width: 99.8%; /* Set width to full viewport width */
+  }
+  
+  .ticketinformation .container {
+    margin: 0 2px 5.5px 2px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 7px;
+    color: #000000;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ticketinformation .ticket-type {
+
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide any overflow */
+    text-overflow: ellipsis; /* Add ellipsis (...) for overflow text */
+    margin-right: 50px; /* Optional margin right */
+    transform: rotate(-89.892deg);
+    position: absolute;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 30px;
+    color: red;
+  }
+  .ticketinformation .rectangle-3 {
+    background: #FFFFFF;
+    position: absolute;
+    /* right: 7px; */
+    margin-left: 1px;
+    bottom: 0px;
+    width: 20px;
+    height: 100%;
+    
+  }
+  .ticketinformation .seat-rectangle{
+    background: #bbe8e9;
+    position: absolute;
+    /* right: 7px; */
+    margin-left: 50px;
+    bottom: 0px;
+    width: 30px;
+    height: 100%;
+    
+  }
+
+  .ticketinformation .sec-row-seat_container{
+    position: relative;
+    bottom: 10px;
+  }
+
+  .ticketinformation .sec {
+    display: flex;
+    flex-direction: row; /* Display items horizontally */
+    transform: rotate(-89.892deg);
+    /* writing-mode: vertical-lr;*/
+    white-space: nowrap;  
+    margin: auto;
+    /* margin-left: 12px;
+    margin-top: 12px; */
+    padding-top: 30px;
+    padding-right: 10px;
+    position: relative;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 25px;
+    color: #000000;
+  }
+  .ticketinformation .sec div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 35px;
+    margin-right: 35px;
+  }
+
+  .ticketinformation .sec-value {
+    display: flex;
+    flex-direction: row; /* Display items horizontally */
+    transform: rotate(-89.892deg);
+    /* writing-mode: vertical-lr;*/
+    white-space: nowrap;  
+    margin-left: 60px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    position: relative;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 25px;
+    color: #000000;
+  }
+  .ticketinformation .sec-value div {
+    /* margin: auto; */
+    margin-left: 45px;
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+
+
+
+  .ticketinformation .name {
+    margin: 5px 1px 1.5px 1px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 20px;
+    color: #A1A1A1;
+  }
+  .ticketinformation .user-detail{
+    margin: 0 0 9.5px 1.5px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 30px;
+    color: #000000;
+  }
+  .ticketinformation .userid {
+    margin: 0 2px 3.5px 2px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 20px;
+    color: #A1A1A1;
+  }
+  .ticketinformation .date {
+    margin-right: 6.5px;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 30px;
+    color: #000000;
+  }
+  .ticketinformation .gate {
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 30px;
+    color: #000000;
+  }
+  .ticketinformation .address {
+    position: relative;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 30px;
+    color: #000000;
+  }
+  .ticketinformation .concert-detail {
+    margin: 0 4px 13.5px 0;
+    display: inline-block;
+    align-self: center;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 30px;
+    color: #848282;
+  }
+  .ticketinformation .showtime {
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 20px;
+    color: #000000;
+  }
+  .ticketinformation .ticket-id {
+    margin-bottom: 3px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 20px;
+    color: #A1A1A1;
+  }
+ 
+  .ticketinformation .polygon-1 {
+  
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    
+    border-top: 25px solid #2d0505;
+    position: relative;
+    top: 0px;
+    right: 14px;
+    width: 0px;
+    height: 0px;
+  }
+  .ticketinformation .polygon-2 {
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    
+    border-bottom: 25px solid #670e0e;
+    position: relative;
+    top: calc(100% - 25px); /* Align with the bottom of line-1 */
+    right: 42px;
+    width: 0px;
+    height: 0px;
+  }
+
+  .ticketinformation .navbar {
+    background: #000000;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: 100%;
+  }
+  .ticketinformation .ticket {
+    position: relative;
+    margin: 100px 3px 19px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 3px 0 3px 4px;
+    box-sizing: border-box;
+    width: 55%;
+    height: 50%;
+    
+  }
+  .ticketinformation .button {
+    border-radius: 10px;
+    background: #F0A20C;
+    position: relative;
+    margin-left: 22px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* padding: 14px 18.4px 11px 14px; */
+    padding: 20px 50px; /* Increase padding to make the button bigger */
+
+    box-sizing: border-box;
+  }
+
+  .ticketinformation .container {
+    background: #FFFFFF;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding-right: 5.5px;
+    box-sizing: border-box;
+
+  }
+  .ticketinformation .container-1 {
+    /* margin: 10px 20px 8.9px -10px; */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 0;
+    box-sizing: border-box;
+  }
+  .ticketinformation .container-2 {
+    position: relative;
+    margin-bottom: 11px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .ticketinformation .download-ticket {
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 14px;
+    color: #000000;
+  }
+  
+  .ticketinformation .container-3 {
+    margin: 6px 12.9px 4px 10px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    font-size: 30px;
+    /* width: 50%; */
+    /* height: 50%; */
+  }
+  .ticketinformation .line-1 {
+    position: relative;
+    /* position: absolute; */
+    /* left: 50%;  */
+    width: 1px;
+    height: 100%;
+  }
+
+  .ticketinformation .line-1::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%; 
+      border-left: 2px dashed #000000; /* Set the style, width, and color of the dashed line */
+  }
+  .ticketinformation .ticket-barcode {
+    /* margin: 0 2.8px 0 0px; */
+    width: 100%;
+    height: 100%;
+  }
+  .ticketinformation .web-logo {
+    margin: 0 0.1px 4px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 40px;
+    color: #FA2222;
+  }
+  .ticketinformation .concert-name {
+    margin: 0 19.6px 1.5px 17px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'ABeeZee';
+    font-weight: 400;
+    font-size: 50px;
+    color: #FA2222;
+  }
+  .ticketinformation .container-4 {
+    position: relative;
+    margin: 10px 0 9px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 240.1px;
+    height: fit-content;
+    box-sizing: border-box;
+  }
+  .ticketinformation .container-5 {
+    background: rgba(11, 8, 143, 0.94);
+    position: relative;
+    margin-right: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* padding: 74.5px 6px 6.5px 12px; */
+    box-sizing: border-box;
+    width: 10%;
+    height: 100%;
+  }
+  .ticketinformation .ellipse-360 {
+    border-radius: 4px;
+    background: #D90429;
+    margin: 0 6.7px 5.3px 6.7px;
+    width: 8px;
+    height: 8px;
+  }
+  .ticketinformation .vector-704 {
+    width: 21.3px;
+    height: 10.7px;
+  }

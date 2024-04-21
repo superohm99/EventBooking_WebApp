@@ -3,6 +3,7 @@ import {
   BrowserRouter, Routes, Route, useNavigate 
 } from "react-router-dom";
 import Reserve from './component/Reserve';
+import Saveticket from './component/Saveticket';
 
 
 function App() {
@@ -19,8 +20,13 @@ function App() {
                     path="/"
                     element={ <Home /> }
                 /> */}
+                 <Route
+                    path="/Saveticket"
+                    element={ <Saveticket /> }
+                />
             </Routes>
         </BrowserRouter>
+        
     </>
   )
 }
