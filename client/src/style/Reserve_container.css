@@ -1,0 +1,28 @@
+.Center-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+}
+
+img{
+    width: 350px;
+    height: 250px;
+}
+
+.Card:hover{
+    box-shadow: 0 0 29px rgba(255,0,0,.5); 
+}
+
+.Card{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+
+.Container{
+    padding: 2px 16px;
+    background-color: white;
+}

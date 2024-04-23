@@ -1,0 +1,127 @@
+:root{
+    font-size: 62.5%;
+  }
+  * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+  }
+  
+  body {
+      min-height: 100vh;
+      /* background: linear-gradient(270deg, #E02E2E 0%, #B54343 50%,#331717 100%); */
+  }
+  
+  .signin {
+      width: min(100%, 76.8rem);
+      margin: 0 auto;
+      background-color: #f4f4f4;
+      border-radius: 1rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+  
+  .signin h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      text-align: center;
+      margin-block: 3rem;
+  }
+  i {
+      font-size: 1.6rem;
+  }
+  .signin form {
+      display: flex;
+      flex-direction: column;
+      padding-inline: 15rem;
+      padding-block: 3rem;
+      gap: 1rem;
+  }
+  
+  .signin form .input-field {
+      position: relative;
+      border: 1px solid #d1d1d1;
+      margin-block: .5rem;
+  }
+  
+  .signin form .input-field i{
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      transform: translateY(-50%);
+  }
+  
+  .signin form .input-field input{
+      width: 100%;
+      font-size: 1.6rem;
+      padding: 1rem;
+      border: none;
+      outline: none;
+      padding-left: 4rem;
+  }
+  
+  .signin form .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      padding-block: .5rem;
+  }
+  
+  .signin form .remember-forgot label {
+      display: flex;
+      gap: 0.5rem;
+  }
+  
+  .signin form .remember-forgot a{
+      text-decoration: none;
+      color: #000;
+  
+  }
+  
+  .signin form button {
+      padding: 1rem;
+      background-color: #E02E2E;
+      color: #000;
+      border: 1px solid #d1d1d1;
+      font-size: 2rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 1rem;
+      cursor: pointer;
+      margin-top: 2rem;
+  }
+  
+  .signin form button:hover {
+      background-color: #9b0505;
+  }
+  
+  .signin form .signup-option {
+      margin-bottom: 3rem;
+  }
+  
+  .signin form p {
+      font-size: 1.6rem;
+  }
+  
+  
+  /* IPAD 11' size */
+  @media (max-width: 834px) {
+      .signin {
+          width: 100%;
+          background-color: transparent;
+      }   
+      .signin h1 {
+          color: #fff;
+      }
+      .signin form button {
+          color: #fff;
+      }
+  }
+  
+  @media (max-width: 576px){
+      .signin form {
+          padding-inline: 2rem;
+      }
+  }

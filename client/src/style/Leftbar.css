@@ -1,0 +1,44 @@
+
+.Leftbar-container{
+    display: inline;
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(166,0,0,1) 100%);
+    width: 10%;
+    height:90vh;
+    position: sticky;
+    top: 10%;
+    overflow: hidden;
+    left: 0;
+}
+
+.filter-container{
+    margin-top: 15px;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.filter-container input{
+    width: 125px;
+    height: 30px;
+    margin-bottom: 30px;
+    border-radius: 5%;
+}
+
+.filter-container button{
+    width: 125px;
+    height: 30px;
+    font-weight: 600;
+    font-size:large;
+    margin-left: 3px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+/* .filter-container input::placeholder{
+    position: relative;
+    left: 50px;
+} */

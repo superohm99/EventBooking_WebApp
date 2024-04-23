@@ -1,0 +1,16 @@
+body{
+    margin: 0 auto;
+}
+
+.sidebar{
+    display: flex;
+    justify-content: space-between;
+}
+
+.colunm-container{
+    margin-top: 10px;
+    margin-left: 60px;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+}
