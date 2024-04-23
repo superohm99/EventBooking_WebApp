@@ -1,0 +1,175 @@
+:root {
+    font-size: 62.5%;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.signup {
+    width: min(100%, 76.8rem);
+    margin-inline: auto;
+    background-color: #f4f4f4;
+    border-radius: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    overflow-y: auto;
+    height: 80vh;
+}
+
+.signup h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    text-align: center;
+    margin-block: 2.5rem;
+}
+
+i {
+    font-size: 1.6rem;
+}
+
+.signup form {
+    display: flex;
+    flex-direction: column;
+    padding-inline: 15rem;
+    padding-block: 3rem;
+    gap: 1rem;
+}
+
+.signup form .input-group {
+    position: relative;
+    border: .1rem solid #d1d1d1;
+    margin-block: .5rem;
+}
+
+.signup form .input-group i {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+}
+
+.signup form .input-group input {
+    width: 100%;
+    font-size: 1.6rem;
+    padding: 1rem;
+    border: none;
+    outline: none;
+    padding-left: 4rem;
+}
+
+.signup form .input-date {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.signup form .input-date {
+    display: flex;
+    gap: 1rem;
+}
+
+select {
+    font-size: 1.6rem;
+    padding: 1rem;
+    height: min-content;
+    border: .1rem solid #d1d1d1;
+}
+
+textarea {
+    width: 100%;
+    font-size: 1.6rem;
+    padding: 1rem;
+    padding-left: 4rem;
+    border: none;
+    outline: none;
+    resize: none;
+}
+
+.signup form button {
+    padding: 1rem;
+    background-color: #E02E2E;
+    color: #000;
+    border: 1px solid #d1d1d1;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.signup form button:hover {
+    background-color: #9b0505;
+}
+
+.signup form .button-option {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.signup form .signup-option {
+    margin-bottom: 2rem;
+}
+
+.signup form p {
+    font-size: 1.6rem;
+}
+
+
+/* IPAD 11' size */
+@media (max-width: 834px) {
+    .signup {
+        background-color: transparent;
+        position: relative;
+        transform: translate(0, 0);
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: max-content;
+
+    }
+
+    .signup h1 {
+        color: #fff;
+    }
+
+    .signup form {
+        width: 100%;
+    }
+    .signup form .input-group {
+        width: 100%;
+    }
+
+    .signup form button {
+        color: #fff;
+        border: .2rem solid #fff;
+    }
+
+    div p {
+        color: #fff;
+    }
+}
+
+@media (max-width: 576px) {
+    .signup form {
+        padding-inline: 2rem;
+    }
+
+    div p {
+        color: #fff;
+    }
+}
