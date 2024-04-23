@@ -1,10 +1,9 @@
-import React from 'react'
-import '../style/Leftbar.css'
+import "../style/Leftbar.css"
 
-function Leftbar() {
+function Filterbar() {
   return (
-    <div className='Leftbar-container'>
-      <div className='filter-container'>
+    <div>
+        <div className='filter-container'>
           <input placeholder='RATING'></input>
           <input placeholder='CATEGORY'></input>
           <input placeholder='BUDGET'></input>
@@ -15,4 +14,4 @@ function Leftbar() {
   )
 }
 
-export default Leftbar
+export default Filterbar

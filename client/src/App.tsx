@@ -3,7 +3,7 @@ import {
   BrowserRouter, Routes, Route, useNavigate 
 } from "react-router-dom";
 import Reserve from './component/Reserve';
-
+import Confirm_reserve from './component/Confirm_reserve';
 
 function App() {
 
@@ -15,10 +15,11 @@ function App() {
                     path="/Reserve"
                     element={ <Reserve /> }
                 />
-                {/* <Route
-                    path="/"
-                    element={ <Home /> }
-                /> */}
+                
+                <Route
+                    path="/Reserve/Confirm-reserve"
+                    element={ <Confirm_reserve /> }
+                />
             </Routes>
         </BrowserRouter>
     </>
