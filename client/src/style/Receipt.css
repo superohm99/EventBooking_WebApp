@@ -1,0 +1,102 @@
+
+.receipt{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;  
+    padding: 2rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+.receipt h2{
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.receipt .event-description {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.receipt .event-description img{
+    width: 20rem;
+    height: 10rem;
+    object-fit: cover;
+    border-radius: .5rem;
+}
+
+.receipt .event-description .event-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: .5rem;
+    
+}
+
+.receipt .event-description .event-info .location-desc, .receipt .event-description .event-info .date-desc{
+    position: relative;
+}
+
+.receipt .event-description .event-info .location-desc i, .receipt .event-description .event-info .date-desc i{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+.receipt .event-description .event-info h3{
+    font-size: 2.2rem;
+}
+.receipt .event-description .event-info .location-desc p, .receipt .event-description .event-info .date-desc p{
+    padding-left: 2rem;
+    font-size: 2rem;
+}
+
+
+.receipt .summary-title{
+    border-top: .2rem dashed #fff;
+    margin-top: 3rem;
+    padding-top: 1rem;
+}
+.receipt .order-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.receipt .order-summary .calculate-price {
+    display: flex;
+    flex-direction: column;
+    border-bottom: .2rem dashed #fff;
+    padding-bottom: 2rem;   
+    gap: 1rem;
+}
+
+.button-option, .selected-seat, .ticket-price, .fee-price, .total-price{
+    display: flex;
+    justify-content: space-between;
+}
+
+.receipt .order-summary .selected-seat{
+    border-bottom: .2rem dashed #fff;
+    padding-block: 2rem;
+}
+
+.receipt .button-option button{
+    padding: 1rem 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+    border: none;
+    border-radius: .5rem;
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.receipt .button-option button:hover{
+    background-color: #b8b4b4;
+}
+
+
+ 
