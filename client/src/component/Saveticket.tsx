@@ -21,7 +21,7 @@ function Saveticket() {
   }
 
   //left
-  const ticket_type ="VIP PASS"
+  const ticket_type ="ABC PASS"
   const sec="D";
   const row="12";
   const seat="35";
