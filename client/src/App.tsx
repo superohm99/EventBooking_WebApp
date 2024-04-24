@@ -9,6 +9,10 @@ import Login from './component/Login';
 import Signup from './component/Signup';
 import Receipt from './component/Receipt';
 
+import Myticket from "./component/Myticket";
+import History from "./component/History";
+import Edit from "./component/Edit";
+import ChangePasswd from "./component/Changepasswd";
 
 function App() {
 
@@ -44,6 +48,11 @@ function App() {
                     path="/Receipt"
                     element={ <Receipt /> }
                 />
+
+                <Route path="/Profile/Myticket" element={<Myticket />} />
+                <Route path="/Profile/History" element={<History />} />
+                <Route path="/Profile/Edit" element={<Edit />} />
+                <Route path="/Profile/Changepasswd" element={<ChangePasswd />} />
 
             </Routes>
         </BrowserRouter>
