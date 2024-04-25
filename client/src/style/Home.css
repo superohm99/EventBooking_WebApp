@@ -1,0 +1,48 @@
+body {
+    background-color: black;
+}
+
+.first-fold {
+    position: relative;
+}
+
+.first-fold .background-container {
+    background-image: linear-gradient(to bottom right, rgb(78, 0, 0), black);
+    position: relative;
+    width: 100%;
+}
+
+.first-fold .background-container .background {
+    width: 100%;
+    height: 57.6rem;
+    object-fit: cover;
+    opacity: 0.08;
+}
+
+.first-fold .background-container .slider {
+    position: absolute;
+    width: 90%;
+    height: 60%;
+    top: 8rem;
+    left: 5%;
+}
+
+.first-fold .search-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: -5.8rem;
+}
+
+.upcoming-event {
+    margin: 0 12.8rem 0 12.8em;
+}
+
+.upcoming-event .event-card-container {
+    display: grid;
+    /* grid-template-columns: repeat(3, 1fr); */
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 5rem;
+    margin: 2rem 5rem 5rem 5rem;
+}

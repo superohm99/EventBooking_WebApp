@@ -1,0 +1,71 @@
+.card-container {
+    background-color: white;
+    display: grid;
+    grid-template-rows: 20rem 11rem;
+    border-radius: 2rem;
+    box-shadow: 0rem 1rem 0.5rem 0rem #AF0000;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.card-container:hover {
+    transform: scale(1.15);
+}
+
+.card-container .image-container img {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    object-fit: cover;
+    object-position: center;
+}
+
+.card-container .info-container {
+    margin: 1.6rem 0;
+    padding: 0 1.6rem 0 0;
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+}
+
+.card-container .info-container .date-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.1rem;
+}
+
+.card-container .info-container .date-container .month {
+    color: #AF0000;
+    font-size: 1.28rem;
+    font-weight: 600;
+}
+
+.card-container .info-container .date-container .date {
+    font-size: 3.2rem;
+    font-weight: 700;
+}
+
+.card-container .info-container .description-container .event-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-container .info-container .description-container .description {
+    color: rgb(0, 0, 0, 0.6);
+    font-size: 1.28rem;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 0.4rem;
+}

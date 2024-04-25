@@ -14,12 +14,21 @@ import History from "./component/History";
 import Edit from "./component/Edit";
 import ChangePasswd from "./component/Changepasswd";
 
+import Home from './component/Home';
+
 function App() {
 
   return (
     <>
         <BrowserRouter>
+
             <Routes>
+
+                <Route
+                    path="/"
+                    element={ <Home/> }
+                />
+
                 <Route
                     path="/Reserve"
                     element={ <Reserve /> }
@@ -51,7 +60,7 @@ function App() {
 
                 <Route path="/Profile/Myticket" element={<Myticket />} />
                 <Route path="/Profile/History" element={<History />} />
-                <Route path="/Profile/Edit" element={<Edit />} />
+                <Route path="/Profile/" element={<Edit />} />
                 <Route path="/Profile/Changepasswd" element={<ChangePasswd />} />
 
             </Routes>

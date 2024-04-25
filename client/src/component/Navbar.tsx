@@ -9,9 +9,15 @@ const Navbar = () => {
           </div>
           
           <div className='Select-path'>
-            <a >Home</a>
-            <a>Reserve</a>
-            <a >Profile</a>
+            <Link to="/" className='nav_menu'>
+              <a >Home</a>
+            </Link>
+            <Link to="/Reserve" className='nav_menu'>
+              <a>Reserve</a>
+            </Link>
+            <Link to="/Profile" className='nav_menu'>
+              <a >Profile</a>
+            </Link>
             <a >Help</a>
           </div>
           

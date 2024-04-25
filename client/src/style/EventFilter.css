@@ -1,0 +1,13 @@
+.event-filter-container {
+    margin: 10.4rem 0 8rem 0;
+    color: white;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.event-filter-container .title {
+    font-size: 4rem;
+    letter-spacing: 0.5rem;
+    font-weight: 600;
+    margin-left: 5rem;
+}
