@@ -9,7 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './users/common/guards';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://thanasuksongsriohm:mHayu0SQ390loYQA@myticketdb.vs5a23w.mongodb.net/MyticketDB'),ConcertModule, UsersModule],
+  imports: [MongooseModule.forRoot('mongodb+srv://teeruth2546:7mawijIAr3yW510N@ruth.jtq6v9f.mongodb.net/'),ConcertModule, UsersModule],
   controllers: [AppController],
   providers: [AppService,{
     provide: APP_GUARD,

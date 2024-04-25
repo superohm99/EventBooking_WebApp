@@ -1,0 +1,9 @@
+.container {
+    width: 90%;
+    height: 12.5rem;
+    background-color: #AF0000;
+    border: none;
+    border-radius: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}

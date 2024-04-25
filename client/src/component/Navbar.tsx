@@ -1,4 +1,5 @@
 import '../style/Navbar.css'
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     return(
@@ -8,15 +9,21 @@ const Navbar = () => {
           </div>
           
           <div className='Select-path'>
-            <a >Home</a>
-            <a>Reserve</a>
-            <a >Profile</a>
+            <Link to="/" className='nav_menu'>
+              <a >Home</a>
+            </Link>
+            <Link to="/Reserve" className='nav_menu'>
+              <a>Reserve</a>
+            </Link>
+            <Link to="/Profile" className='nav_menu'>
+              <a >Profile</a>
+            </Link>
             <a >Help</a>
           </div>
           
           <div className='Login-signup'>
-            <button className='Login'>Login</button>
-            <button className='Signup'>Signup</button>
+            <Link to='/Signin'><button className='Login'>Login</button></Link>
+            <Link to='/Signup'><button className='Signup'>Signup</button></Link>
           </div>
       </div>
     )
