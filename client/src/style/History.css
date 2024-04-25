@@ -1,0 +1,27 @@
+.box-container {
+    display: flex;
+    font-size: 1.5rem;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 2rem;
+  }
+  
+  .heading {
+    color: #fff;
+    text-transform: capitalize;
+  }
+  
+  .search-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 1rem;
+    margin-top: 2rem;
+    color: #fff;
+    background-color: #5c5c5f;
+    width: fit-content;
+    cursor: pointer;
+    border-radius: 0.5rem;
+  }
