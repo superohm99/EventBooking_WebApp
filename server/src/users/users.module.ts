@@ -4,9 +4,14 @@ import { User, UserSchema } from 'src/schemas/User.schema';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { UserSettings, UserSettingsSchema } from 'src/schemas/UserSettings.schema';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { AtStrategy, RtStrategy } from './strategies';
 
 @Module({
   imports:[
+    PassportModule.register({ defaultStrategy: 'jwt'}),
+    JwtModule.register({}),
     MongooseModule.forFeature([
         {
             name: User.name,
@@ -19,6 +24,6 @@ import { UserSettings, UserSettingsSchema } from 'src/schemas/UserSettings.schem
     ]),
 ],
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService,AtStrategy,RtStrategy]
 })
 export class UsersModule {}

@@ -31,3 +31,9 @@ export class CreateUserDto{
     @Type(() => CreateUserSettingsDto)
     settings?: CreateUserSettingsDto;
 }
+
+export class LoginDto{
+    email: string;
+    
+    password: string;
+}
