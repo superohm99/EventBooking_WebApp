@@ -1,18 +1,47 @@
-import { Body, Controller, Delete, HttpException, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, HttpException, Param, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/User.dto';
-import mongoose from 'mongoose';
+import { LoginDto } from './dto/User.dto';
+import mongoose, { Types } from 'mongoose';
+import { GetCurrentUser, GetCurrentUserId, Public } from './common/decorators/src/common/decorators';
+import { RtGuard } from './common/guards';
+import { Tokens } from './types';
 
 @Controller('users')
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
-    @Post()
+    @Public()
+    @Post('register')
     @UsePipes(new ValidationPipe())
     createUser(@Body() createUserDto: CreateUserDto){
         console.log(createUserDto);
+        console.log("asf")
         return this.usersService.createUser(createUserDto)
     }
+
+    @Public()
+    @Post('login')
+    login(@Body() LoginDto: LoginDto){
+        console.log(LoginDto);
+        return this.usersService.login(LoginDto);
+    }
+
+    @Post('logout')
+    async logout(@GetCurrentUserId() userId: Types.ObjectId): Promise<boolean> {
+        return await this.usersService.logout(userId);
+    }
+
+    @Public()
+    @UseGuards(RtGuard)
+    @Post('refresh')
+    refreshTokens(
+        @GetCurrentUserId() userId: Types.ObjectId,
+        @GetCurrentUser('refreshToken') refreshToken: string,
+      ): Promise<Tokens> {
+        return this.usersService.refreshTokens(userId, refreshToken);
+      }
+
 
     @Delete(':id')
     async deleteUser(@Param('id') id: string){
