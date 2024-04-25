@@ -1,0 +1,140 @@
+.slider-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 8rem 1fr 8rem;
+}
+
+.slider-container .left-button,
+.slider-container .right-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4.8rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    /* background-color: green; */
+}
+
+.slider-container .left-button:hover,
+.slider-container .right-button:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.slider-container .carousel-container {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    /* Firefox */
+    scrollbar-width: none;
+    /* Internet Explorer and Edge */
+    -ms-overflow-style: none;
+}
+
+.slider-container .carousel-container::-webkit-scrollbar {
+    /* Hide scrollbar for WebKit browsers (Chrome, Safari, etc.) */
+    display: none;
+}
+
+
+.slider-container .carousel-container .content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex: 0 0 auto;
+    width: 100%;
+    height: 100%;
+    transition: translate 0.6s ease-in-out;
+}
+
+.slider-container .carousel-container .content-container .image-container {
+    width: 100%;
+    height: 100%;
+    /* background-color: aqua; */
+}
+
+.slider-container .carousel-container .content-container .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.slider-container .carousel-container .content-container .info-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    padding: 0 4rem;
+}
+
+.slider-container .carousel-container .content-container .info-container .info {
+    padding-top: 3.2rem;
+    color: white;
+}
+
+.slider-container .carousel-container .content-container .info-container .info .title {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.176rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.slider-container .carousel-container .content-container .info-container .info .description {
+    padding-top: 0.8rem;
+    font-size: 1.44rem;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.slider-container .carousel-container .content-container .info-container .button-container .get-ticket-button {
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15rem;
+    border: none;
+    border-radius: 3.5rem;
+    color: white;
+    background-color: red;
+    padding: 1.75rem 2.88rem;
+    cursor: pointer;
+}
+
+.slider-container .carousel-container .content-container .info-container .button-container .get-ticket-button:hover {
+    background-color: #e00000;
+}
+
+.slider-container .carousel-dot-container {
+    position: absolute;
+    bottom: -2.5rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.slider-container .carousel-dot-container .carousel-dot {
+    width: 1.2rem;
+    height: 1.2rem;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0rem 0.45rem;
+    cursor: pointer;
+}
+
+.slider-container .carousel-dot-container .carousel-dot:hover {
+    transform: scale(1.2);
+}
+
+.slider-container .carousel-dot-container .carousel-dot.active {
+    background-color: red;
+}

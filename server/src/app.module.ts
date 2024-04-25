@@ -6,8 +6,8 @@ import { ConcertModule } from './concert/concert.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://thanasuksongsriohm:<password>@myticketdb.vs5a23w.mongodb.net/MyticketDB'),ConcertModule, UsersModule],
+  imports: [MongooseModule.forRoot('mongodb+srv://natapatraungput2547:IJL2fWGRfccF1jDt@natapat.ztbx3gd.mongodb.net/'), ConcertModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
