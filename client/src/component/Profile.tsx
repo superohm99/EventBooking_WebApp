@@ -33,7 +33,7 @@ function Profile() {
           </Link>
         </li>
         <li>
-          <Link to="/Profile/Edit" className="menu-item">
+          <Link to="/Profile/" className="menu-item">
             <FontAwesomeIcon icon={faPenToSquare} />
             <p>Edit Profile</p>
           </Link>

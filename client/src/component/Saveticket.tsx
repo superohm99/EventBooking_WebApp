@@ -1,6 +1,26 @@
 import React from 'react'
-import Navbar from './Navbar'
 import '../style/Saveticketstyle.css'
+import { Link } from "react-router-dom";
+
+
+function Mytickcket(){
+  return(
+    <>
+      <div className='Nav-ticket'>
+        <div className='back-arrow'>
+          <Link to="/Profile/Myticket">
+            <button className="custom-button">&lt;</button>
+          </Link>
+        </div>
+        <span className='Topic'>
+          <div>Myticket</div>
+        </span>
+
+      </div>
+    </>
+  )
+}
+
 
 function Saveticket() {
 
@@ -45,7 +65,7 @@ function Saveticket() {
   return (
     <section>
       <div className="ticketinformation">
-        <Navbar/>
+        <Mytickcket/>
         <div className="ticket">
           <div className="container">
             <div className="container-5">

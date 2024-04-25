@@ -1,0 +1,36 @@
+.part-container {
+    width: 80%;
+    color: white;
+    justify-self: center;
+    display: grid;
+    grid-template-rows: 1.75fr 2fr;
+}
+
+.part-container p {
+    font-size: 1.3rem;
+    padding: 2.5rem 0 0 0;
+}
+
+.part-container .list-container input,
+.part-container .list-container select {
+    width: 100%;
+    font-size: 2rem;
+    padding: 0.2rem 0rem;
+    border: none;
+    appearance: none;
+    font-weight: 600;
+    color: white;
+    background-color: #AF0000;
+}
+
+.part-container .list-container option {
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 600;
+    color: white;
+    background-color: red;
+}
+
+.part-container .list-container hr {
+    color: #FFD0D0;
+}
