@@ -1,62 +1,85 @@
-.box-container {
+.edit-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.heading {
+  font-size: 3rem;
+  color: #fff;
+  text-transform: capitalize;
+  margin: 2rem 0;
+}
+
+.input-vertical,
+.input-horizontal {
+  margin-bottom: 1rem;
+}
+
+.input-vertical p {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.input-horizontal p {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+
+.input-horizontal {
+  display: flex;
+  gap: 1.5rem;
+}
+
+input {
+  min-width: 25rem;
+}
+
+textarea {
+  min-width: 33rem;
+  max-width: 30%;
+}
+
+select {
+  width: fit-content;
+  margin-right: 1rem;
+}
+
+textarea,
+select,
+input {
+  font-size: 1.5rem;
+  padding: 1rem;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+}
+
+.submit-btn {
+  margin: 1.5rem 0;
+  font-size: medium;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 1rem;
+  color: #fff;
+  background-color: #5c5c5f;
+  width: fit-content;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .edit-container  {
     display: flex;
-    font-size: 1.5rem;
+    flex-direction: column;
   }
-  
-  .content {
-    flex: 1;
-    padding: 2rem;
-  }
-  
-  .heading {
-    color: #fff;
-    text-transform: capitalize;
-  }
-  
-  .input-vertical,
-  .input-horizontal {
-    margin-bottom: 1rem;
-  }
-  
-  .input-vertical p {
-    margin-bottom: 0.5rem;
-  }
-  
-  .input-horizontal {
-    display: flex;
-    gap: 1.5rem;
-  }
-  
-  textarea,
+
   input {
-    width: 30%;
+    width: 100%;
   }
-  
-  select {
-    width: fit-content;
-    margin-right: 1rem;
+
+  textarea {
+    min-width: 100%;
   }
-  
-  textarea,
-  select,
-  input {
-    font-size: 1.5rem;
-    padding: 1rem;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    box-sizing: border-box;
-  }
-  
-  .submit-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.25rem 1rem;
-    margin-top: 2rem;
-    color: #fff;
-    background-color: #5c5c5f;
-    width: fit-content;
-    cursor: pointer;
-    border-radius: 0.5rem;
-  }
+}

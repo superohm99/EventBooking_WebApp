@@ -51,7 +51,10 @@ const provinces = [
 ];
 
 const districts = [
-  { province: "Bangkok", district: ["Ladprao", "Sathorn", "Bangrak", "Ladkrabang"] },
+  {
+    province: "Bangkok",
+    district: ["Ladprao", "Sathorn", "Bangrak", "Ladkrabang"],
+  },
   { province: "Chiang Mai", district: ["Muang", "Sarapee", "Doi Saket"] },
   { province: "Phuket", district: ["Muang", "Kathu", "Thalang"] },
 ];
@@ -150,140 +153,146 @@ function Edit() {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="box-container">
-        <Profile />
-        <div className="content">
-          <h1 className="heading">Edit Profile</h1>
-          <form>
-            <div className="input-vertical">
-              <p>Name</p>
-              <input
-                type="text"
-                value={EditState.name}
-                onChange={handleNameChange}
-              />
-            </div>
-            <div className="input-vertical">
-              <p>Gender</p>
-              <select value={EditState.gender} onChange={handleGenderChange}>
-                <option value="">Gender</option>
-                {genders.map((gender, index) => (
-                  <option key={index} value={gender}>
-                    {gender}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="input-vertical">
-              <p>Date of Birth</p>
-              <select
-                value={EditState.dateOfBirth.day}
-                onChange={handleDayChange}
+        <div className="edit-container">
+          <Profile />
+          <div className="content">
+            <h1 className="heading">Edit Profile</h1>
+            <form>
+              <div className="input-vertical">
+                <p>Name</p>
+                <input
+                  type="text"
+                  value={EditState.name}
+                  onChange={handleNameChange}
+                />
+              </div>
+              <div className="input-vertical">
+                <p>Gender</p>
+                <select value={EditState.gender} onChange={handleGenderChange}>
+                  <option value="">Gender</option>
+                  {genders.map((gender, index) => (
+                    <option key={index} value={gender}>
+                      {gender}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="input-vertical">
+                <p>Date of Birth</p>
+                <select
+                  value={EditState.dateOfBirth.day}
+                  onChange={handleDayChange}
+                >
+                  <option value="">Day</option>
+                  {days.map((day) => (
+                    <option key={day} value={day}>
+                      {day}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={EditState.dateOfBirth.month}
+                  onChange={handleMonthChange}
+                >
+                  <option value="">Month</option>
+                  {months.map((month, index) => (
+                    <option key={index} value={month}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={EditState.dateOfBirth.year}
+                  onChange={handleYearChange}
+                >
+                  <option value="">Year</option>
+                  {years.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="input-vertical">
+                <p>ID Card</p>
+                <input
+                  type="text"
+                  value={EditState.idCard}
+                  onChange={handleIdCardChange}
+                />
+              </div>
+              <div className="input-vertical">
+                <p>Phone Number</p>
+                <input
+                  type="text"
+                  value={EditState.phoneNumber}
+                  onChange={handlePhoneChange}
+                />
+              </div>
+              <div className="input-vertical">
+                <p>Home No, Room No, Aparment/Village Name, Sub-District</p>
+                <textarea
+                  value={EditState.address}
+                  onChange={handleAddressChange}
+                ></textarea>
+              </div>
+              <div className="input-horizontal">
+                <p>Country</p>
+                <select value={EditState.country}>
+                  <option value={EditState.country}>{EditState.country}</option>
+                </select>
+              </div>
+              <div className="input-horizontal">
+                <p>Province</p>
+                <select
+                  value={EditState.province}
+                  onChange={handleProvinceChange}
+                >
+                  <option value="">Province</option>
+                  {provinces.map((province) => (
+                    <option key={province.value} value={province.label}>
+                      {province.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="input-horizontal">
+                <p>District</p>
+                <select
+                  value={EditState.district}
+                  onChange={handleDistrictChange}
+                >
+                  <option value="">District</option>
+                  {districts.map((district) => {
+                    if (district.province === EditState.province) {
+                      return district.district.map((district, index) => (
+                        <option key={index} value={district}>
+                          {district}
+                        </option>
+                      ));
+                    }
+                  })}
+                </select>
+              </div>
+              <div className="input-vertical">
+                <p>Zip Code</p>
+                <input
+                  type="text"
+                  value={EditState.zipCode}
+                  onChange={handleZipCodeChange}
+                />
+              </div>
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className="submit-btn"
               >
-                <option value="">Day</option>
-                {days.map((day) => (
-                  <option key={day} value={day}>
-                    {day}
-                  </option>
-                ))}
-              </select>
-              <select
-                value={EditState.dateOfBirth.month}
-                onChange={handleMonthChange}
-              >
-                <option value="">Month</option>
-                {months.map((month, index) => (
-                  <option key={index} value={month}>
-                    {month}
-                  </option>
-                ))}
-              </select>
-              <select
-                value={EditState.dateOfBirth.year}
-                onChange={handleYearChange}
-              >
-                <option value="">Year</option>
-                {years.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="input-vertical">
-              <p>ID Card</p>
-              <input
-                type="text"
-                value={EditState.idCard}
-                onChange={handleIdCardChange}
-              />
-            </div>
-            <div className="input-vertical">
-              <p>Phone Number</p>
-              <input
-                type="text"
-                value={EditState.phoneNumber}
-                onChange={handlePhoneChange}
-              />
-            </div>
-            <div className="input-vertical">
-              <p>Home No, Room No, Aparment/Village Name, Sub-District</p>
-              <textarea
-                value={EditState.address}
-                onChange={handleAddressChange}
-              ></textarea>
-            </div>
-            <div className="input-horizontal">
-              <p>Country</p>
-              <select value={EditState.country}>
-                <option value={EditState.country}>{EditState.country}</option>
-              </select>
-            </div>
-            <div className="input-horizontal">
-              <p>Province</p>
-              <select
-                value={EditState.province}
-                onChange={handleProvinceChange}
-              >
-                <option value="">Province</option>
-                {provinces.map((province) => (
-                  <option key={province.value} value={province.label}>
-                    {province.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="input-horizontal">
-              <p>District</p>
-              <select
-                value={EditState.district}
-                onChange={handleDistrictChange}
-              >
-                <option value="">District</option>
-                {districts.map((district) => {
-                  if (district.province === EditState.province) {
-                    return district.district.map((district, index) => (
-                      <option key={index} value={district}>
-                        {district}
-                      </option>
-                    ));
-                  }
-                })}
-              </select>
-            </div>
-            <div className="input-vertical">
-              <p>Zip Code</p>
-              <input
-                type="text"
-                value={EditState.zipCode}
-                onChange={handleZipCodeChange}
-              />
-            </div>
-            <button type="submit" onClick={handleSubmit} className="submit-btn">
-              Save Changes
-            </button>
-          </form>
+                Save Changes
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </>
