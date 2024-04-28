@@ -1,7 +1,11 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
 
 @Schema()
 export class Seat {
+  @Prop({ type: mongoose.Schema.ObjectId })
+  id: string;
+
   @Prop({ required: true })
   type: string;
 
