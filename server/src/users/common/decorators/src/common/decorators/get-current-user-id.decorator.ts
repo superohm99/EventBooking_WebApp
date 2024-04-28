@@ -3,10 +3,12 @@ import { JwtPayload } from "../../../../../../users/types"
 import { Types } from 'mongoose';
 
 export const GetCurrentUserId = createParamDecorator(
-  (_: undefined, context: ExecutionContext): Types.ObjectId => {
+  (_: undefined, context: ExecutionContext): any => {
     const request = context.switchToHttp().getRequest();
     const user = request.user as JwtPayload;
-    console.log(request);
-    return user.sub;
+    return { _id: new Types.ObjectId(user.sub) };
+    // console.log(typeof(user));
+    // console.log((user.sub));
+    // return user.sub;
   },
 );
