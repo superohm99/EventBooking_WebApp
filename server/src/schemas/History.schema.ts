@@ -1,21 +1,19 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import mongoose from 'mongoose';
+import { Schema, Prop, SchemaFactory} from "@nestjs/mongoose"
+import mongoose from "mongoose"
+import { Reserve } from "./Reserve.schema";
 
 
 @Schema()
-export class EventSchedule {
-    @Prop({required : false})
-    start_date: Date;
+export class History{
 
-    @Prop({required : false})
-    end_date: Date;
-
-    @Prop({required : false})
-    start_time: Date;
-
-    @Prop({required : false})
-    end_time: Date;
+    @Prop({ required: true , default:false})
+    payment_status:boolean;
+    
+    @Prop({ required: true })
+    reserve_timestamp:Date;
+    
+    @Prop({type: mongoose.Schema.Types.ObjectId,ref:"Reserve"})
+    reserve:Reserve;
 }
 
-export const EventScheduleSchema = 
-SchemaFactory.createForClass(EventSchedule)
+export const HistorySchema = SchemaFactory.createForClass(History)
