@@ -1,34 +1,23 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
-
-// event_name
-// event_description
-// image
-// rating
-// venue
-// schedules : []
+import { Schema, Prop, SchemaFactory} from "@nestjs/mongoose"
 
 @Schema()
-export class Event extends Document {
-  @Prop({ required: true})
-  event_name: string;
+export class Event{
 
-  @Prop({ required: true})
-  event_description: string;
+    @Prop()
+    event_name:string
 
-  @Prop({ required: true})
-  image: string;
+    @Prop()
+    event_description:string
 
-  @Prop({ required: true})
-  rating: number;
+    @Prop()
+    event_image:string
 
-  @Prop({ type: Types.ObjectId, ref: 'Venue', required: true})
-  venue: string;
+    @Prop()
+    rating:string
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'EventSchedule' }]})
-  schedules: string[];
-
+    @Prop()
+    venue_id:string
 
 }
 
-export const EventSchema = SchemaFactory.createForClass(Event);
+export const EventSchema = SchemaFactory.createForClass(Event)

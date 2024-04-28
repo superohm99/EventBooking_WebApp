@@ -8,7 +8,7 @@ import { UserSettings } from 'src/schemas/UserSettings.schema';
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt';
 import { Response } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, response } from 'express';
 import { JwtPayload, Tokens } from './types';
 import generateUniqueId from 'generate-unique-id';
 
@@ -86,7 +86,7 @@ export class UsersService {
         }
 
         const tokens = await this.getTokens(user._id, user.email);
-        await this.updateRtHash(user.id, tokens.refresh_token);
+        await this.updateRtHash(user._id, tokens.refresh_token);
 
         console.log("complete login")
 
@@ -102,8 +102,8 @@ export class UsersService {
         const rtMatches = await bcrypt.compare(user.hashedRt.toString(), rt);
         if (!rtMatches) throw new ForbiddenException('Access Denied');
     
-        const tokens = await this.getTokens(user.id, user.email);
-        await this.updateRtHash(user.id, tokens.refresh_token);
+        const tokens = await this.getTokens(user._id, user.email);
+        await this.updateRtHash(user._id, tokens.refresh_token);
     
         return tokens;
     }
@@ -121,19 +121,19 @@ export class UsersService {
     }
 
     async logout(userId: Types.ObjectId): Promise<boolean>{
-        await this.userModel.updateMany({
-            where: {
-              id: userId,
-              hashedRt: {
-                not: null,
-              },
-            },
-            data: {
-              hashedRt: null,
-            },
-          });
-
-          return true;
+      if (userId)
+      try {
+  
+        // await this.userModel.updateMany(userId,{ hashedRt: { $ne: null } }, { $set: { hashedRt: null } });
+        const filter = { hashedRt: null }; // สร้างอ็อบเจ็กต์ filter ที่ใช้ในการค้นหาข้อมูลที่ต้องการอัปเดต
+        await this.userModel.updateMany(userId,filter, { $set: { hashedRt: null } }).exec(); // ทำการอัปเดตข้อมูลผู้ใช้
+        console.log('Users updated successfully.');
+        return true
+      } catch (error) {
+        console.error('Error updating users:', error);
+      }
+      else
+        return false
     }
 
 
