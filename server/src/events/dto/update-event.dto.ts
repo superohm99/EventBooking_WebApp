@@ -4,7 +4,7 @@ import { IsString, IsNumber, IsUrl, IsNotEmpty, IsMongoId, Min, IsOptional } fro
 // image
 // rating
 // venue
-export class CreateEventDto {
+export class UpdateEventDto {
     @IsOptional()
     @IsString()
     @IsNotEmpty()

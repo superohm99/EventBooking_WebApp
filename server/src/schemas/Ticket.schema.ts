@@ -9,7 +9,7 @@ export class Ticket{
     events: Event
 
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'Seat'}]})
-    seats: Seat[]
+    seats: Seat[]   
 
 }
 

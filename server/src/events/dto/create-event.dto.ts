@@ -1,9 +1,5 @@
-import { IsString, IsNumber, IsUrl, IsNotEmpty, IsMongoId, Min } from 'class-validator';
-// event_name
-// event_description
-// image
-// rating
-// venue
+import { IsString, IsNumber, IsUrl, IsNotEmpty, IsMongoId, Min, Max } from 'class-validator';
+import { Venue } from 'src/schemas/Venue.schema';
 export class CreateEventDto {
     @IsString()
     @IsNotEmpty()
@@ -17,10 +13,11 @@ export class CreateEventDto {
 
     @IsNumber()
     @Min(0)
+    @Max(5)
     readonly rating: number;
 
     @IsNotEmpty()
     @IsMongoId()
-    readonly venue: string;
+    readonly venue: Venue;
 
 }
