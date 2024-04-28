@@ -1,5 +1,7 @@
 import { Schema, Prop, SchemaFactory} from "@nestjs/mongoose"
-
+import mongoose from "mongoose"
+import { EventSchedule } from "./Event_schedule.schema"
+import { Venue } from "./Venue.schema"
 @Schema()
 export class Event{
 
@@ -15,8 +17,11 @@ export class Event{
     @Prop()
     rating:string
 
-    @Prop()
-    venue_id:string
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'Vanue'}]})
+    venue: Venue
+
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'EventSchedule'}]})
+    events: EventSchedule[];
 
 }
 

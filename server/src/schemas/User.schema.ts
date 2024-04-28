@@ -5,8 +5,6 @@ import { PrimaryGeneratedColumn } from "typeorm"
 
 @Schema()
 export class User {
-    @Prop({type:mongoose.Schema.ObjectId})
-    id:string
 
     @Prop({ unique: true, required: true})
     username:string
@@ -16,9 +14,6 @@ export class User {
 
     @Prop({ unique: true, required:true})
     password:string
-
-    // @Prop({unique: true})
-    // hash:String
 
     @Prop({unique: true})
     hashedRt:String

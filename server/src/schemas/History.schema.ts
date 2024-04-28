@@ -1,19 +1,19 @@
 import { Schema, Prop, SchemaFactory} from "@nestjs/mongoose"
 import mongoose from "mongoose"
-import { Document } from "typeorm";
+import { Reserve } from "./Reserve.schema";
+
 
 @Schema()
 export class History{
 
-    @Prop({type: mongoose.Schema.Types.ObjectId})
-    reserve_id:string;
-
-    @Prop({ required: true })
+    @Prop({ required: true , default:false})
     payment_status:boolean;
-
+    
     @Prop({ required: true })
     reserve_timestamp:Date;
-
+    
+    @Prop({type: mongoose.Schema.Types.ObjectId,ref:"Reserve"})
+    reserve:Reserve;
 }
 
 export const HistorySchema = SchemaFactory.createForClass(History)

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import mongoose from 'mongoose';
-import {Event} from "./Event.schema"
+
 
 @Schema()
 export class EventSchedule {
@@ -15,9 +15,6 @@ export class EventSchedule {
 
     @Prop({required : false})
     end_time: Date;
-
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'Event'}]})
-    events: Event[];
 }
 
 export const EventScheduleSchema = 
