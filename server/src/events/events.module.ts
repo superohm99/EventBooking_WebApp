@@ -4,6 +4,7 @@ import { EventsController } from './events.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventSchedule, EventScheduleSchema } from 'src/schemas/Event_schedule.schema';
 import { Event, EventSchema } from 'src/schemas/Event.schema';
+import { Venue, VenueSchema } from 'src/schemas/Venue.schema';
 
 @Module({
   imports:[
@@ -15,6 +16,10 @@ import { Event, EventSchema } from 'src/schemas/Event.schema';
     {
         name: Event.name,
         schema: EventSchema,
+    },
+    {
+      name: Venue.name,
+      schema: VenueSchema,
     }
 ]),],
   controllers: [EventsController],
