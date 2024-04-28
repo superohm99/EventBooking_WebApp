@@ -1,23 +1,16 @@
-// import { Schema, Prop, SchemaFactory} from "@nestjs/mongoose"
+import { Schema, Prop, SchemaFactory} from "@nestjs/mongoose"
+import {User} from "./User.schema"
+import { Ticket } from "./Ticket.schema"
+import mongoose from "mongoose"
+@Schema()
+export class Reserve{
 
-// @Schema()
-// export class Event{
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'User'}]})
+    users: User;
 
-//     @Prop()
-//     event_name:string
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'Ticket'}]})
+    tickets: Ticket;
 
-//     @Prop()
-//     event_description:string
+}
 
-//     @Prop()
-//     event_image:string
-
-//     @Prop()
-//     rating:string
-
-//     @Prop()
-//     venue_id:string
-
-// }
-
-// export const EventSchema = SchemaFactory.createForClass(Event)
+export const ReserveSchema = SchemaFactory.createForClass(Reserve)
