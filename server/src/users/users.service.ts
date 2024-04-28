@@ -8,7 +8,7 @@ import { UserSettings } from 'src/schemas/UserSettings.schema';
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt';
 import { Response } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, response } from 'express';
 import { JwtPayload, Tokens } from './types';
 import generateUniqueId from 'generate-unique-id';
 
@@ -123,6 +123,7 @@ export class UsersService {
     async logout(userId: Types.ObjectId): Promise<boolean>{
       if (userId)
       try {
+  
         // await this.userModel.updateMany(userId,{ hashedRt: { $ne: null } }, { $set: { hashedRt: null } });
         const filter = { hashedRt: null }; // สร้างอ็อบเจ็กต์ filter ที่ใช้ในการค้นหาข้อมูลที่ต้องการอัปเดต
         await this.userModel.updateMany(userId,filter, { $set: { hashedRt: null } }).exec(); // ทำการอัปเดตข้อมูลผู้ใช้
