@@ -6,6 +6,7 @@ import mongoose, { Types } from 'mongoose';
 import { GetCurrentUser, GetCurrentUserId, Public } from './common/decorators/src/common/decorators';
 import { RtGuard } from './common/guards';
 import { Tokens } from './types';
+import { Type } from 'class-transformer';
 
 @Controller('users')
 export class UsersController {
@@ -15,8 +16,6 @@ export class UsersController {
     @Post('register')
     @UsePipes(new ValidationPipe())
     createUser(@Body() createUserDto: CreateUserDto){
-        console.log(createUserDto);
-        console.log("asf")
         return this.usersService.createUser(createUserDto)
     }
 
@@ -29,6 +28,8 @@ export class UsersController {
 
     @Post('logout')
     async logout(@GetCurrentUserId() userId: Types.ObjectId): Promise<boolean> {
+        console.log(userId)
+        console.log(typeof(userId))
         return await this.usersService.logout(userId);
     }
 
