@@ -21,7 +21,7 @@ export class Event{
     venue: Venue
 
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'EventSchedule'}]})
-    events: EventSchedule[];
+    eventschedules: EventSchedule[];
 
 }
 
