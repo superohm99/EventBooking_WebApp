@@ -22,6 +22,7 @@ export class EventsController {
   @Post('create_venue')
   create_venue(@Body() venueDto: CreateVenueDto) {
     return this.eventsService.create_venue(venueDto);
+    
   }
 
 
