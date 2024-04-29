@@ -10,7 +10,7 @@ import { Public } from 'src/users/common/decorators/src/common/decorators';
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
-  @Post(':id/createSeat')
+  @Post(':id/create_seat')
   createSeat(@Param('id') id: string, @Body() createSeatDto: CreateSeatDto) {
     return this.eventsService.createSeat(id, createSeatDto);
   }
