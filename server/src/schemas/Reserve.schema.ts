@@ -1,16 +1,14 @@
-import { Schema, Prop, SchemaFactory} from "@nestjs/mongoose"
-import {User} from "./User.schema"
-import { Ticket } from "./Ticket.schema"
-import mongoose from "mongoose"
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { User } from './User.schema';
+import { Ticket } from './Ticket.schema';
+import mongoose from 'mongoose';
 @Schema()
-export class Reserve{
+export class Reserve {
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  users: User;
 
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'User'}]})
-    users: User;
-
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'Ticket'}]})
-    tickets: Ticket;
-
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' }] })
+  tickets: Ticket;
 }
 
-export const ReserveSchema = SchemaFactory.createForClass(Reserve)
+export const ReserveSchema = SchemaFactory.createForClass(Reserve);

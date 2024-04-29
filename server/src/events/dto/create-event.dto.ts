@@ -1,23 +1,28 @@
-import { IsString, IsNumber, IsUrl, IsNotEmpty, IsMongoId, Min, Max } from 'class-validator';
-import { Venue } from 'src/schemas/Venue.schema';
+import { IsString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+
 export class CreateEventDto {
-    @IsString()
-    @IsNotEmpty()
-    readonly event_name: string;
+  @IsString()
+  @IsNotEmpty()
+  id: string;
 
-    @IsString()
-    readonly event_description: string;
+  @IsString()
+  @IsNotEmpty()
+  event_name: string;
 
-    @IsUrl()
-    readonly image: string;
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  event_description?: string;
 
-    @IsNumber()
-    @Min(0)
-    @Max(5)
-    readonly rating: number;
+  @IsString()
+  @IsNotEmpty()
+  image: string;
 
-    @IsNotEmpty()
-    @IsMongoId()
-    readonly venue: Venue;
+  @IsNumber()
+  @IsOptional()
+  rating: number;
 
+  @IsString()
+  @IsNotEmpty()
+  venue_id: string;
 }

@@ -9,14 +9,16 @@ import { EventsModule } from './events/events.module';
 import { HistoryModule } from './history/history.module';
 import { ReserveModule } from './reserve/reserve.module';
 
-
 @Module({
   imports: [MongooseModule.forRoot('mongodb://root:example@localhost:27017/MyTicket?authSource=admin'),
   UsersModule],
   controllers: [AppController],
-  providers: [AppService,{
-    provide: APP_GUARD,
-    useClass: AtGuard,
-  }],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AtGuard,
+    },
+  ],
 })
 export class AppModule {}

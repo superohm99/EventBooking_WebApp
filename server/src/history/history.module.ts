@@ -4,13 +4,14 @@ import { HistoryController } from './history.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { History, HistorySchema } from 'src/schemas/History.schema';
 @Module({
-  imports:[
+  imports: [
     MongooseModule.forFeature([
-    {
+      {
         name: History.name,
-        schema: HistorySchema
-    },
-]),],
+        schema: HistorySchema,
+      },
+    ]),
+  ],
   controllers: [HistoryController],
   providers: [HistoryService],
 })
