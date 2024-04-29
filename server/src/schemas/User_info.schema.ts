@@ -33,7 +33,7 @@ export class User_info{
     postal_code:string;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-    users: User;
+    user: User;
 
 }
 
