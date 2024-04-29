@@ -11,7 +11,8 @@ import { ReserveModule } from './reserve/reserve.module';
 
 @Module({
   imports: [MongooseModule.forRoot('mongodb://root:example@localhost:27017/MyTicket?authSource=admin'),
-  UsersModule],
+  UsersModule,
+  EventsModule,],
   controllers: [AppController],
   providers: [
     AppService,

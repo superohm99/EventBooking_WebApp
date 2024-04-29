@@ -7,7 +7,7 @@ import { Document, Types } from 'mongoose';
 @Schema()
 export class Ticket extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Event'})
-  events: Event;
+  event: Event;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Seat' }] })
   seats: Seat[];

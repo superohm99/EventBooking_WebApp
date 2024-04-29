@@ -12,16 +12,25 @@ export class EventsService {
     @InjectModel(Ticket.name) private ticketModel: Model<Ticket>
   ) {}
 
-  async createSeat(id: string, createSeatDto: CreateSeatDto): Promise<Seat> {
-    const seat = new this.seatModel(createSeatDto);
-    const seat_result = await seat.save();
-    const ticket = new this.ticketModel({"events": id, "seats": [seat_result]});
-    await ticket.save();
-    console.log(ticket);
-    return seat_result;
+  async createSeat(event_id: string, createSeatDto: CreateSeatDto): Promise<Seat> {
+    const newSeat = new this.seatModel(createSeatDto);
+    await newSeat.save();
+
+    const ticket = await this.ticketModel.findOneAndUpdate(
+      { event: event_id },
+      { $push: { seats: newSeat._id } },
+      { new: true }
+    );
+
+    console.log("ticket", ticket);
+
+    return newSeat;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+  async createTicket(event_id: string): Promise<Ticket> {
+    const newTicket = new this.ticketModel({ event: event_id, seats: [] });
+    await newTicket.save();
+    return newTicket;
   }
+
 }

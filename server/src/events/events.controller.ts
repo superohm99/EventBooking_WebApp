@@ -11,8 +11,8 @@ export class EventsController {
     return this.eventsService.createSeat(id, createSeatDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.eventsService.findOne(+id);
+  @Post(':id/createTicket')
+  createTicket(@Param('id') id: string) {
+    return this.eventsService.createTicket(id);
   }
 }
