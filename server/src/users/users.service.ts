@@ -13,7 +13,7 @@ import { JwtPayload, Tokens } from './types';
 import generateUniqueId from 'generate-unique-id';
 import { CreateUserInfoDto } from './dto/User.dto';
 import { User_info } from 'src/schemas/User_info.schema';
-
+import { UpdateUserInfoDto } from './dto/User.dto';
 
 @Injectable()
 export class UsersService {
@@ -166,4 +166,22 @@ export class UsersService {
       return new_userInfo.save()
     }
     
+    //get_userinfo
+    async getUserInfoWithUserDetails(user_id: string): Promise<User_info> {
+      const userInfo = await this.userInfoModel.findOne({ user: user_id }).populate('user').exec();
+      console.log('User_info:', userInfo);
+      return userInfo;
+    }
+
+    //update_userinfo
+    async updateUserInfo(user_id: string, updateUserInfoDto: UpdateUserInfoDto): Promise<User_info> {
+      const updatedUserInfo = await this.userInfoModel.findOneAndUpdate(
+        { user: user_id },
+        updateUserInfoDto,
+        { new: true }
+      ).populate('user').exec();
+      console.log('new_User_info:',updateUserInfoDto);
+      return updatedUserInfo;
+    }
+
 }
