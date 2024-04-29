@@ -14,15 +14,14 @@ export class Event {
   event_image: string;
 
   @Prop()
-  rating: string;
+  rating: string
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Venue' }] })
-  venue: Venue;
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Vanue' }] })
+  venue: Venue
 
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'EventSchedule' }],
-  })
-  events: EventSchedule[];
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'EventSchedule' }] })
+  eventschedules: EventSchedule[];
+
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);
