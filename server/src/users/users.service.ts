@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/c
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User } from 'src/schemas/User.schema';
-import { CreateUserDto } from './dto/User.dto';
+import { CreateUserDto} from './dto/User.dto';
 import { LoginDto } from './dto/User.dto';
 import { UserSettings } from 'src/schemas/UserSettings.schema';
 import * as bcrypt from 'bcrypt'
@@ -11,6 +11,8 @@ import { Response } from '@nestjs/common';
 import { Request, response } from 'express';
 import { JwtPayload, Tokens } from './types';
 import generateUniqueId from 'generate-unique-id';
+import { CreateUserInfoDto } from './dto/User.dto';
+import { User_info } from 'src/schemas/User_info.schema';
 
 
 @Injectable()
@@ -18,6 +20,9 @@ export class UsersService {
     constructor(
         @InjectModel(User.name) private userModel: Model<User>,
         @InjectModel(UserSettings.name) private userSettingsModel: Model<UserSettings>,
+
+        @InjectModel(User_info.name) private userInfoModel: Model<User_info>,
+
         private jwtService: JwtService,
     ) {}
 
@@ -30,7 +35,7 @@ export class UsersService {
         const [at, rt] = await Promise.all([
           this.jwtService.signAsync(jwtPayload, {
             secret: 'at-secret',
-            expiresIn: '15m',
+            expiresIn: '1h',
           }),
           this.jwtService.signAsync(jwtPayload, {
             secret: 'rt-secret',
@@ -141,5 +146,24 @@ export class UsersService {
         return this.userModel.findByIdAndDelete(id)
     }
 
+
+    //user_info
+    async createUserInfo(UserInfoDto: CreateUserInfoDto){
+      const new_userInfo = new this.userInfoModel({
+        date_of_birth: UserInfoDto.date_of_birth,
+        id_card: UserInfoDto.id_card,
+        gender: UserInfoDto.gender,
+        phone_no: UserInfoDto.phone_no,
+        address: UserInfoDto.address,
+        country: UserInfoDto.country,
+        province: UserInfoDto.province,
+        district: UserInfoDto.district,
+        postal_code: UserInfoDto.postal_code,
+        user:  UserInfoDto.user_id
+      })
+      const test = await new_userInfo.populate('user');
+      console.log(test)
+      return new_userInfo.save()
+    }
     
 }

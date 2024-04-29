@@ -2,6 +2,7 @@ import { Body, Controller, Delete, HttpException, Param, Post, Req, UseGuards, U
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/User.dto';
 import { LoginDto } from './dto/User.dto';
+import { CreateUserInfoDto } from './dto/User.dto';
 import mongoose, { Types } from 'mongoose';
 import { GetCurrentUser, GetCurrentUserId, Public } from './common/decorators/src/common/decorators';
 import { RtGuard } from './common/guards';
@@ -52,4 +53,11 @@ export class UsersController {
         if (!deletedUser) throw new HttpException('User not Found',404)
         console.log(deletedUser)
     }
+
+    //UserInfo
+    @Post('user_info')
+    create_user_info(@Body() UserInfoDto: CreateUserInfoDto){
+        return this.usersService.createUserInfo(UserInfoDto);
+    }
+
 }

@@ -11,7 +11,7 @@ import { ReserveModule } from './reserve/reserve.module';
 
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://thanasuksongsriohm:IV3OE0pdQVwKVSbB@myticketdb.vs5a23w.mongodb.net/'), UsersModule, EventsModule, HistoryModule, ReserveModule,],
+  imports: [MongooseModule.forRoot('mongodb+srv://teeruth2546:7mawijIAr3yW510N@ruth.jtq6v9f.mongodb.net/'), UsersModule, EventsModule, HistoryModule,ReserveModule],
   controllers: [AppController],
   providers: [AppService,{
     provide: APP_GUARD,

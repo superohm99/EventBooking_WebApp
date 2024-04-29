@@ -51,6 +51,7 @@ export class EventsService {
 
     (await event).save();
     await new_eventSchedule.save();
+    console.log(new_eventSchedule);
     return true
   }
 
