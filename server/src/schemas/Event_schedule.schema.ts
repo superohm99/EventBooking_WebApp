@@ -1,6 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import mongoose from 'mongoose';
-
 
 @Schema()
 export class EventSchedule {
@@ -17,5 +15,4 @@ export class EventSchedule {
     end_time: Date;
 }
 
-export const EventScheduleSchema = 
-SchemaFactory.createForClass(EventSchedule)
+export const EventScheduleSchema = SchemaFactory.createForClass(EventSchedule)

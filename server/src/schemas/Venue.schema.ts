@@ -3,14 +3,14 @@ import { Document, Types } from 'mongoose';
 
 @Schema()
 export class Venue extends Document {
-    @Prop()
-    name: string
+  @Prop()
+  name: string;
 
-    @Prop()
-    location: string
+  @Prop()
+  location: string;
 
-    @Prop()
-    capacity: number
+  @Prop()
+  capacity: number;
 }
 
-export const VenueSchema = SchemaFactory.createForClass(Venue)
+export const VenueSchema = SchemaFactory.createForClass(Venue);
