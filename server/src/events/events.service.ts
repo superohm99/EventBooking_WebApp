@@ -6,6 +6,7 @@ import { Event } from 'src/schemas/Event.schema';
 import { EventSchedule } from 'src/schemas/Event_schedule.schema';
 import { Venue } from 'src/schemas/Venue.schema';
 import { Model } from 'mongoose';
+import { Ticket } from 'src/schemas/Ticket.schema';
 
 @Injectable()
 export class EventsService {
@@ -13,6 +14,7 @@ export class EventsService {
     @InjectModel(Event.name) private eventModel: Model<Event>,
     @InjectModel(EventSchedule.name) private eventScheduleModel: Model<EventSchedule>,
     @InjectModel(Venue.name) private venue: Model<Venue>,
+    @InjectModel(Ticket.name) private ticketModel: Model<Ticket>,
 ) {}
 
     async create_event(createEventDto: CreateEventDto) {
@@ -25,10 +27,13 @@ export class EventsService {
       rating:createEventDto.rating,
     });
 
+    const new_ticket = new this.ticketModel({
+      events:new_event._id,
+    })
 
 
     await new_event.save();
-
+    await new_ticket.save();
     return true;
   }
 
@@ -57,6 +62,7 @@ export class EventsService {
       capacity: venueDto.capacity
     })
 
+    
     const event = await this.eventModel.findByIdAndUpdate(venueDto.event_id,{venue:new_venue._id});
 
     (await event).save();
