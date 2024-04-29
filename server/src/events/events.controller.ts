@@ -15,11 +15,6 @@ export class EventsController {
     return this.eventsService.createSeat(id, createSeatDto);
   }
 
-  @Post(':id/createTicket')
-  createTicket(@Param('id') id: string) {
-    return this.eventsService.createTicket(id);
-  }
-
   @Post('create_event')
   create(@Body() createEventDto: CreateEventDto) {
     return this.eventsService.create_event(createEventDto);
@@ -33,6 +28,5 @@ export class EventsController {
   @Post('create_venue')
   create_venue(@Body() venueDto: CreateVenueDto) {
     return this.eventsService.create_venue(venueDto);
-    
   }
 }

@@ -24,34 +24,29 @@ export class EventsService {
     const newSeat = new this.seatModel(createSeatDto);
     await newSeat.save();
 
-    const ticket = await this.ticketModel.findOneAndUpdate(
-      { event: event_id },
-      { $push: { seats: newSeat._id } },
-      { new: true }
-    );
+    const event = await this.eventModel.findById(event_id);
 
-    console.log("ticket", ticket);
+    const ticket = await this.ticketModel.findOne({ event: event._id });
+
+    ticket.seats.push(newSeat._id);
+    await ticket.save();
 
     return newSeat;
   }
-  async create_event(createEventDto: CreateEventDto) {
 
-    const new_event = new this.eventModel({
-      // id:generateUniqueId(),
-      event_name: createEventDto.event_name,
-      event_description: createEventDto.event_description,
-      image: createEventDto.image,
-      rating: createEventDto.rating,
+  async create_event(createEventDto: CreateEventDto): Promise<Event> {
+    const new_event = new this.eventModel(createEventDto);
+    await new_event.save();
+    console.log("new_event", new_event);
+    const ticket = new this.ticketModel({
+      event: new_event._id
     });
 
-    const new_ticket = new this.ticketModel({
-      events: new_event._id,
-      seats: []
-    })
+    await ticket.save();
 
-    await new_event.save();
-    await new_ticket.save();
-    return true;
+    console.log("ticket from create event", ticket);
+
+    return new_event;
   }
 
   async create_eventsch(eventschDto: CreateEventSchDto) {
@@ -84,12 +79,6 @@ export class EventsService {
     (await event).save();
     await new_venue.save();
     return true
-  }
-
-  async createTicket(event_id: string): Promise<Ticket> {
-    const newTicket = new this.ticketModel({ event: event_id, seats: [] });
-    await newTicket.save();
-    return newTicket;
   }
 
 }
