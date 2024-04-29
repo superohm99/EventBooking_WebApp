@@ -10,9 +10,7 @@ import { HistoryModule } from './history/history.module';
 import { ReserveModule } from './reserve/reserve.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://root:example@localhost:27017/MyTicket?authSource=admin'),
-  UsersModule,
-  EventsModule,],
+  imports: [MongooseModule.forRoot('mongodb+srv://teeruth2546:7mawijIAr3yW510N@ruth.jtq6v9f.mongodb.net/'), UsersModule, EventsModule, HistoryModule,ReserveModule],
   controllers: [AppController],
   providers: [
     AppService,

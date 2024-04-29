@@ -37,3 +37,25 @@ export class LoginDto{
     
     password: string;
 }
+
+export class CreateUserInfoDto{
+    date_of_birth: Date;
+
+    id_card: string;
+
+    gender: string;
+
+    phone_no: string;
+
+    address: string;
+
+    country: string;
+
+    province: string;
+
+    district: string;
+
+    postal_code: string;
+
+    user_id: string;
+}
