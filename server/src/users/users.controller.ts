@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, HttpException, Param, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, HttpException, Param, Post, Req, UseGuards, UsePipes, ValidationPipe, Get } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/User.dto';
 import { LoginDto } from './dto/User.dto';
@@ -8,7 +8,7 @@ import { GetCurrentUser, GetCurrentUserId, Public } from './common/decorators/sr
 import { RtGuard } from './common/guards';
 import { Tokens } from './types';
 import { Type } from 'class-transformer';
-
+import { UpdateUserInfoDto } from './dto/User.dto';
 @Controller('users')
 export class UsersController {
     constructor(private usersService: UsersService) {}
@@ -59,5 +59,19 @@ export class UsersController {
     create_user_info(@Body() UserInfoDto: CreateUserInfoDto){
         return this.usersService.createUserInfo(UserInfoDto);
     }
+
+    //Get user_info detail
+    // Route to get User_info with associated User details
+    @Get('user_info/:id')
+    getUserInfoWithUserDetails(@Param('id') id: string) {
+    return this.usersService.getUserInfoWithUserDetails(id);
+    }
+
+    //EdituserInfo
+    @Post('user_info/:user_id')
+    async updateUser(@Param('user_id') user_id: string, @Body() updateUserInfoDto: UpdateUserInfoDto) {
+    return this.usersService.updateUserInfo(user_id, updateUserInfoDto);
+    }
+
 
 }

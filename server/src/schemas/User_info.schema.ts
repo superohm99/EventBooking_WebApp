@@ -28,6 +28,9 @@ export class User_info {
   @Prop({ required: true })
   district: string;
 
+  @Prop({ required: true })
+  postal_code: string;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 }
