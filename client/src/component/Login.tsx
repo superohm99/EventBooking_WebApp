@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
+import { FormError } from '../constants'
+import { handleLoginValidation } from './InputValidation'
 
 interface LoginState {
     email: string;
@@ -10,6 +12,8 @@ interface LoginState {
 }
 
 function Login () {
+  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [errors, setErrors] = useState<FormError>({});
   const [loginState, setLoginState] = useState<LoginState>({
     email: '',
     password: '',
@@ -23,6 +27,20 @@ function Login () {
     };
   }, []);
 
+  useEffect(() => {
+    if (submitted) {
+      console.log(loginState);
+      // using axios to send loginState to the server
+      // send body as JSON.stringify(loginState)
+    }
+
+    return () => {
+      setSubmitted(false);
+    }
+  }, [submitted]);
+
+
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setLoginState({ ...loginState, [name]: value });
@@ -30,20 +48,32 @@ function Login () {
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    console.log(loginState);
+    const validateErrors: FormError = handleLoginValidation(loginState.email, loginState.password);
+    setErrors(validateErrors);
+    console.log(validateErrors);
+    if (Object.keys(validateErrors).length === 0) {
+      setSubmitted(true);
+      alert('Login Success');
+    }
   };
 
   return (
     <div className="signin">
         <h1>Welcome Back!</h1>
         <form>
-            <div className="input-field">
-              <i><FontAwesomeIcon icon={faEnvelope} /></i>
-              <input type="email" name="email" value={loginState.email} onChange={handleChange} placeholder="Email Address" />
+            <div className="input-group">
+              <div className="input-field">
+                <i><FontAwesomeIcon icon={faEnvelope} /></i>
+                <input type="email" name="email" value={loginState.email} onChange={handleChange} placeholder="Email Address" autoFocus/>
+              </div>
+              {errors.email && <p className="error">{errors.email}</p>}
             </div>
-            <div className="input-field">
-              <i><FontAwesomeIcon icon={faLock} /></i>
-            <input type="password" name="password" value={loginState.password} onChange={handleChange} placeholder="Password" />
+            <div className="input-group">
+              <div className="input-field">
+                <i><FontAwesomeIcon icon={faLock} /></i>
+              <input type="password" name="password" value={loginState.password} onChange={handleChange} placeholder="Password" />
+              </div>
+              {errors.password && <p className="error">{errors.password}</p>}
             </div>
             <div className="remember-forgot">
                 <label>

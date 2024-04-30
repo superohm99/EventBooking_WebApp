@@ -10,7 +10,7 @@
     /* z-index: 9999; */
 }
 
-.bottombar-container input,button{
+.bottombar-container input,.bottombar-container button{
     margin-right: 20px;
 }
 

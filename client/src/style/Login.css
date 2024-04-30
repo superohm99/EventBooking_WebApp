@@ -102,6 +102,10 @@
       font-size: 1.6rem;
   }
 
+  .signin .error{
+    font-size: .9rem;
+    color: red;
+  }
   @media (max-width: 834px) {
       .signin {
           width: 100%;
@@ -113,8 +117,18 @@
       }
 
       .signin form button {
-          color: #fff;
+          color: #000;
+          background-color: #efa6a6;
       }
+
+        .signin form button:hover {
+            color: #fff;
+            background-color: #000;
+        }
+
+    .signin .error{
+        color: yellow;
+    }
   }
 
   @media (max-width: 576px) {

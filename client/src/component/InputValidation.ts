@@ -1,4 +1,4 @@
-import { DateOfBirth, months, genders, FormError } from '../constants';
+import { DateOfBirth, genders, FormError } from '../constants';
 
 const validationEmail = (email: string): string => {
   const emailRegex: RegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -55,10 +55,12 @@ const validationGender = (gender: string): string => {
 
 const validationDateOfBirth = (dateOfBirth: DateOfBirth): string => {
   const { day, month, year } = dateOfBirth;
-  if ((day >= 1 && day <= 31) && (months.indexOf(month) !== -1) && (year >= 1900 && year <= 2021)) {
-    return '';
+
+  if(day.toString() === '' || month.toString() === '' || year.toString() === '') {
+    return 'Please select date of birth';
   }
-  return 'Invalid date of birth';
+
+  return '';
 };
 
 const validationFullname = (fullname: string): string => {
@@ -73,7 +75,6 @@ const validationFullname = (fullname: string): string => {
 
 export const handleFirstSignupValidation = (fullname: string, email: string, password: string, confirmPassword: string): FormError => {
   const errors: FormError = {};
-
   const fullnameError: string = validationFullname(fullname);
   const emailError: string = validationEmail(email);
   const passwordError: string = validationPassword(password);
@@ -97,46 +98,59 @@ export const handleFirstSignupValidation = (fullname: string, email: string, pas
 
 }
 
-// idCard, phoneNumber, address, country, province, district, zipCode, gender
 export const handleSecondSignupValidation = (idCard: string, phoneNumber: string, address: string, country: string,
   province: string, district: string, zipCode: string, gender: string, dateOfBirth: DateOfBirth): FormError => {
   const errors: FormError = {};
   const idCardError: string = validationIDCard(idCard);
-  // const genderError: string = validationGender(gender);
-  // const dateOfBirthError: string = validationDateOfBirth(dateOfBirth);
+  const genderError: string = validationGender(gender);
+  const dateOfBirthError: string = validationDateOfBirth(dateOfBirth);
   const phoneNumberError: string = validationPhoneNumber(phoneNumber);
   const addressError: string = validationAddress(address);
-  // const countryError: string = validationCountry(country);
-  // const provinceError: string = validationProvince(province);
-  // const districtError: string = validationDistrict(district);
+  const countryError: string = validationCountry(country);
+  const provinceError: string = validationProvince(province);
+  const districtError: string = validationDistrict(district);
   const zipCodeError: string = validationZipCode(zipCode);
 
   if (idCardError) {
     errors.idCard = idCardError;
   }
-  // if (genderError) {
-  //   errors.gender = genderError;
-  // }
-  // if (dateOfBirthError) {
-  //   errors.dateOfBirth = dateOfBirthError;
-  // }
+  if (genderError) {
+    errors.gender = genderError;
+  }
+  if (dateOfBirthError) {
+    errors.dateOfBirth = dateOfBirthError;
+  }
   if (phoneNumberError) {
     errors.phoneNumber = phoneNumberError;
   }
   if (addressError) {
     errors.address = addressError;
   }
-  // if (countryError) {
-  //   errors.country = countryError;
-  // }
-  // if (provinceError) {
-  //   errors.province = provinceError;
-  // }
-  // if (districtError) {
-  //   errors.district = districtError;
-  // }
+  if (countryError) {
+    errors.country = countryError;
+  }
+  if (provinceError) {
+    errors.province = provinceError;
+  }
+  if (districtError) {
+    errors.district = districtError;
+  }
   if (zipCodeError) {
     errors.zipCode = zipCodeError;
+  }
+  return errors;
+}
+
+export const handleLoginValidation = (email: string, password: string): FormError => {
+  const errors: FormError = {};
+  const emailError: string = validationEmail(email);
+  const passwordError: string = validationPassword(password);
+
+  if (emailError) {
+    errors.email = emailError;
+  }
+  if (passwordError) {
+    errors.password = passwordError;
   }
   return errors;
 }
