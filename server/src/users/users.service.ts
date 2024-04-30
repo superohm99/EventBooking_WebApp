@@ -15,6 +15,7 @@ import { CreateUserInfoDto } from './dto/User.dto';
 import { User_info } from 'src/schemas/User_info.schema';
 import { UpdateUserInfoDto } from './dto/User.dto';
 
+
 @Injectable()
 export class UsersService {
     constructor(
@@ -35,7 +36,7 @@ export class UsersService {
         const [at, rt] = await Promise.all([
           this.jwtService.signAsync(jwtPayload, {
             secret: 'at-secret',
-            expiresIn: '1h',
+            expiresIn: '3h',
           }),
           this.jwtService.signAsync(jwtPayload, {
             secret: 'rt-secret',
@@ -165,7 +166,7 @@ export class UsersService {
       console.log(test)
       return new_userInfo.save()
     }
-    
+
     //get_userinfo
     async getUserInfoWithUserDetails(user_id: string): Promise<User_info> {
       const userInfo = await this.userInfoModel.findOne({ user: user_id }).populate('user').exec();
@@ -183,5 +184,5 @@ export class UsersService {
       console.log('new_User_info:',updateUserInfoDto);
       return updatedUserInfo;
     }
-
+    
 }

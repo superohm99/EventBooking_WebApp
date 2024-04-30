@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateSeatDto } from './dto/create-seat.dto';
 import { Seat } from 'src/schemas/Seat.schema';
 import { CreateEventDto, CreateEventSchDto, CreateVenueDto } from './dto/create-event.dto';
@@ -24,13 +24,16 @@ export class EventsService {
     const newSeat = new this.seatModel(createSeatDto);
     await newSeat.save();
 
-    const event = await this.eventModel.findById(event_id);
+    const event_id_obj = new Types.ObjectId(event_id);
 
-    const ticket = await this.ticketModel.findOne({ event: event._id });
+    const updatedTicket = await this.ticketModel.findOneAndUpdate(
+      { event: event_id_obj }, 
+      { $push: { seats: newSeat._id } }, 
+      { new: true }
+    );
 
-    ticket.seats.push(newSeat._id);
-    await ticket.save();
-
+    console.log("updated ticket", updatedTicket);
+    
     return newSeat;
   }
 
