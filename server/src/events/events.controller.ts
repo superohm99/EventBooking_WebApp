@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto, CreateEventSchDto, CreateVenueDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Public } from 'src/users/common/decorators/src/common/decorators';
+import { Venue } from 'src/schemas/Venue.schema';
 
 @Public()
 @Controller('events')
@@ -22,27 +23,29 @@ export class EventsController {
   @Post('create_venue')
   create_venue(@Body() venueDto: CreateVenueDto) {
     return this.eventsService.create_venue(venueDto);
-    
+  }
+
+  @Get('events_data')
+  events_data() {
+    return  this.eventsService.events_data();
+  }
+
+  @Post('events_name')
+  async getEvents(@Body('name') name: string): Promise<any> {
+    if (name) {
+      return this.eventsService.getEventsByName(name);
+    }
+    return this.eventsService.getAllEvents();
+  }
+
+  @Post('events_place')
+  async getplace(@Body('id') id: string):  Promise<any>{
+    console.log(id)
+    if (id) {
+      return this.eventsService.getplace(id);
+    }
   }
 
 
-  @Get()
-  findAll() {
-    return this.eventsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.eventsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
-    return this.eventsService.update(+id, updateEventDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.eventsService.remove(+id);
-  }
+ 
 }

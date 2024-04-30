@@ -69,19 +69,42 @@ export class EventsService {
     return true
   }
 
-  findAll() {
-    return `This action returns all events`;
+  async events_data(){
+    const events = this.eventModel.find({}).exec();
+    return events
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+  async getEventsByName(name: string): Promise<Event[]> {
+
+    const regex = new RegExp('^' + name);
+    console.log(this.eventModel.find({ event_name: regex }));
+    return this.eventModel.find({ event_name: regex }).exec();
   }
 
-  update(id: number, updateEventDto: UpdateEventDto) {
-    return `This action updates a #${id} event`;
+  async getAllEvents(): Promise<Event[]> {
+
+    console.log(this.eventModel.find().exec())
+    return this.eventModel.find().exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} event`;
+  async getplace(id: string):  Promise<Venue> {
+    // console.log("kkkk")
+    // const regex = new RegExp('^' + id);
+    // console.log(this.eventModel.find({ _id: regex }));
+    const events =  (await this.eventModel.findOne({ _id: id }));
+    const object = events.venue
+    // const venue = await events.pop()
+    // const venueArray = events.pop() // Assuming each event has a venue property
+    // console.log(object[0])
+    const venue = await this.venue.findOne({_id:object[0]}).exec();
+    // let fuck = [];
+    // fuck.push(venue)
+    // console.log(venue)
+    // for (let i in venueArray.venue)
+    // {
+    //   var s = i
+    // }
+    // console.log(s); 
+    return await this.venue.findOne({_id:object[0]}).exec()
   }
 }

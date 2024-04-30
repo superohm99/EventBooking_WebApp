@@ -2,7 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 @Schema()
-export class Venue extends Document {
+export class Venue {
+ 
     @Prop()
     name: string
 
