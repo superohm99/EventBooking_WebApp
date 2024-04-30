@@ -8,6 +8,7 @@ import Saveticket from './component/Saveticket';
 import Login from './component/Login';
 import Signup from './component/Signup';
 import Receipt from './component/Receipt';
+import Register from './component/Register';
 
 import Myticket from "./component/Myticket";
 import History from "./component/History";
@@ -50,7 +51,7 @@ function App() {
                 />
                 <Route
                     path="/Signup"
-                    element={ <Signup /> }
+                    element={ <Register /> }
                 />
 
                 <Route

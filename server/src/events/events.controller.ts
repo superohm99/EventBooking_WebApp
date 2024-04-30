@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { EventsService } from './events.service';
+import { CreateSeatDto } from './dto/create-seat.dto';
 import { CreateEventDto, CreateEventSchDto, CreateVenueDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Public } from 'src/users/common/decorators/src/common/decorators';
@@ -9,6 +10,11 @@ import { Venue } from 'src/schemas/Venue.schema';
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
+
+  @Post(':id/create_seat')
+  createSeat(@Param('id') id: string, @Body() createSeatDto: CreateSeatDto) {
+    return this.eventsService.createSeat(id, createSeatDto);
+  }
 
   @Post('create_event')
   create(@Body() createEventDto: CreateEventDto) {

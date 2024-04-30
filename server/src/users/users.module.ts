@@ -7,7 +7,8 @@ import { UserSettings, UserSettingsSchema } from 'src/schemas/UserSettings.schem
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AtStrategy, RtStrategy } from './strategies';
-
+import { User_infoSchema} from 'src/schemas/User_info.schema';
+import { User_info } from 'src/schemas/User_info.schema';
 @Module({
   imports:[
     PassportModule.register({ defaultStrategy: 'jwt'}),
@@ -20,7 +21,13 @@ import { AtStrategy, RtStrategy } from './strategies';
         {
             name: UserSettings.name,
             schema: UserSettingsSchema,
+        },
+        {
+            name: User_info.name,
+            schema: User_infoSchema,
         }
+
+
     ]),
 ],
   controllers: [UsersController],

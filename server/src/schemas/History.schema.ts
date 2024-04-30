@@ -2,7 +2,6 @@ import { Schema, Prop, SchemaFactory} from "@nestjs/mongoose"
 import mongoose from "mongoose"
 import { Reserve } from "./Reserve.schema";
 
-
 @Schema()
 export class History{
 

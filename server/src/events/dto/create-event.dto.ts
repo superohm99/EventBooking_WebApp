@@ -1,13 +1,9 @@
-import { Types } from "mongoose";
 
 export class CreateEventDto {
-    event_name: string
-
-    event_description: string
-
-    image: string
-
-    rating: string
+  event_name: string;
+  event_description?: string;
+  image?: string;
+  rating?: number;
 }
 
 export class CreateEventSchDto{
