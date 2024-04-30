@@ -1,17 +1,3 @@
-:root {
-    font-size: 62.5%;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    min-height: 100vh;
-}
-
 .signup {
     width: min(100%, 76.8rem);
     margin-inline: auto;
@@ -32,7 +18,7 @@ body {
     margin-block: 2.5rem;
 }
 
-i {
+.signup i {
     font-size: 1.6rem;
 }
 
@@ -72,14 +58,14 @@ i {
     gap: 1rem;
 }
 
-select {
+.signup select {
     font-size: 1.6rem;
     padding: 1rem;
     height: min-content;
     border: .1rem solid #d1d1d1;
 }
 
-textarea {
+.signup textarea {
     width: 100%;
     font-size: 1.6rem;
     padding: 1rem;
@@ -161,7 +147,7 @@ textarea {
         border: .2rem solid #fff;
     }
 
-    div p {
+    .signup p {
         color: #fff;
     }
 }
@@ -171,7 +157,7 @@ textarea {
         padding-inline: 2rem;
     }
 
-    div p {
+    .signup p {
         color: #fff;
     }
 }

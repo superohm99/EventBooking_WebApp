@@ -7,33 +7,25 @@ import { Link } from 'react-router-dom'
 interface LoginState {
     email: string;
     password: string;
-    error: string | null;
 }
 
 function Login () {
   const [loginState, setLoginState] = useState<LoginState>({
     email: '',
     password: '',
-    error: null,
   })
 
   useEffect(() => {
-    // Apply gradient background to body when component mounts
     document.body.style.background = 'rgb(2,0,36)';
     document.body.style.background = 'linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(121,9,9,1) 50%, rgba(255,0,0,1) 100%)';
-
-    // Cleanup function to revert background when component unmounts
     return () => {
       document.body.style.background = '';
     };
   }, []);
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginState({ ...loginState, email: event.target.value });
-  };
-
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginState({ ...loginState, password: event.target.value });
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setLoginState({ ...loginState, [name]: value });
   };
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -47,11 +39,11 @@ function Login () {
         <form>
             <div className="input-field">
               <i><FontAwesomeIcon icon={faEnvelope} /></i>
-              <input type="email" value={loginState.email} onChange={handleEmailChange} placeholder="Email Address" />
+              <input type="email" name="email" value={loginState.email} onChange={handleChange} placeholder="Email Address" />
             </div>
             <div className="input-field">
               <i><FontAwesomeIcon icon={faLock} /></i>
-            <input type="password" value={loginState.password} onChange={handlePasswordChange} placeholder="Password" />
+            <input type="password" name="password" value={loginState.password} onChange={handleChange} placeholder="Password" />
             </div>
             <div className="remember-forgot">
                 <label>
