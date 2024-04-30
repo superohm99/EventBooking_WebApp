@@ -60,6 +60,7 @@ export class CreateUserInfoDto{
     user_id: string;
 }
 
+
 //UpdateUserInfoDto
 export class UpdateUserInfoDto{
     date_of_birth: Date;
