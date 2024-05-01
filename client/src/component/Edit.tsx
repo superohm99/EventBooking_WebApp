@@ -48,8 +48,7 @@ const provinces = [
   { label: "Bangkok", value: 1 },
   { label: "Chiang Mai", value: 2 },
   { label: "Phuket", value: 3 },
-  { label: "Loey", value: 4},
-  
+  { label: "Loey", value: 4 },
 ];
 
 const districts = [
@@ -62,8 +61,6 @@ const districts = [
 ];
 
 function Edit() {
-
-  
   const [userInfo, setUserinfo] = useState<EditState>({
     username: "",
     gender: "",
@@ -80,57 +77,58 @@ function Edit() {
     district: "",
     postal_code: "",
     error: null,
-  })
+  });
 
   useEffect(() => {
-    fetch("http://localhost:3001/users/user_info/662bbd45a61dee89ac39044f",
-      {
-        headers: {
-          "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjMwYzFlOTJhZjAxMDlhN2FkZmQ0NjAiLCJlbWFpbCI6IlQzQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ5NzI2OCwiZXhwIjoxNzE0NTA4MDY4fQ.ihzhcKG48zMbIpwJSRp7jN4-szmiEDX-loZa9H2OYE4`,
-         },
-      })
+    fetch("http://localhost:3001/users/user_info/662bbd45a61dee89ac39044f", {
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjMwYzFlOTJhZjAxMDlhN2FkZmQ0NjAiLCJlbWFpbCI6IlQzQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ5NzI2OCwiZXhwIjoxNzE0NTA4MDY4fQ.ihzhcKG48zMbIpwJSRp7jN4-szmiEDX-loZa9H2OYE4`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
-        setUserinfo({ ...userInfo,
+        setUserinfo({
+          ...userInfo,
           username: data.user.username,
-          gender:data.gender,
+          gender: data.gender,
           id_card: data.id_card,
           phone_no: data.phone_no,
           address: data.address,
           country: data.country,
           province: data.province,
           district: data.district,
-          postal_code: data.postal_code
-        })
-        console.log('Username',userInfo)
-        console.log(data)
-      })
-
-  }, [])
-
+          postal_code: data.postal_code,
+        });
+        console.log("Username", userInfo);
+        console.log(data);
+      });
+  }, []);
 
   const updateUserInfo = async (updatedData: Partial<EditState>) => {
     try {
-      const response = await fetch("http://localhost:3001/users/user_info/662bbd45a61dee89ac39044f", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjMwYzFlOTJhZjAxMDlhN2FkZmQ0NjAiLCJlbWFpbCI6IlQzQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ5NzI2OCwiZXhwIjoxNzE0NTA4MDY4fQ.ihzhcKG48zMbIpwJSRp7jN4-szmiEDX-loZa9H2OYE4`,
-        },
+      const response = await fetch(
+        "http://localhost:3001/users/user_info/662bbd45a61dee89ac39044f",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjMwYzFlOTJhZjAxMDlhN2FkZmQ0NjAiLCJlbWFpbCI6IlQzQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ5NzI2OCwiZXhwIjoxNzE0NTA4MDY4fQ.ihzhcKG48zMbIpwJSRp7jN4-szmiEDX-loZa9H2OYE4`,
+          },
           body: JSON.stringify(updatedData),
-        // body: JSON.stringify({
-        //   user: "662bbd45a61dee89ac39044f", 
-        //   username: userInfo.username, 
-        //   gender: userInfo.gender,
-        //   id_card: userInfo.id_card,
-        //   phone_no: userInfo.phone_no,
-        //   address: userInfo.address,
-        //   country: userInfo.country,
-        //   province: userInfo.province,
-        //   district: userInfo.district,
-        //   postal_code: userInfo.postal_code
-        // }),
-      });
+          // body: JSON.stringify({
+          //   user: "662bbd45a61dee89ac39044f",
+          //   username: userInfo.username,
+          //   gender: userInfo.gender,
+          //   id_card: userInfo.id_card,
+          //   phone_no: userInfo.phone_no,
+          //   address: userInfo.address,
+          //   country: userInfo.country,
+          //   province: userInfo.province,
+          //   district: userInfo.district,
+          //   postal_code: userInfo.postal_code
+          // }),
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         setUserinfo({ ...userInfo, ...data });
@@ -142,7 +140,6 @@ function Edit() {
       console.error("Error updating user info:", error);
     }
   };
-
 
   const [EditState, setEditState] = useState<EditState>({
     username: "Ben Tennyson",
@@ -243,18 +240,18 @@ function Edit() {
 
     updateUserInfo({
       username: userInfo.username,
-      gender:userInfo.gender,
+      gender: userInfo.gender,
       id_card: userInfo.id_card,
       phone_no: userInfo.phone_no,
       address: userInfo.address,
       country: userInfo.country,
       province: userInfo.province,
       district: userInfo.district,
-      postal_code: userInfo.postal_code
+      postal_code: userInfo.postal_code,
       // Add more fields as needed
     });
 
-    console.log('User_info update:',userInfo);
+    console.log("User_info update:", userInfo);
     // console.log(EditState);
   };
 
@@ -288,39 +285,41 @@ function Edit() {
               </div>
               <div className="input-vertical">
                 <p>Date of Birth</p>
-                <select
-                  value={EditState.dateOfBirth.day}
-                  onChange={handleDayChange}
-                >
-                  <option value="">Day</option>
-                  {days.map((day) => (
-                    <option key={day} value={day}>
-                      {day}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  value={EditState.dateOfBirth.month}
-                  onChange={handleMonthChange}
-                >
-                  <option value="">Month</option>
-                  {months.map((month, index) => (
-                    <option key={index} value={month}>
-                      {month}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  value={EditState.dateOfBirth.year}
-                  onChange={handleYearChange}
-                >
-                  <option value="">Year</option>
-                  {years.map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </select>
+                <div className="dob-selectors">
+                  <select
+                    value={EditState.dateOfBirth.day}
+                    onChange={handleDayChange}
+                  >
+                    <option value="">Day</option>
+                    {days.map((day) => (
+                      <option key={day} value={day}>
+                        {day}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={EditState.dateOfBirth.month}
+                    onChange={handleMonthChange}
+                  >
+                    <option value="">Month</option>
+                    {months.map((month, index) => (
+                      <option key={index} value={month}>
+                        {month}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={EditState.dateOfBirth.year}
+                    onChange={handleYearChange}
+                  >
+                    <option value="">Year</option>
+                    {years.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div className="input-vertical">
                 <p>ID Card</p>
