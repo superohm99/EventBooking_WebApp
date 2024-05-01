@@ -46,7 +46,6 @@ export class UsersController {
         return this.usersService.refreshTokens(userId, refreshToken);
       }
 
-
     @Delete(':id')
     async deleteUser(@Param('id') id: string){
         const isValid = mongoose.Types.ObjectId.isValid(id);
@@ -66,13 +65,13 @@ export class UsersController {
     // Route to get User_info with associated User details
     @Get('user_info/:id')
     getUserInfoWithUserDetails(@Param('id') id: string) {
-    return this.usersService.getUserInfoWithUserDetails(id);
+        return this.usersService.getUserInfoWithUserDetails(id);
     }
 
     //EdituserInfo
     @Patch('user_info/:user_id')
     async updateUser(@Param('user_id') user_id: string, @Body() updateUserInfoDto: UpdateUserInfoDto) {
-    return this.usersService.updateUserInfo(user_id, updateUserInfoDto);
+        return this.usersService.updateUserInfo(user_id, updateUserInfoDto);
     }
 
 
