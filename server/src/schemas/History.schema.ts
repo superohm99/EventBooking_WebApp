@@ -1,9 +1,10 @@
 import { Schema, Prop, SchemaFactory} from "@nestjs/mongoose"
 import mongoose from "mongoose"
 import { Reserve } from "./Reserve.schema";
+import { Document } from "mongoose";
 
 @Schema()
-export class History{
+export class History extends Document{
 
     @Prop({ required: true , default:false})
     payment_status:boolean;
