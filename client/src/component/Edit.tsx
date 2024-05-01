@@ -97,10 +97,12 @@ function Edit() {
   
 
   useEffect(() => {
+    const token = localStorage.getItem("access_token")
+    
     fetch("http://localhost:3001/users/user_info/get",
       {
         headers: {
-          "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjJiYmQ0NWE2MWRlZTg5YWMzOTA0NGYiLCJlbWFpbCI6IlRAZ21haWwuY29tIiwiaWF0IjoxNzE0NTQ4MzI4LCJleHAiOjE3MTQ1NTkxMjh9.MbGnEhLfkboe2ZsOFSmRutcajZ7PBwk_p2_ABuqv6qo`,
+          "Authorization": `Bearer ${token}`,
          },
       })
       .then((res) => res.json())
@@ -128,12 +130,13 @@ function Edit() {
   }, []);
 
   const updateUserInfo = async (updatedData: Partial<UpdateState>) => {
+    const token = localStorage.getItem("access_token")
     try {
       const response = await fetch("http://localhost:3001/users/user_info/update_info", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjJiYmQ0NWE2MWRlZTg5YWMzOTA0NGYiLCJlbWFpbCI6IlRAZ21haWwuY29tIiwiaWF0IjoxNzE0NTQ4MzI4LCJleHAiOjE3MTQ1NTkxMjh9.MbGnEhLfkboe2ZsOFSmRutcajZ7PBwk_p2_ABuqv6qo`,
+          "Authorization": `Bearer ${token}`,
         },
           body: JSON.stringify(updatedData),
       });

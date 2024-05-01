@@ -46,6 +46,7 @@ function Login () {
         console.log(res.data);
         token = res.data.access_token;
         console.log('token', token);
+        localStorage.setItem("access_token",token);
       });
 
       setRedirect(true);
