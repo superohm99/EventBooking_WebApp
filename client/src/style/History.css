@@ -4,8 +4,8 @@
 }
 
 .content {
-  width: 75%;
-  padding: 2rem;
+  width: 100%;
+  padding: 1rem;
 }
 
 .heading {
@@ -40,9 +40,133 @@
   border-radius: 0.5rem;
 }
 
-.history-list {
-  font-size: 2rem;
+.history-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(34rem, 1fr));
+  gap: 2rem;
 }
+
+.history {
+  background-color: #ecd87e;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  position: relative;
+}
+
+.history__image{
+  width: 15rem;
+  aspect-ratio: 2/3;
+}
+
+.history__pos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode:vertical-rl;
+  transform: rotate(180deg);
+  gap: 1rem;
+  padding-block: .5rem;
+  border-left: .2rem dashed #000;
+}
+
+.history__pos > div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.history__pos span:nth-child(1){
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}
+
+.history__payment-status {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1rem;
+  margin-left: auto;
+}
+
+.payment-status__success {
+  background-color: green;
+  color: white;
+}
+
+.payment-status__pending {
+  background-color: orange;
+  color: white;
+}
+
+.history__info{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.history__info > div{
+  display: flex;
+  flex-direction: column;
+}
+
+.history__info span:nth-child(1){
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.history__info span:nth-child(2){
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.history__location span:nth-child(2), .history__event span:nth-child(2){
+  max-width: 10rem; /* Adjust this value as needed */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.payment__button{
+  padding: 1rem .5rem;
+  background-color: gray;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}
+
+.payment__button--success:hover{
+  cursor: not-allowed;
+}
+
+.payment__button--pending{
+  background-color: rgb(2, 172, 2);
+}
+.payment__button--pending:hover{
+  background-color: green;
+}
+
 
 @media (max-width: 768px) {
   .history-container  {
