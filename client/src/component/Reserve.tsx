@@ -1,4 +1,3 @@
-import React from 'react'
 import '../style/Reserve.css'
 import Navbar from './Navbar'
 import Leftbar from './Leftbar'
@@ -6,7 +5,9 @@ import Rightbar from './Rightbar'
 import Bottombar from './Bottombar'
 import Reserve_container from './Reserve_container'
 
+
 function Reserve() {
+
   return (
     <div>
       <Navbar/>
