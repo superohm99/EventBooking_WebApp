@@ -9,6 +9,7 @@ import { RtGuard } from './common/guards';
 import { Tokens } from './types';
 import { Type } from 'class-transformer';
 import { UpdateUserInfoDto } from './dto/User.dto';
+import{ jwtDecode } from 'jwt-decode';
 
 @Controller('users')
 export class UsersController {
@@ -63,15 +64,43 @@ export class UsersController {
 
     //Get user_info detail
     // Route to get User_info with associated User details
-    @Get('user_info/:id')
-    getUserInfoWithUserDetails(@Param('id') id: string) {
-    return this.usersService.getUserInfoWithUserDetails(id);
+    @Get('user_info/get')
+    getUserInfoWithUserDetails(@Param('id') id: string, @Req() req) {
+    const authHeader = req.headers.authorization;
+    console.log(authHeader)
+    if (!authHeader) {
+        throw new Error('Authorization header not found');
+      }
+  
+      const token = authHeader.split(' ')[1];
+      if (!token) {
+        throw new Error('Token not found in Authorization header');
+      }
+
+    const decodedToken = jwtDecode(token);
+    console.log('decode',decodedToken)
+
+    return this.usersService.getUserInfoWithUserDetails(decodedToken.sub);
     }
 
     //EdituserInfo
-    @Patch('user_info/:user_id')
-    async updateUser(@Param('user_id') user_id: string, @Body() updateUserInfoDto: UpdateUserInfoDto) {
-    return this.usersService.updateUserInfo(user_id, updateUserInfoDto);
+    @Patch('user_info/update_info')
+    async updateUser(@Param('user_id') user_id: string, @Body() updateUserInfoDto: UpdateUserInfoDto, @Req() req) {
+    const authHeader = req.headers.authorization;
+    console.log(authHeader)
+    if (!authHeader) {
+        throw new Error('Authorization header not found');
+      }
+  
+      const token = authHeader.split(' ')[1];
+      if (!token) {
+        throw new Error('Token not found in Authorization header');
+      }
+
+    const decodedToken = jwtDecode(token);
+    console.log('decode',decodedToken)
+
+    return this.usersService.updateUserInfo(decodedToken.sub, updateUserInfoDto);
     }
 
    
