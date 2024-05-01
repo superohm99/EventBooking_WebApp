@@ -12,7 +12,21 @@ interface DateOfBirth {
 interface EditState {
   username: string;
   gender: string;
-  dateOfBirth: DateOfBirth;
+  date_of_birth: DateOfBirth;
+  id_card: string;
+  phone_no: string;
+  address: string;
+  country: string;
+  province: string;
+  district: string;
+  postal_code: string;
+  error: string | null;
+}
+
+interface UpdateState {
+  username: string;
+  gender: string;
+  date_of_birth: Date;
   id_card: string;
   phone_no: string;
   address: string;
@@ -61,10 +75,12 @@ const districts = [
 ];
 
 function Edit() {
+
+
   const [userInfo, setUserinfo] = useState<EditState>({
     username: "",
     gender: "",
-    dateOfBirth: {
+    date_of_birth: {
       day: 24,
       month: 2,
       year: 2000,
@@ -77,20 +93,29 @@ function Edit() {
     district: "",
     postal_code: "",
     error: null,
-  });
+  })
+  
 
   useEffect(() => {
-    fetch("http://localhost:3001/users/user_info/662bbd45a61dee89ac39044f", {
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjMwYzFlOTJhZjAxMDlhN2FkZmQ0NjAiLCJlbWFpbCI6IlQzQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ5NzI2OCwiZXhwIjoxNzE0NTA4MDY4fQ.ihzhcKG48zMbIpwJSRp7jN4-szmiEDX-loZa9H2OYE4`,
-      },
-    })
+    const token = localStorage.getItem("access_token")
+    
+    fetch("http://localhost:3001/users/user_info/get",
+      {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+         },
+      })
       .then((res) => res.json())
       .then((data) => {
         setUserinfo({
           ...userInfo,
           username: data.user.username,
-          gender: data.gender,
+          gender:data.gender,
+          date_of_birth: {
+            day: new Date(data.date_of_birth).getDate(),
+            month: new Date(data.date_of_birth).getMonth() + 1, // Month is zero-based, so add 1
+            year: new Date(data.date_of_birth).getFullYear(),
+          },
           id_card: data.id_card,
           phone_no: data.phone_no,
           address: data.address,
@@ -104,31 +129,17 @@ function Edit() {
       });
   }, []);
 
-  const updateUserInfo = async (updatedData: Partial<EditState>) => {
+  const updateUserInfo = async (updatedData: Partial<UpdateState>) => {
+    const token = localStorage.getItem("access_token")
     try {
-      const response = await fetch(
-        "http://localhost:3001/users/user_info/662bbd45a61dee89ac39044f",
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjMwYzFlOTJhZjAxMDlhN2FkZmQ0NjAiLCJlbWFpbCI6IlQzQGdtYWlsLmNvbSIsImlhdCI6MTcxNDQ5NzI2OCwiZXhwIjoxNzE0NTA4MDY4fQ.ihzhcKG48zMbIpwJSRp7jN4-szmiEDX-loZa9H2OYE4`,
-          },
+      const response = await fetch("http://localhost:3001/users/user_info/update_info", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
           body: JSON.stringify(updatedData),
-          // body: JSON.stringify({
-          //   user: "662bbd45a61dee89ac39044f",
-          //   username: userInfo.username,
-          //   gender: userInfo.gender,
-          //   id_card: userInfo.id_card,
-          //   phone_no: userInfo.phone_no,
-          //   address: userInfo.address,
-          //   country: userInfo.country,
-          //   province: userInfo.province,
-          //   district: userInfo.district,
-          //   postal_code: userInfo.postal_code
-          // }),
-        }
-      );
+      });
       const data = await response.json();
       if (response.ok) {
         setUserinfo({ ...userInfo, ...data });
@@ -144,7 +155,7 @@ function Edit() {
   const [EditState, setEditState] = useState<EditState>({
     username: "Ben Tennyson",
     gender: "Male",
-    dateOfBirth: {
+    date_of_birth: {
       day: 24,
       month: 2,
       year: 2000,
@@ -170,30 +181,30 @@ function Edit() {
   };
 
   const handleDayChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setEditState({
-      ...EditState,
-      dateOfBirth: {
-        ...EditState.dateOfBirth,
+    setUserinfo({
+      ...userInfo,
+      date_of_birth: {
+        ...userInfo.date_of_birth,
         day: parseInt(event.target.value),
       },
     });
   };
 
   const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setEditState({
-      ...EditState,
-      dateOfBirth: {
-        ...EditState.dateOfBirth,
+    setUserinfo({
+      ...userInfo,
+      date_of_birth: {
+        ...userInfo.date_of_birth,
         month: parseInt(event.target.value),
       },
     });
   };
 
   const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setEditState({
-      ...EditState,
-      dateOfBirth: {
-        ...EditState.dateOfBirth,
+    setUserinfo({
+      ...userInfo,
+      date_of_birth: {
+        ...userInfo.date_of_birth,
         year: parseInt(event.target.value),
       },
     });
@@ -237,10 +248,22 @@ function Edit() {
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     // send "values" to database
+    // const dateOfBirthString = formatDateOfBirth(userInfo.date_of_birth);
+    // console.log('formatted_date_update', dateOfBirthString);
+    // console.log('type_date_update', typeof(dateOfBirthString));
+
+    const year = userInfo.date_of_birth.year
+    const month = userInfo.date_of_birth.month -1
+    const day = userInfo.date_of_birth.day
+
+    const dateOBJ = new Date(Date.UTC(year, month, day));
+    console.log('dateObj',dateOBJ)
+
 
     updateUserInfo({
       username: userInfo.username,
-      gender: userInfo.gender,
+      gender:userInfo.gender,
+      date_of_birth: dateOBJ,
       id_card: userInfo.id_card,
       phone_no: userInfo.phone_no,
       address: userInfo.address,
@@ -250,8 +273,7 @@ function Edit() {
       postal_code: userInfo.postal_code,
       // Add more fields as needed
     });
-
-    console.log("User_info update:", userInfo);
+    console.log('User_info update:',userInfo);
     // console.log(EditState);
   };
 
@@ -283,42 +305,43 @@ function Edit() {
                   ))}
                 </select>
               </div>
+              
               <div className="input-vertical">
                 <p>Date of Birth</p>
                 <div className="dob-selectors">
-                  <select
-                    value={EditState.dateOfBirth.day}
-                    onChange={handleDayChange}
-                  >
-                    <option value="">Day</option>
-                    {days.map((day) => (
-                      <option key={day} value={day}>
-                        {day}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    value={EditState.dateOfBirth.month}
-                    onChange={handleMonthChange}
-                  >
-                    <option value="">Month</option>
-                    {months.map((month, index) => (
-                      <option key={index} value={month}>
-                        {month}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    value={EditState.dateOfBirth.year}
-                    onChange={handleYearChange}
-                  >
-                    <option value="">Year</option>
-                    {years.map((year) => (
-                      <option key={year} value={year}>
-                        {year}
-                      </option>
-                    ))}
-                  </select>
+                <select
+                  value={userInfo.date_of_birth.day}
+                  onChange={handleDayChange}
+                >
+                  <option value="">Day</option>
+                  {days.map((day) => (
+                    <option key={day} value={day}>
+                      {day}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={userInfo.date_of_birth.month}
+                  onChange={handleMonthChange}
+                >
+                  <option value="">Month</option>
+                  {months.map((month, index) => (
+                    <option key={index} value={index+1}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={userInfo.date_of_birth.year}
+                  onChange={handleYearChange}
+                >
+                  <option value="">Year</option>
+                  {years.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
                 </div>
               </div>
               <div className="input-vertical">

@@ -63,6 +63,8 @@ export class CreateUserInfoDto{
 
 //UpdateUserInfoDto
 export class UpdateUserInfoDto{
+    username: string
+
     date_of_birth: Date;
 
     id_card: string;
