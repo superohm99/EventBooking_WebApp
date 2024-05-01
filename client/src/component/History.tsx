@@ -89,10 +89,11 @@ function History() {
   const [histories, setHistories] = useState<HistoryProps[]>([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("access_token");
     fetch("http://localhost:3001/history",
       {
         headers: {
-          "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjMwYzA2NzNhYjFmYzA4NGNiNTI0NzUiLCJlbWFpbCI6ImphbmUuZG9lQG1haWwuY29tIiwiaWF0IjoxNzE0NTUzMTMxLCJleHAiOjE3MTQ1NTY3MzF9.GRGIn1MNUtJz-iIc5PpaWipjQCdg4Yo0rP3aBXkBnJY`,
+          "Authorization": `Bearer ${token}`,
         },
       })
       .then((res) => res.json())
