@@ -6,7 +6,6 @@ import Reserve from './component/Reserve';
 import Confirm_reserve from './component/Confirm_reserve';
 import Saveticket from './component/Saveticket';
 import Login from './component/Login';
-import Signup from './component/Signup';
 import Receipt from './component/Receipt';
 import Register from './component/Register';
 

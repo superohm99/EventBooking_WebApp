@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, HttpException, Param, Post, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, HttpException, Param, Post, Req, UseGuards, UsePipes, ValidationPipe, Get, Patch } from '@nestjs/common';
+
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/User.dto';
 import { LoginDto } from './dto/User.dto';
@@ -8,6 +9,8 @@ import { GetCurrentUser, GetCurrentUserId, Public } from './common/decorators/sr
 import { RtGuard } from './common/guards';
 import { Tokens } from './types';
 import { Type } from 'class-transformer';
+import { UpdateUserInfoDto } from './dto/User.dto';
+import{ jwtDecode } from 'jwt-decode';
 
 @Controller('users')
 export class UsersController {
@@ -44,7 +47,6 @@ export class UsersController {
         return this.usersService.refreshTokens(userId, refreshToken);
       }
 
-
     @Delete(':id')
     async deleteUser(@Param('id') id: string){
         const isValid = mongoose.Types.ObjectId.isValid(id);
@@ -59,5 +61,47 @@ export class UsersController {
     create_user_info(@Body() UserInfoDto: CreateUserInfoDto){
         return this.usersService.createUserInfo(UserInfoDto);
     }
+
+    //Get user_info detail
+    // Route to get User_info with associated User details
+    @Get('user_info/get')
+    getUserInfoWithUserDetails(@Param('id') id: string, @Req() req) {
+    const authHeader = req.headers.authorization;
+    console.log(authHeader)
+    if (!authHeader) {
+        throw new Error('Authorization header not found');
+      }
+  
+      const token = authHeader.split(' ')[1];
+      if (!token) {
+        throw new Error('Token not found in Authorization header');
+      }
+
+    const decodedToken = jwtDecode(token);
+    console.log('decode',decodedToken)
+
+    return this.usersService.getUserInfoWithUserDetails(decodedToken.sub);
+    }
+
+    //EdituserInfo
+    @Patch('user_info/update_info')
+    async updateUser(@Param('user_id') user_id: string, @Body() updateUserInfoDto: UpdateUserInfoDto, @Req() req) {
+    const authHeader = req.headers.authorization;
+    console.log(authHeader)
+    if (!authHeader) {
+        throw new Error('Authorization header not found');
+      }
+  
+      const token = authHeader.split(' ')[1];
+      if (!token) {
+        throw new Error('Token not found in Authorization header');
+      }
+
+    const decodedToken = jwtDecode(token);
+    console.log('decode',decodedToken)
+
+    return this.usersService.updateUserInfo(decodedToken.sub, updateUserInfoDto);
+    }
+
 
 }

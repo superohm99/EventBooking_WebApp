@@ -59,3 +59,27 @@ export class CreateUserInfoDto{
 
     user_id: string;
 }
+
+
+//UpdateUserInfoDto
+export class UpdateUserInfoDto{
+    username: string
+
+    date_of_birth: Date;
+
+    id_card: string;
+
+    gender: string;
+
+    phone_no: string;
+
+    address: string;
+
+    country: string;
+
+    province: string;
+
+    district: string;
+
+    postal_code: string;
+}

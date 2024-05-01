@@ -2,9 +2,10 @@ import '../style/Login.css'
 import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FormError } from '../constants'
 import { handleLoginValidation } from './InputValidation'
+import axios from 'axios';
 
 interface LoginState {
     email: string;
@@ -27,19 +28,43 @@ function Login () {
     };
   }, []);
 
+  const navigate = useNavigate();
+  const [redirect, setRedirect] = useState<boolean>(false);
+
+  if (redirect) {
+    navigate('/', { replace: true });
+  }
+
+  const handleLogin = async () => {
+    try {
+      let token;
+
+      await axios.post('http://localhost:3001/users/login', JSON.stringify(loginState), {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }).then((res) => {
+        console.log(res.data);
+        token = res.data.access_token;
+        console.log('token', token);
+        localStorage.setItem("access_token",token);
+      });
+
+      setRedirect(true);
+    } catch (err) {
+      console.error('error', err);
+    }
+  }
+
   useEffect(() => {
     if (submitted) {
-      console.log(loginState);
-      // using axios to send loginState to the server
-      // send body as JSON.stringify(loginState)
+      // console.log(loginState);
+      handleLogin();
     }
 
     return () => {
       setSubmitted(false);
     }
   }, [submitted]);
-
-
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

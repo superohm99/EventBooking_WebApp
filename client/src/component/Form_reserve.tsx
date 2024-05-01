@@ -7,7 +7,7 @@ function Form_reserve() {
   const [data, setData] = useState([])
   useEffect(()=> {
     // axios.get('https://jsonplaceholder.typicode.com/posts')
-    axios.get('http://localhost:3001/concert/getdata')
+    axios.get('http://localhost:3001/events/events_data')
     .then(res => setData(res.data))
     .catch(err => console.log(err));
   },[])
@@ -23,7 +23,11 @@ function Form_reserve() {
                     </div>
                 </div>
 
-                
+                {/* <div>
+                {data.map(item => (
+                  <div>{item.event_name} {item.rating}</div>
+                ))}
+                </div> */}
 
                 <div className='Show-detail'>
                     <p >Date: 26/08/2566</p>

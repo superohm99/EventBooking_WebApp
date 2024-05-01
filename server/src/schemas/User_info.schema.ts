@@ -28,8 +28,11 @@ export class User_info {
   @Prop({ required: true })
   district: string;
 
+  @Prop({ required: true })
+  postal_code: string;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  users: User;
+  user: User;
 }
 
 export const User_infoSchema = SchemaFactory.createForClass(User_info);

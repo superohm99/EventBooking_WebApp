@@ -13,6 +13,7 @@ import { JwtPayload, Tokens } from './types';
 import generateUniqueId from 'generate-unique-id';
 import { CreateUserInfoDto } from './dto/User.dto';
 import { User_info } from 'src/schemas/User_info.schema';
+import { UpdateUserInfoDto } from './dto/User.dto';
 
 
 @Injectable()
@@ -35,7 +36,7 @@ export class UsersService {
         const [at, rt] = await Promise.all([
           this.jwtService.signAsync(jwtPayload, {
             secret: 'at-secret',
-            expiresIn: '1h',
+            expiresIn: '3h',
           }),
           this.jwtService.signAsync(jwtPayload, {
             secret: 'rt-secret',
@@ -68,6 +69,7 @@ export class UsersService {
             await this.updateRtHash(newUser._id, tokens.refresh_token);
 
             // const token = this.jwtService.sign({id : newUser.settings},{});
+            // return tokens and newUser._id;
             return tokens;
 
         // }
@@ -76,26 +78,26 @@ export class UsersService {
     }
 
     async login(LoginDto : LoginDto) : Promise<Tokens>{
-        const { email, password } = LoginDto;
+      const { email, password } = LoginDto;
 
-        const user = await this.userModel.findOne({ email });
+      const user = await this.userModel.findOne({ email });
 
-        if (!user) {
-        throw new UnauthorizedException('Invalid email or password');
-        }
+      if (!user) {
+      throw new UnauthorizedException('Invalid email or password');
+      }
 
-        const isPasswordMatched = await bcrypt.compare(password, user.password);
+      const isPasswordMatched = await bcrypt.compare(password, user.password);
 
-        if (!isPasswordMatched) {
-        throw new UnauthorizedException('Invalid email or password');
-        }
+      if (!isPasswordMatched) {
+      throw new UnauthorizedException('Invalid email or password');
+      }
 
-        const tokens = await this.getTokens(user._id, user.email);
-        await this.updateRtHash(user._id, tokens.refresh_token);
+      const tokens = await this.getTokens(user._id, user.email);
+      await this.updateRtHash(user._id, tokens.refresh_token);
 
-        console.log("complete login")
+      console.log("complete login")
 
-        return tokens;
+      return tokens;
     }
 
     async refreshTokens(userId: Types.ObjectId, rt: string ): Promise<Tokens> {
@@ -164,6 +166,33 @@ export class UsersService {
       const test = await new_userInfo.populate('user');
       console.log(test)
       return new_userInfo.save()
+    }
+
+    //get_userinfo
+    async getUserInfoWithUserDetails(user_id: string): Promise<User_info> {
+      const userInfo = await this.userInfoModel.findOne({ user: user_id }).populate('user').exec();
+      console.log('User_info:', userInfo);
+      return userInfo;
+    }
+
+    //update_userinfo
+    async updateUserInfo(user_id: string, updateUserInfoDto: UpdateUserInfoDto): Promise<User_info> {  
+
+      const update_username = await this.userModel.findByIdAndUpdate(
+        user_id,
+        { username: updateUserInfoDto.username},
+        {new: true},
+      ).exec();
+      console.log('username_update',update_username);
+
+      const updatedUserInfo = await this.userInfoModel.findOneAndUpdate(
+        { user: user_id },
+        updateUserInfoDto,
+        { new: true }
+      ).populate('user').exec();
+      
+      console.log('new_User_info:',updateUserInfoDto);
+      return updatedUserInfo;
     }
     
 }

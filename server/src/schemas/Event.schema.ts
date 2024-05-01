@@ -16,10 +16,14 @@ export class Event {
   @Prop()
   rating: string
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Vanue' }] })
-  venue: Venue
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'EventSchedule' }] })
+  @Prop()
+  image:string
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'Venue'}]})
+  venue: Venue;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'EventSchedule'}]})
   eventschedules: EventSchedule[];
 
 }
