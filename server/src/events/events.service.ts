@@ -53,8 +53,9 @@ export class EventsService {
   }
 
   async create_eventsch(eventschDto: CreateEventSchDto) {
+    const d = new Date();
     const new_eventSchedule = new this.eventScheduleModel({
-      start_date: eventschDto.start_date,
+      start_date: d,
       end_date: eventschDto.end_date,
       start_time: eventschDto.start_time,
       end_time: eventschDto.end_time
