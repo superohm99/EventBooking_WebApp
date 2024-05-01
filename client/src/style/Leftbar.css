@@ -20,15 +20,15 @@
 }
 
 
-.filter-container input{
-    width: 125px;
+.filter-container select{
+    width: 80%;
     height: 30px;
     margin-bottom: 30px;
     border-radius: 5%;
 }
 
 .filter-container button{
-    width: 125px;
+    width: 80%;
     height: 30px;
     font-weight: 600;
     font-size:large;

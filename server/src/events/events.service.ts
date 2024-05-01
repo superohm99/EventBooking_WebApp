@@ -91,6 +91,19 @@ export class EventsService {
     return events
   }
 
+  async events_filter(filter:string){
+    console.log(filter)
+    let  data_filter = filter.split('$')
+    const venueID= await this.venue.find({ location: data_filter.pop()}).exec()
+    const description = data_filter.pop()
+
+    const venueIDs = venueID.map(venue => venue._id);
+
+    return this.eventModel.find({
+      $and:[{venue: {$in: venueIDs }},{event_description:description},{rating:data_filter.pop()}]
+    }).exec()
+  }
+
   async getEventsByName(name: string): Promise<Event[]> {
 
     const regex = new RegExp('^' + name);
@@ -108,5 +121,10 @@ export class EventsService {
     const events =  (await this.eventModel.findOne({ _id: id }));
     const object = events.venue
     return await this.venue.findOne({_id:object[0]}).exec()
+  }
+
+  async getallvenue(){
+    const venues = this.venue.find({}).exec();
+    return venues
   }
 }
