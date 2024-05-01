@@ -58,15 +58,15 @@ function Slider({ events }: SliderProps) {
                 {events.map((event, index) => (
                     <div className='content-container' key={index} style={{ translate: `${-100 * imageIndex}%` }}>
                         <div className="image-container">
-                            {/* <img key={index} src={event.img} alt={event.title}></img> */}
+                            <img key={index} src={event.image} alt={event.event_name}></img>
                         </div>
                         <div className="info-container">
                             <div className='info'>
                                 <div className='title'>
-                                    {event.title}
+                                    {event.event_name}
                                 </div>
                                 <div className='description'>
-                                    {event.description}
+                                    {event.event_description}
                                 </div>
                             </div>
                             <div className='button-container'>

@@ -3,50 +3,47 @@
   flex-direction: row;
 }
 
-.heading {
+.edit-container .content {
+  width: 47rem;
+  padding: 1.5rem;
+}
+
+.edit-container .heading {
   font-size: 3rem;
   color: #fff;
   text-transform: capitalize;
   margin: 2rem 0;
 }
 
-.input-vertical,
-.input-horizontal {
+.edit-container .input-vertical,
+.edit-container .input-horizontal {
   margin-bottom: 1rem;
 }
 
-.input-vertical p {
+.edit-container .input-vertical p {
   margin-bottom: 0.5rem;
   font-size: 1.5rem;
 }
 
-.input-horizontal p {
-  margin-top: 1rem;
+.edit-container .input-horizontal p {
   font-size: 1.5rem;
+  width: 8rem;
 }
 
-.input-horizontal {
+.edit-container .input-vertical .dob-selectors {
   display: flex;
-  gap: 1.5rem;
-}
-
-.edit-container input {
-  min-width: 25rem;
+  gap: 1rem;
 }
 
 .edit-container textarea {
-  min-width: 33rem;
-  max-width: 30%;
+  height: 10rem;
+  resize: none;
 }
 
-.edit-container select {
-  width: fit-content;
-  margin-right: 1rem;
-}
-
+.edit-container input,
 .edit-container textarea,
-.edit-container select,
-.edit-container input {
+.edit-container select {
+  width: 100%;
   font-size: 1.5rem;
   padding: 1rem;
   display: inline-block;
@@ -55,7 +52,7 @@
   box-sizing: border-box;
 }
 
-.submit-btn {
+.edit-container .submit-btn {
   margin: 1.5rem 0;
   font-size: medium;
   display: flex;
@@ -69,17 +66,16 @@
   border-radius: 0.5rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 820px) {
   .edit-container  {
     display: flex;
     flex-direction: column;
-  }
-
-  .edit-container input {
-    width: 100%;
-  }
-
-  .edit-container textarea {
-    min-width: 100%;
+    align-items: center;
   }
 }
+
+@media (max-width: 430px) {
+  .edit-container .content {
+    width: 100%;
+  }
+} 

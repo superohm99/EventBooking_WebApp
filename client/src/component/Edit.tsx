@@ -62,8 +62,7 @@ const provinces = [
   { label: "Bangkok", value: 1 },
   { label: "Chiang Mai", value: 2 },
   { label: "Phuket", value: 3 },
-  { label: "Loey", value: 4},
-  
+  { label: "Loey", value: 4 },
 ];
 
 const districts = [
@@ -106,7 +105,8 @@ function Edit() {
       })
       .then((res) => res.json())
       .then((data) => {
-        setUserinfo({ ...userInfo,
+        setUserinfo({
+          ...userInfo,
           username: data.user.username,
           gender:data.gender,
           date_of_birth: {
@@ -120,14 +120,12 @@ function Edit() {
           country: data.country,
           province: data.province,
           district: data.district,
-          postal_code: data.postal_code
-        })
-        console.log('Username',userInfo)
-        console.log(data)
-      })
-
-  }, [])
-
+          postal_code: data.postal_code,
+        });
+        console.log("Username", userInfo);
+        console.log(data);
+      });
+  }, []);
 
   const updateUserInfo = async (updatedData: Partial<UpdateState>) => {
     try {
@@ -150,7 +148,6 @@ function Edit() {
       console.error("Error updating user info:", error);
     }
   };
-
 
   const [EditState, setEditState] = useState<EditState>({
     username: "Ben Tennyson",
@@ -270,7 +267,7 @@ function Edit() {
       country: userInfo.country,
       province: userInfo.province,
       district: userInfo.district,
-      postal_code: userInfo.postal_code
+      postal_code: userInfo.postal_code,
       // Add more fields as needed
     });
     console.log('User_info update:',userInfo);
@@ -305,8 +302,10 @@ function Edit() {
                   ))}
                 </select>
               </div>
+              
               <div className="input-vertical">
                 <p>Date of Birth</p>
+                <div className="dob-selectors">
                 <select
                   value={userInfo.date_of_birth.day}
                   onChange={handleDayChange}
@@ -340,6 +339,7 @@ function Edit() {
                     </option>
                   ))}
                 </select>
+                </div>
               </div>
               <div className="input-vertical">
                 <p>ID Card</p>

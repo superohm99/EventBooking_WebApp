@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, HttpException, Param, Post, Req, UseGuards, UsePipes, ValidationPipe, Get, Patch } from '@nestjs/common';
+
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/User.dto';
 import { LoginDto } from './dto/User.dto';
@@ -45,7 +46,6 @@ export class UsersController {
       ): Promise<Tokens> {
         return this.usersService.refreshTokens(userId, refreshToken);
       }
-
 
     @Delete(':id')
     async deleteUser(@Param('id') id: string){
@@ -103,5 +103,5 @@ export class UsersController {
     return this.usersService.updateUserInfo(decodedToken.sub, updateUserInfoDto);
     }
 
-   
+
 }

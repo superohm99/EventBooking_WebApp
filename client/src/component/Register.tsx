@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faEnvelope, faLock, faLocationDot, faPhone, faMailBulk } from '@fortawesome/free-solid-svg-icons'
 import { SignupState, FormError, provinces, districts, genders, months, getDaysInMonth, range} from '../constants';
 import { handleFirstSignupValidation, handleSecondSignupValidation } from './InputValidation';
 import '../style/Register.css';
+import axios from 'axios';
+import{ jwtDecode } from 'jwt-decode';
 
 interface FirstSignUpStepProps {
     inputData: SignupState;
@@ -288,24 +290,66 @@ const Register = () => {
         }
     }
 
+    const navigate = useNavigate();
+    const [redirect, setRedirect] = useState<boolean>(false);
+
+    if (redirect) {
+        navigate('/signin', { replace: true });
+    }
+
+    const handleRegister = async () => {
+        try {
+            const { dateOfBirth,...restDate } = SignupState;
+            const { year, month, day } = dateOfBirth;
+            const dateOBJ = new Date(Date.UTC(year, month, day));
+            const formData = {...restDate, dateOfBirth: dateOBJ };
+            let token;
+            let user_id;
+        
+            const userData = {...formData, username: formData.fullname, email: formData.email, password: formData.password };
+        
+            await axios.post("http://localhost:3001/users/register", JSON.stringify(userData), {
+                withCredentials: true,
+                headers: { "Content-Type": "application/json" },
+            }).then((res) => {
+                // console.log(res);
+                token = res.data.access_token;
+                const user = jwtDecode(token);
+                user_id = user.sub;
+            });
+
+            const userInfoData = {
+                date_of_birth: dateOBJ,
+                id_card: formData.idCard,
+                gender: formData.gender,
+                phone_no: formData.phoneNumber,
+                address: formData.address,
+                country: formData.country,
+                province: formData.province,
+                district: formData.district,
+                postal_code: formData.zipCode,
+                user_id: user_id
+            };
+        
+            await axios.post("http://localhost:3001/users/user_info", JSON.stringify(userInfoData), {
+                withCredentials: true,
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            setRedirect(true);
+        } catch (err) {
+            console.error('error', err);
+        }
+    };
+
     useEffect(() => {
         console.log('submitted', submitted);
 
         if (submitted) {
-            const { dateOfBirth, ...restDate } = SignupState;
-            const {year, month, day} = dateOfBirth;
-            console.log(year, month, day);
-            const dateOBJ = new Date(Date.UTC(year, month, day));
-            const formData = {
-                ...restDate,
-                dateOfBirth: dateOBJ
-            };
-            
-            console.log(formData);
-            console.log(JSON.stringify(formData));
-
-            // using axios to send data to server with SignupState value
-            // body as JSON.stringify(formData)
+            handleRegister();
         }
 
         return () => {
@@ -313,7 +357,7 @@ const Register = () => {
         }
 
     }, [submitted]);
-
+    
     useEffect(() => {
         const maxDayInMonth = getDaysInMonth(SignupState.dateOfBirth.month, SignupState.dateOfBirth.year);
         if (SignupState.dateOfBirth.day > maxDayInMonth) {

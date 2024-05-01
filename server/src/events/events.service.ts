@@ -85,4 +85,27 @@ export class EventsService {
     return true
   }
 
+  async events_data(){
+    const events = this.eventModel.find({}).exec();
+    return events
+  }
+
+  async getEventsByName(name: string): Promise<Event[]> {
+
+    const regex = new RegExp('^' + name);
+    console.log(this.eventModel.find({ event_name: regex }));
+    return this.eventModel.find({ event_name: regex }).exec();
+  }
+
+  async getAllEvents(): Promise<Event[]> {
+
+    console.log(this.eventModel.find().exec())
+    return this.eventModel.find().exec();
+  }
+
+  async getplace(id: string):  Promise<Venue> {
+    const events =  (await this.eventModel.findOne({ _id: id }));
+    const object = events.venue
+    return await this.venue.findOne({_id:object[0]}).exec()
+  }
 }

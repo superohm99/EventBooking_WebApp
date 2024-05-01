@@ -36,7 +36,7 @@ export class UsersService {
         const [at, rt] = await Promise.all([
           this.jwtService.signAsync(jwtPayload, {
             secret: 'at-secret',
-            expiresIn: '3h',
+            expiresIn: '15s',
           }),
           this.jwtService.signAsync(jwtPayload, {
             secret: 'rt-secret',
@@ -69,6 +69,7 @@ export class UsersService {
             await this.updateRtHash(newUser._id, tokens.refresh_token);
 
             // const token = this.jwtService.sign({id : newUser.settings},{});
+            // return tokens and newUser._id;
             return tokens;
 
         // }
