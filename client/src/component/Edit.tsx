@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import "../style/Edit.css";
 import Profile from "./Profile";
 import Navbar from "./Navbar";
+import { DateOfBirth, range, getDaysInMonth, months, genders, provinces, districts } from "../constants";
 
-interface DateOfBirth {
-  day: number;
-  month: number;
-  year: number;
+interface ProfileState{
+  email: string;
+  username: string;
 }
-
 interface EditState {
   username: string;
   gender: string;
@@ -20,7 +19,6 @@ interface EditState {
   province: string;
   district: string;
   postal_code: string;
-  error: string | null;
 }
 
 interface UpdateState {
@@ -34,56 +32,23 @@ interface UpdateState {
   province: string;
   district: string;
   postal_code: string;
-  error: string | null;
 }
-
-const genders = ["Male", "Female", "Other"];
-
-const days = Array.from({ length: 31 }, (_, i) => i + 1);
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const years = Array.from({ length: 50 }, (_, i) => 1970 + i);
-
-const provinces = [
-  { label: "Bangkok", value: 1 },
-  { label: "Chiang Mai", value: 2 },
-  { label: "Phuket", value: 3 },
-  { label: "Loey", value: 4 },
-];
-
-const districts = [
-  {
-    province: "Bangkok",
-    district: ["Ladprao", "Sathorn", "Bangrak", "Ladkrabang"],
-  },
-  { province: "Chiang Mai", district: ["Muang", "Sarapee", "Doi Saket"] },
-  { province: "Phuket", district: ["Muang", "Kathu", "Thalang"] },
-];
 
 function Edit() {
 
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [profile, setProfile] = useState<ProfileState>({
+    email: "",
+    username: "",
+  });
 
   const [userInfo, setUserinfo] = useState<EditState>({
     username: "",
     gender: "",
     date_of_birth: {
-      day: 24,
-      month: 2,
-      year: 2000,
+      day: '',
+      month: '',
+      year: ''
     },
     id_card: "",
     phone_no: "",
@@ -92,7 +57,6 @@ function Edit() {
     province: "",
     district: "",
     postal_code: "",
-    error: null,
   })
   
 
@@ -106,15 +70,19 @@ function Edit() {
          },
       })
       .then((res) => res.json())
-      .then((data) => {
+      .then((data) => { 
+        setProfile({
+          email: data.user.email,
+          username: data.user.username,
+        });
         setUserinfo({
           ...userInfo,
           username: data.user.username,
           gender:data.gender,
           date_of_birth: {
-            day: new Date(data.date_of_birth).getDate(),
-            month: new Date(data.date_of_birth).getMonth() + 1, // Month is zero-based, so add 1
-            year: new Date(data.date_of_birth).getFullYear(),
+            day: new Date(data.date_of_birth).getDate().toString(),
+            month: new Date(data.date_of_birth).getMonth().toString(),
+            year: new Date(data.date_of_birth).getFullYear().toString(),
           },
           id_card: data.id_card,
           phone_no: data.phone_no,
@@ -124,8 +92,6 @@ function Edit() {
           district: data.district,
           postal_code: data.postal_code,
         });
-        console.log("Username", userInfo);
-        console.log(data);
       });
   }, []);
 
@@ -142,8 +108,7 @@ function Edit() {
       });
       const data = await response.json();
       if (response.ok) {
-        setUserinfo({ ...userInfo, ...data });
-        console.log("User info updated successfully:", data);
+        //
       } else {
         console.error("Failed to update user info:", data);
       }
@@ -152,113 +117,34 @@ function Edit() {
     }
   };
 
-  const [EditState, setEditState] = useState<EditState>({
-    username: "Ben Tennyson",
-    gender: "Male",
-    date_of_birth: {
-      day: 24,
-      month: 2,
-      year: 2000,
-    },
-    id_card: "1010112346",
-    phone_no: "0987654321",
-    address: "911/2 gaygee1",
-    country: "Thailand",
-    province: "Bangkok",
-    district: "Ladkrabang",
-    postal_code: "99999",
-    error: null,
-  });
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newName = event.target.value;
-    setUserinfo({ ...userInfo, username: newName });
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setUserinfo({ ...userInfo, [name]: value });
   };
 
-  const handleGenderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newGender = event.target.value;
-    setUserinfo({ ...userInfo, gender: newGender });
-  };
-
-  const handleDayChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleBirthDateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = event.target;
     setUserinfo({
       ...userInfo,
       date_of_birth: {
         ...userInfo.date_of_birth,
-        day: parseInt(event.target.value),
+        [name]: value,
       },
     });
-  };
-
-  const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setUserinfo({
-      ...userInfo,
-      date_of_birth: {
-        ...userInfo.date_of_birth,
-        month: parseInt(event.target.value),
-      },
-    });
-  };
-
-  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setUserinfo({
-      ...userInfo,
-      date_of_birth: {
-        ...userInfo.date_of_birth,
-        year: parseInt(event.target.value),
-      },
-    });
-  };
-
-  const handleIdCardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newCard = event.target.value;
-    setUserinfo({ ...userInfo, id_card: newCard });
-  };
-
-  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newPhone = event.target.value;
-    setUserinfo({ ...userInfo, phone_no: newPhone });
-  };
-
-  const handleAddressChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const newAddress = event.target.value;
-    setUserinfo({ ...userInfo, address: newAddress });
-  };
-
-  const handleProvinceChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const newProvince = event.target.value;
-    setUserinfo({ ...userInfo, province: newProvince });
-  };
-  const handleDistrictChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const newDistrict = event.target.value;
-    setUserinfo({ ...userInfo, district: newDistrict });
-  };
-
-  const handleZipCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newZipcode = event.target.value;
-    setUserinfo({ ...userInfo, postal_code: newZipcode });
   };
 
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    // send "values" to database
-    // const dateOfBirthString = formatDateOfBirth(userInfo.date_of_birth);
-    // console.log('formatted_date_update', dateOfBirthString);
-    // console.log('type_date_update', typeof(dateOfBirthString));
 
-    const year = userInfo.date_of_birth.year
-    const month = userInfo.date_of_birth.month -1
-    const day = userInfo.date_of_birth.day
+    setIsEdit(true);
+  };
 
-    const dateOBJ = new Date(Date.UTC(year, month, day));
-    console.log('dateObj',dateOBJ)
-
+  useEffect(() => {
+    if (isEdit) {
+      const { day, month, year } = userInfo.date_of_birth;
+      console.log(`|${day}|${month}|${year}|`)
+      const dateOBJ = new Date(Date.UTC(parseInt(year), parseInt(month), parseInt(day)));
+      console.log('dateObj',dateOBJ)
 
     updateUserInfo({
       username: userInfo.username,
@@ -271,32 +157,38 @@ function Edit() {
       province: userInfo.province,
       district: userInfo.district,
       postal_code: userInfo.postal_code,
-      // Add more fields as needed
     });
+    setProfile({...profile, username: userInfo.username});
+    setUserinfo({...userInfo, date_of_birth: {day: day, month: month, year: year}});
     console.log('User_info update:',userInfo);
-    // console.log(EditState);
-  };
+    }
+
+    return () => {
+      setIsEdit(false);
+    };
+
+  }, [isEdit]);
 
   return (
     <>
       <Navbar />
       <div className="box-container">
         <div className="edit-container">
-          <Profile />
+          <Profile username={profile.username} email={profile.email} />
           <div className="content">
-            <h1 className="heading">Edit Profile</h1>
             <form>
               <div className="input-vertical">
                 <p>Name</p>
                 <input
+                  name="username"
                   type="text"
                   value={userInfo.username}
-                  onChange={handleNameChange}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="input-vertical">
                 <p>Gender</p>
-                <select value={userInfo.gender} onChange={handleGenderChange}>
+                <select name="gender" value={userInfo.gender} onChange={handleInputChange}>
                   <option value="">Gender</option>
                   {genders.map((gender, index) => (
                     <option key={index} value={gender}>
@@ -310,34 +202,37 @@ function Edit() {
                 <p>Date of Birth</p>
                 <div className="dob-selectors">
                 <select
+                  name="day"
                   value={userInfo.date_of_birth.day}
-                  onChange={handleDayChange}
+                  onChange={handleBirthDateChange}
                 >
                   <option value="">Day</option>
-                  {days.map((day) => (
-                    <option key={day} value={day}>
+                  {range(1, getDaysInMonth(userInfo.date_of_birth.month, userInfo.date_of_birth.year)).map((day, index) => (
+                    <option key={index} value={day}>
                       {day}
                     </option>
                   ))}
                 </select>
                 <select
+                  name="month"
                   value={userInfo.date_of_birth.month}
-                  onChange={handleMonthChange}
+                  onChange={handleBirthDateChange}
                 >
                   <option value="">Month</option>
                   {months.map((month, index) => (
-                    <option key={index} value={index+1}>
+                    <option key={index} value={index}>
                       {month}
                     </option>
                   ))}
                 </select>
                 <select
+                  name="year"
                   value={userInfo.date_of_birth.year}
-                  onChange={handleYearChange}
+                  onChange={handleBirthDateChange}
                 >
-                  <option value="">Year</option>
-                  {years.map((year) => (
-                    <option key={year} value={year}>
+                  <option value="">year</option>
+                  {range(new Date().getFullYear() - 100, new Date().getFullYear()).map((year, index) => (
+                    <option key={index} value={year}>
                       {year}
                     </option>
                   ))}
@@ -347,24 +242,27 @@ function Edit() {
               <div className="input-vertical">
                 <p>ID Card</p>
                 <input
+                 name="id_card"
                   type="text"
                   value={userInfo.id_card}
-                  onChange={handleIdCardChange}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="input-vertical">
                 <p>Phone Number</p>
                 <input
+                  name="phone_no"
                   type="text"
                   value={userInfo.phone_no}
-                  onChange={handlePhoneChange}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="input-vertical">
                 <p>Home No, Room No, Aparment/Village Name, Sub-District</p>
                 <textarea
+                 name="address"
                   value={userInfo.address}
-                  onChange={handleAddressChange}
+                  onChange={handleInputChange}
                 ></textarea>
               </div>
               <div className="input-horizontal">
@@ -376,13 +274,14 @@ function Edit() {
               <div className="input-horizontal">
                 <p>Province</p>
                 <select
+                 name="province"
                   value={userInfo.province}
-                  onChange={handleProvinceChange}
+                  onChange={handleInputChange}
                 >
                   <option value="">Province</option>
-                  {provinces.map((province) => (
-                    <option key={province.value} value={province.label}>
-                      {province.label}
+                  {provinces.map((province, index) => (
+                    <option key={index} value={province}>
+                      {province}
                     </option>
                   ))}
                 </select>
@@ -390,12 +289,13 @@ function Edit() {
               <div className="input-horizontal">
                 <p>District</p>
                 <select
+                 name="district"
                   value={userInfo.district}
-                  onChange={handleDistrictChange}
+                  onChange={handleInputChange}
                 >
                   <option value="">District</option>
                   {districts.map((district) => {
-                    if (district.province === EditState.province) {
+                    if (district.province === userInfo.province) {
                       return district.district.map((district, index) => (
                         <option key={index} value={district}>
                           {district}
@@ -408,9 +308,10 @@ function Edit() {
               <div className="input-vertical">
                 <p>Zip Code</p>
                 <input
+                  name="postal_code"
                   type="text"
                   value={userInfo.postal_code}
-                  onChange={handleZipCodeChange}
+                  onChange={handleInputChange}
                 />
               </div>
               <button

@@ -195,9 +195,9 @@ const Register = () => {
         gender: 'Male',
         idCard: '1234567890123',
         dateOfBirth: {
-            day: 1,
-            month: 0,
-            year: 1998,
+            day: '1',
+            month: '0',
+            year: '2000'
         },
         phoneNumber: '0123456789',
         address: 'BKK, TH',
@@ -210,7 +210,7 @@ const Register = () => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = event.target;
         setSignupState({ ...SignupState, [name]: value });
-      };
+    };
 
     const handleChangeBirthDate = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -294,15 +294,17 @@ const Register = () => {
     const [redirect, setRedirect] = useState<boolean>(false);
 
     if (redirect) {
-        navigate('/signin', { replace: true });
+        navigate('/profile', { replace: true });
     }
 
     const handleRegister = async () => {
         try {
             const { dateOfBirth,...restDate } = SignupState;
             const { year, month, day } = dateOfBirth;
-            const dateOBJ = new Date(Date.UTC(year, month, day));
+            const dateOBJ = new Date(Date.UTC(parseInt(year), parseInt(month), parseInt(day)));
             const formData = {...restDate, dateOfBirth: dateOBJ };
+            console.log('formData', formData);
+            
             let token;
             let user_id;
         
@@ -360,9 +362,14 @@ const Register = () => {
     }, [submitted]);
     
     useEffect(() => {
-        const maxDayInMonth = getDaysInMonth(SignupState.dateOfBirth.month, SignupState.dateOfBirth.year);
-        if (SignupState.dateOfBirth.day > maxDayInMonth) {
-            setSignupState({ ...SignupState, dateOfBirth: { ...SignupState.dateOfBirth, day: maxDayInMonth } });
+        const { day, month, year } = SignupState.dateOfBirth;
+        const maxDayInMonth = getDaysInMonth(month, year);
+        if(day === '' || month === '' || year === '') {
+            console.log('day, month, year', day, month, year);
+        } else{
+            if (parseInt(day) > maxDayInMonth) {
+                setSignupState({ ...SignupState, dateOfBirth: { ...SignupState.dateOfBirth, day: '' } });
+            }
         }
     }, [SignupState.dateOfBirth.month, SignupState.dateOfBirth.year]);
 
