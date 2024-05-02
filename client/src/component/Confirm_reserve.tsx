@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import Bottombar from './Bottombar'
 import Form_reserve from './Form_reserve'
@@ -10,22 +10,24 @@ import axios from 'axios'
 function Confirm_reserve() {
 
   const params = useParams()
+  const [event,setEvent] = useState([])
   console.log(params.Id)
 
   useEffect(()=>{
     axios.get(`http://localhost:3001/reserve/${params.Id}`)
-  },[])
+    .then(res => setEvent(res.data))
+  },[params.Id])
 
   return (
     <div>
         <Navbar/>
         <div className='Form-reserve'> 
-        <Form_reserve/>
+        {event.length > 0 && <Form_reserve object={event}/>}
 
         <div className='Tone-2'>
             <div>
                 <h3>RESERVE TICKET</h3>
-                {JSON.stringify(params)}
+                {/* {JSON.stringify(params)} */}
             </div>
 
             <input placeholder='FirstName'></input>

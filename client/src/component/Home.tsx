@@ -25,7 +25,7 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/events/events_data')
+        axios.post('http://localhost:3001/events/events_data',{filter :""})
         .then(res => setData(res.data))
         .catch(err => console.log(err));
       },[]);

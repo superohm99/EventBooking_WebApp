@@ -22,9 +22,11 @@ export class ReserveService {
   async getdata_reserve(id:string){
     let lst_resp = []
     const event = await this.eventModel.findOne({_id:id});
+    const venue = await this.venue.findOne({_id:event.venue})
     console.log(event.event_name);
     lst_resp.push(event)
-    return event
+    lst_resp.push(venue)
+    return lst_resp
   }
 
   create(createReserveDto: CreateReserveDto) {
