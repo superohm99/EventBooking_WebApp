@@ -2,14 +2,26 @@ import React, { useEffect, useState } from 'react'
 import '../style/Reserve_container.css'
 import axios from 'axios';
 
-function Reserve_container() {
+interface Reserve_cont {
+  filter: string
+}
+
+
+function Reserve_container(props: Reserve_cont) {
+
   const [data, setData] = useState([])
+  const [filterdata, setFilterData] = useState('')
 
   useEffect(() => {
-    axios.get('http://localhost:3001/events/events_data')
+      console.log("555555")
+      setFilterData(props.filter)
+  } , [props.filter])
+
+  useEffect(() => {
+    axios.post('http://localhost:3001/events/events_data',{filter :filterdata})
     .then(res => setData(res.data))
     .catch(err => console.log(err));
-  },[]);
+  },[filterdata]);
   
   return (
     <div className='Center-container'>
@@ -22,7 +34,6 @@ function Reserve_container() {
             <h3><b>{item.event_name}</b></h3>
             {item.eventschedules.map(schedule => (
               <div key={schedule._id}>
-                {console.log(schedule.start_date)}
                <h3>Date: {schedule.start_date}</h3>
             </div>
             ))}

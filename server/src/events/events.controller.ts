@@ -31,8 +31,11 @@ export class EventsController {
     return this.eventsService.create_venue(venueDto);
   }
 
-  @Get('events_data')
-  events_data() {
+  @Post('events_data')
+  events_data(@Body('filter') filter:string): Promise<any>{
+    if (filter)
+      return this.eventsService.events_filter(filter);
+    console.log("superohm")
     return  this.eventsService.events_data();
   }
 
@@ -52,6 +55,10 @@ export class EventsController {
     }
   }
 
+  @Get('event_venues')
+  async getvenue(){
+    return this.eventsService.getallvenue();
+  }
 
  
 }
