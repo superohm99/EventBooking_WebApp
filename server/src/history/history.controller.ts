@@ -26,9 +26,6 @@ export class HistoryController {
 
     const decoded = jwtDecode(token);
     const userId = decoded.sub;
-    console.log(`userId: ${userId}`);
-    console.log(`token: ${token}`);
-    console.log(`typeof usrID: ${typeof userId}`);
     return this.historyService.findAll(userId);
   }
 

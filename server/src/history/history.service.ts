@@ -4,11 +4,15 @@ import { UpdateHistoryDto } from './dto/update-history.dto';
 import { History } from 'src/schemas/History.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { jwtDecode } from 'jwt-decode';
+import { User } from 'src/schemas/User.schema';
+import { Types } from 'mongoose';
 @Injectable()
 export class HistoryService {
 
-  constructor(@InjectModel(History.name) private historyModel: Model<History>) {}
+  constructor(
+    @InjectModel(History.name) private historyModel: Model<History>,
+    @InjectModel(User.name) private userModel: Model<User>
+  ) {}
 
   private readonly histories = [
     {
@@ -19,7 +23,7 @@ export class HistoryService {
       event_date: new Date(),
       event_time: new Date(),
       payment_status: true,
-      user_id: "66334685cdc825b37826929a",
+      user_id: "663356b951a4421ff792fe02",
       section: "E",
       row: "5",
       seat: "E5",
@@ -33,7 +37,7 @@ export class HistoryService {
       event_date: new Date(),
       event_time: new Date(),
       payment_status: false,
-      user_id: "66334685cdc825b37826929a",
+      user_id: "663356b951a4421ff792fe02",
       section: "D",
       row: "4",
       seat: "D4",
@@ -47,7 +51,7 @@ export class HistoryService {
       event_date: new Date(),
       event_time: new Date(),
       payment_status: true,
-      user_id: "66334685cdc825b37826929a",
+      user_id: "663356b951a4421ff792fe02",
       section: "C",
       row: "3",
       seat: "C3",
@@ -61,7 +65,7 @@ export class HistoryService {
       event_date: new Date(),
       event_time: new Date(),
       payment_status: false,
-      user_id: "66334685cdc825b37826929a",
+      user_id: "663356b951a4421ff792fe02",
       section: "B",
       row: "2",
       seat: "B2",
@@ -75,7 +79,7 @@ export class HistoryService {
       event_date: new Date(),
       event_time: new Date(),
       payment_status: true,
-      user_id: "66334685cdc825b37826929a",
+      user_id: "663356b951a4421ff792fe02",
       section: "A",
       row: "1",
       seat: "A1",
@@ -135,9 +139,13 @@ export class HistoryService {
   }
 
   async findAll(user_id: string) {
-    // return this.historyModel.find().exec();
-  
-    return this.histories.filter(history => history.user_id === user_id);
+    const user_id_obj = new Types.ObjectId(user_id);
+    const user = await this.userModel.findById(user_id_obj);
+    if (!user) throw new Error('User not found');
+    return { history: this.histories.filter(history => history.user_id === user_id), user: {
+      username: user.username,
+      email: user.email,
+    } };
   }
 
   findOne(id: number) {

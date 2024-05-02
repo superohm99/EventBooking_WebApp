@@ -24,6 +24,11 @@ interface HistoryProps {
     price: number;
 }
 
+interface ProfileProps {
+    username: string;
+    email: string;
+}
+
 const HistoryElement: React.FC<HistoryElementProps> = ({ historyData }) => {
   return (
     <>
@@ -86,6 +91,7 @@ function History() {
   };
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [histories, setHistories] = useState<HistoryProps[]>([]);
+  const [profile, setProfile] = useState<ProfileProps>({ username: "", email: "" });
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -96,7 +102,9 @@ function History() {
         },
       });
       const data = await response.data;
-      const historyList: HistoryProps[] = data.map((element: any) => {
+      const historyResData = data.history;
+      const userResData = data.user;
+      const historyList: HistoryProps[] = historyResData.map((element: any) => {
         const date = new Date(element.event_date);
         const time = new Date(element.event_time);
         return {
@@ -114,6 +122,7 @@ function History() {
         };
     });
     setHistories(historyList);
+    setProfile(userResData); 
     };
     fetchData();
   }, []);
@@ -122,7 +131,7 @@ function History() {
     if (isSearch) {
       console.log("searching...");
     }
-    
+
     return () => {
       setIsSearch(false);
     };
@@ -133,7 +142,7 @@ function History() {
       <Navbar />
       <div className="box-container">
         <div className="history-container">
-          <Profile username="User" email="pond@mail.com" />
+          <Profile username={profile.username} email={profile.email} />
           <div className="content">
             <h1 className="heading">Purchase History</h1>
             <div className="input-horizontal">
