@@ -4,7 +4,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "../style/History.css";
 import Profile from "./Profile";
 import Navbar from "./Navbar";
-
+import axios from "axios";
 
 interface HistoryElementProps {
     historyData: HistoryProps;
@@ -78,7 +78,6 @@ const HistoryElement: React.FC<HistoryElementProps> = ({ historyData }) => {
   )
 }
 
-
 function History() {
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -90,124 +89,51 @@ function History() {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    fetch("http://localhost:3001/history",
-      {
+    const fetchData = async () => {
+      const response = await axios.get("http://localhost:3001/history", {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
-      })
-      .then((res) => res.json())
-      .then((data) => {
-        const historyList: HistoryProps[] = [];
-        data.forEach((element: any) => {
-          const date = new Date(element.event_date);
-          const time = new Date(element.event_time);
-          const history: HistoryProps = {
-            event_image: element.event_image,
-            event_name: element.event_name,
-            event_location: element.event_location,
-            event_date: date,
-            event_time: time,
-            payment_status: element.payment_status,
-            user_id: element.user_id,
-            section: element.section,
-            row: element.row,
-            seat: element.seat,
-            price: element.price,
-          };
-          historyList.push(history);
-        });
-        setHistories(historyList);
       });
+      const data = await response.data;
+      const historyList: HistoryProps[] = data.map((element: any) => {
+        const date = new Date(element.event_date);
+        const time = new Date(element.event_time);
+        return {
+          event_image: element.event_image,
+          event_name: element.event_name,
+          event_location: element.event_location,
+          event_date: date,
+          event_time: time,
+          payment_status: element.payment_status,
+          user_id: element.user_id,
+          section: element.section,
+          row: element.row,
+          seat: element.seat,
+          price: element.price,
+        };
+    });
+    setHistories(historyList);
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
     if (isSearch) {
       console.log("searching...");
     }
-
+    
     return () => {
       setIsSearch(false);
     };
   }, [isSearch]);
 
-  useEffect(() => {
-    console.log("historyList set!", histories);
-  }, [histories]);
-
-  // const historyDataList: HistoryProps[] = [
-  //   {
-  //     event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/da6a1c12016011ef911101117567899b.jpg?opt=mild&resize=w200,h290",
-  //     event_name: "Event Name 1sadfasdfasfasdfadsfad",
-  //     event_location: "Tokyo Dome @Tokyo",
-  //     event_date: new Date(),
-  //     event_time: new Date(),
-  //     payment_status: true,
-  //     user_id: "user_id_1",
-  //     section: "A",
-  //     row: "1",
-  //     seat: "A1",
-  //     price: 100,
-  //   },
-  //   {
-  //     event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/da6a1c12016011ef911101117567899b.jpg?opt=mild&resize=w200,h290",
-  //     event_name: "Event Name 2",
-  //     event_location: "Event Location 2sdfadfasdfasdfasdfafdsasfasdfasdfadfad",
-  //     event_date: new Date(),
-  //     event_time: new Date(),
-  //     payment_status: false,
-  //     user_id: "user_id_2",
-  //     section: "B",
-  //     row: "2",
-  //     seat: "B2",
-  //     price: 200,
-  //   },
-  //   {
-  //     event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/da6a1c12016011ef911101117567899b.jpg?opt=mild&resize=w200,h290",
-  //     event_name: "Event Name 3",
-  //     event_location: "Event Location 3",
-  //     event_date: new Date(),
-  //     event_time: new Date(),
-  //     payment_status: true,
-  //     user_id: "user_id_3",
-  //     section: "C",
-  //     row: "3",
-  //     seat: "C3",
-  //     price: 300,
-  //   },
-  //   {
-  //     event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/da6a1c12016011ef911101117567899b.jpg?opt=mild&resize=w200,h290",
-  //     event_name: "Event Name 4",
-  //     event_location: "Event Location 4",
-  //     event_date: new Date(),
-  //     event_time: new Date(),
-  //     payment_status: false,
-  //     user_id: "user_id_4",
-  //     section: "D",
-  //     row: "4",
-  //     seat: "D4",
-  //     price: 400,
-  //   },
-  //   {
-  //     event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/da6a1c12016011ef911101117567899b.jpg?opt=mild&resize=w200,h290",
-  //     event_name: "Event Name 5",
-  //     event_location: "Event Location 5",
-  //     event_date: new Date(),
-  //     event_time: new Date(),
-  //     payment_status: true,
-  //     user_id: "user_id_5",
-  //     section: "E",
-  //     row: "5",
-  //     seat: "E5",
-  //     price: 500,
-  //   },
-  // ];
   return (
     <>
       <Navbar />
       <div className="box-container">
         <div className="history-container">
-          <Profile />
+          <Profile username="User" email="pond@mail.com" />
           <div className="content">
             <h1 className="heading">Purchase History</h1>
             <div className="input-horizontal">

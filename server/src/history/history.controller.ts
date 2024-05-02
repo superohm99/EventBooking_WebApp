@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { HistoryService } from './history.service';
 import { CreateHistoryDto } from './dto/create-history.dto';
 import { UpdateHistoryDto } from './dto/update-history.dto';
+import { jwtDecode } from 'jwt-decode';
 
 @Controller('history')
 export class HistoryController {
@@ -13,8 +14,22 @@ export class HistoryController {
   }
 
   @Get()
-  findAll() {
-    return this.historyService.findAll();
+  findAll(@Req() req) {
+    const authHeader = req.headers.authorization;
+    if(!authHeader) {
+      return [];
+    }
+    const token = authHeader.split(" ")[1];
+    if(!token) {
+      return [];
+    }
+
+    const decoded = jwtDecode(token);
+    const userId = decoded.sub;
+    console.log(`userId: ${userId}`);
+    console.log(`token: ${token}`);
+    console.log(`typeof usrID: ${typeof userId}`);
+    return this.historyService.findAll(userId);
   }
 
   @Get(':id')
