@@ -124,13 +124,13 @@ function Confirm_reserve() {
 
         <div className='Tone-2'>
             <div>
-                <h3>RESERVE TICKET</h3>
+                <h1>RESERVE TICKET</h1>
                 {/* {JSON.stringify(params)} */}
             </div>
 
             <h2>Username: {userinfo.username}</h2>
 
-            <form>
+            <form className='form_select'>
 
               <select value={selectedClass} onChange={handleClassChange}>
                 <option value="" disabled selected>Seat-Class</option>
@@ -184,8 +184,10 @@ function Confirm_reserve() {
 
 
             <div className='Tone-2-button'>
+              <Link to="/reserve">
                 <button id='back-1'>BACK</button>
-                <Link to="/receipt">
+              </Link>
+                <Link to="/receipt" >
                 <button id='next-1'type='submit' onClick={handlesubmit}>NEXT</button>
                 </Link>
             </div>
