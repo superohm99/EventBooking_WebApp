@@ -30,7 +30,7 @@ function Home() {
         .catch(err => console.log(err));
       },[]);
 
-    console.log(events)
+    // console.log(events)
 
     return (
         <>
