@@ -128,28 +128,19 @@ export class UsersService {
         }
     }
 
-    async logout(hash: any): Promise<boolean>{
-      console.log(hash.Authorization);
-      const auth =  hash.Authorization
-      const jwt =  auth.split(' ')[1]
-      const decode = jwtDecode(jwt)
-      console.log(decode.sub)
-      const sub = new ObjectId(decode.sub)
-      console.log(sub)
-      if (decode.sub)  
+    async logout(userId): Promise<boolean> {
+      if (userId) {
         try {
-    
-          const Ids = { _id: sub };
-          const filter = { hashedRt: null }; // สร้างอ็อบเจ็กต์ filter ที่ใช้ในการค้นหาข้อมูลที่ต้องการอัปเดต
-          await this.userModel.updateMany(Ids,filter, { $set: { hashedRt: null } }).exec(); // ทำการอัปเดตข้อมูลผู้ใช้
+          const filter = { _id: userId };
+          await this.userModel.updateMany(filter, { $set: { hashedRt: null } }).exec();
           console.log('Users updated successfully.');
-          return true
+          return true;
         } catch (error) {
           console.error('Error updating users:', error);
         }
-      else
-        return false
-      return true
+      } else {
+        return false;
+      }
     }
 
     deleteUser(id: string){
