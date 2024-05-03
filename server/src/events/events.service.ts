@@ -88,6 +88,7 @@ export class EventsService {
 
   async events_data(){
     const events = this.eventModel.find({}).exec();
+    console.log('event_detail',events)
     return events
   }
 
