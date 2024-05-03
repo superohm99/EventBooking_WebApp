@@ -78,9 +78,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await axios.post("http://localhost:3001/users/logout", {
-        headers: {
           Authorization: `Bearer ${token}`,
-        },
       }).then((res) => {
         if (res.data) {
           console.log("logout success", res.data);

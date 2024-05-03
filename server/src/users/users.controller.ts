@@ -32,9 +32,9 @@ export class UsersController {
 
     @Public()
     @Post('logout')
-    async logout(): Promise<boolean> {
-      console.log("logout")
-      return true;
+    async logout(@Body() Authorization: any): Promise<boolean> {
+      // console.log(Authorization)
+      return await this.usersService.logout(Authorization);
         // console.log("userId = ", userId)
         // console.log(typeof(userId))
         // return await this.usersService.logout(userId);
@@ -68,7 +68,7 @@ export class UsersController {
     //Get user_info detail
     // Route to get User_info with associated User details
     @Get('user_info/get')
-    getUserInfoWithUserDetails(@Param('id') id: string, @Req() req) {
+    getUserInfoWithUserDetails(@Param('id') id: string, @Req() req): object {
     const authHeader = req.headers.authorization;
     console.log(authHeader)
     if (!authHeader) {

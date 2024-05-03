@@ -4,7 +4,7 @@ import axios from 'axios'
 
 
 function Form_reserve(props:any) {
-  console.log(props.object)
+  // console.log(props.object)
   const [rendered, setRendered] = useState(false);
   const [event, setEvent] = useState([])
   const [eventsch, setEventsch] = useState([])
@@ -33,7 +33,7 @@ function Form_reserve(props:any) {
                 <div className="Tone-card">
                     <img src={event.image}/>
                     <div className='Tone-container'>
-                    <p>{event.event_name} {console.log(event)}</p>
+                    <p>{event.event_name}</p>
                     {<p>Date: {event.eventschedules[0].start_date}</p>}
                     </div>
                 </div>

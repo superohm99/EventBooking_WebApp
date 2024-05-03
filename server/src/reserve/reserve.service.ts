@@ -23,9 +23,13 @@ export class ReserveService {
     let lst_resp = []
     const event = await this.eventModel.findOne({_id:id});
     const venue = await this.venue.findOne({_id:event.venue})
-    console.log(event.event_name);
+    const seat =await this.seatModel.find({_id:event.seats}).exec()
+    console.log("fuck")
+    console.log(seat)
+    console.log(event);
     lst_resp.push(event)
     lst_resp.push(venue)
+    lst_resp.push(seat)
     return lst_resp
   }
 
