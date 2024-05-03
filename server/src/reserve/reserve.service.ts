@@ -30,9 +30,7 @@ export class ReserveService {
     const event = await this.eventModel.findOne({_id:id});
     const venue = await this.venue.findOne({_id:event.venue})
     const seat =await this.seatModel.find({_id:event.seats}).exec()
-    console.log("fuck")
-    console.log(seat)
-    console.log(event);
+    
     lst_resp.push(event)
     lst_resp.push(venue)
     lst_resp.push(seat)
@@ -40,12 +38,11 @@ export class ReserveService {
   }
 
   async create_reserve(createReserveDto: CreateReserveDto) {
-    console.log("TestReserve")
-    console.log(createReserveDto)
+ 
     const decode = jwtDecode(createReserveDto.authorization.split(" ")[1]);
-    console.log(decode)
+  
     const user = await this.userModel.findOne({_id:decode.sub}).exec();
-    console.log(user)
+  
     const new_ticket = new this.ticketModel({
       event: new Types.ObjectId(createReserveDto.eventid)
     })

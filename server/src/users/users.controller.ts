@@ -48,16 +48,6 @@ export class UsersController {
     return this.usersService.login(LoginDto);
   }
 
-<<<<<<< HEAD
-    @Public()
-    @Post('logout')
-    async logout(@Body() Authorization: any): Promise<boolean> {
-      // console.log(Authorization)
-      return await this.usersService.logout(Authorization);
-        // console.log("userId = ", userId)
-        // console.log(typeof(userId))
-        // return await this.usersService.logout(userId);
-=======
   @Public()
   @Post('logout')
   async logout(@Req() req): Promise<boolean> {
@@ -65,7 +55,6 @@ export class UsersController {
     
     if (!authHeader) {
       throw new Error('Authorization header not found');
->>>>>>> 8d6833c3cea986bfa3a9e90f27f3776256cbb67c
     }
 
     const [scheme, token] = authHeader.split(' ');
@@ -78,12 +67,6 @@ export class UsersController {
       throw new Error('Invalid token payload');
     }
 
-<<<<<<< HEAD
-    //Get user_info detail
-    // Route to get User_info with associated User details
-    @Get('user_info/get')
-    getUserInfoWithUserDetails(@Param('id') id: string, @Req() req): object {
-=======
     return await this.usersService.logout(decodedToken.sub);
   }
 
@@ -116,7 +99,6 @@ export class UsersController {
   // Route to get User_info with associated User details
   @Get('user_info/get')
   getUserInfoWithUserDetails(@Param('id') id: string, @Req() req) {
->>>>>>> 8d6833c3cea986bfa3a9e90f27f3776256cbb67c
     const authHeader = req.headers.authorization;
     console.log(authHeader);
     if (!authHeader) {
