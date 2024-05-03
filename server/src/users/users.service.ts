@@ -14,6 +14,9 @@ import generateUniqueId from 'generate-unique-id';
 import { CreateUserInfoDto } from './dto/User.dto';
 import { User_info } from 'src/schemas/User_info.schema';
 import { UpdateUserInfoDto } from './dto/User.dto';
+import { jwtDecode } from 'jwt-decode';
+const { ObjectId } = require('mongodb');
+
 
 @Injectable()
 export class UsersService {
@@ -35,7 +38,7 @@ export class UsersService {
         const [at, rt] = await Promise.all([
           this.jwtService.signAsync(jwtPayload, {
             secret: 'at-secret',
-            expiresIn: '15s',
+            expiresIn: '10M',
           }),
           this.jwtService.signAsync(jwtPayload, {
             secret: 'rt-secret',
@@ -166,7 +169,7 @@ export class UsersService {
     //get_userinfo
     async getUserInfoWithUserDetails(user_id: string): Promise<User_info> {
       const userInfo = await this.userInfoModel.findOne({ user: user_id }).populate('user').exec();
-      // console.log('User_info:', userInfo);
+      console.log('User_info:', userInfo);
       return userInfo;
     }
 

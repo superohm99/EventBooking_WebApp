@@ -13,6 +13,12 @@ export class ReserveController {
   getdata_reserve(@Param('id') id:string){
       return this.reserveService.getdata_reserve(id);
   }
+  
+  @Public()
+  @Post('create_reserve')
+  create_reserve(@Body() create_reserve:CreateReserveDto){
+    return this.reserveService.create_reserve(create_reserve);
+  }
 
 
   

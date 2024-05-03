@@ -23,8 +23,13 @@ export class EventsService {
   async createSeat(event_id: string, createSeatDto: CreateSeatDto): Promise<Seat> {
     const newSeat = new this.seatModel(createSeatDto);
     await newSeat.save();
-
     const event_id_obj = new Types.ObjectId(event_id);
+
+    const event = await this.eventModel.findOne({_id:event_id});
+
+    (await event).seats.push(newSeat);
+
+    (await event).save()
 
     const updatedTicket = await this.ticketModel.findOneAndUpdate(
       { event: event_id_obj }, 
@@ -90,6 +95,8 @@ export class EventsService {
     const events = this.eventModel.find({}).exec();
     return events
   }
+
+
 
   async events_filter(filter:string){
     console.log(filter)
