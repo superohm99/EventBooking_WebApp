@@ -30,11 +30,14 @@ export class UsersController {
         return this.usersService.login(LoginDto);
     }
 
+    @Public()
     @Post('logout')
-    async logout(@GetCurrentUserId() userId: Types.ObjectId): Promise<boolean> {
-        console.log(userId)
-        console.log(typeof(userId))
-        return await this.usersService.logout(userId);
+    async logout(): Promise<boolean> {
+      console.log("logout")
+      return true;
+        // console.log("userId = ", userId)
+        // console.log(typeof(userId))
+        // return await this.usersService.logout(userId);
     }
 
     @Public()
@@ -102,6 +105,4 @@ export class UsersController {
 
     return this.usersService.updateUserInfo(decodedToken.sub, updateUserInfoDto);
     }
-
-
 }
