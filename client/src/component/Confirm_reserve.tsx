@@ -3,7 +3,7 @@ import Navbar from './Navbar'
 import Bottombar from './Bottombar'
 import Form_reserve from './Form_reserve'
 import '../style/Form_reserve.css'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 interface InputReserve {
@@ -21,6 +21,13 @@ function Confirm_reserve() {
   const [userinfo,setUserinfo] = useState([])
   const [seatid,setSeatid] = useState("")
 
+
+  const [selectedClass, setSelectedClass] = useState('');
+  const [selectedSection, setSelectedSection] = useState('');
+  const [selectedRow, setSelectedRow] = useState('');
+  const [selectedSeatNum, setSelectedSeatNum] = useState('');
+  const [selectedPrice, setSelectedPrice] = useState('');
+
   console.log(params.Id)
 
   const [input, setInput] = useState<InputReserve>({
@@ -29,9 +36,50 @@ function Confirm_reserve() {
   })
   
 
-  const handleseatid = (filter:React.ChangeEvent<HTMLSelectElement>) => {
-    setSeatid(filter.target.value);
+  // const handleseatid = (filter:React.ChangeEvent<HTMLSelectElement>) => {
+  //   setSeatid(filter.target.value);
+  // };
+
+  const uniqueValues = (arr:any) => {
+    return Array.from(new Set(arr));
   };
+
+  const handleClassChange = (filter:React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedClass = filter.target.value;
+    setSelectedClass(selectedClass);
+    setSelectedSection('');
+    setSelectedRow('');
+    setSelectedSeatNum('');
+    setSelectedPrice('');
+  }
+  
+  const handleSectionChange = (filter:React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedSection = filter.target.value;
+    setSelectedSection(selectedSection);
+    setSelectedRow('');
+    setSelectedSeatNum('');
+    setSelectedPrice('');
+  }
+
+  const handleRowChange = (filter:React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedRow = filter.target.value;
+    setSelectedRow(selectedRow);
+    setSelectedSeatNum('');
+    setSelectedPrice('');
+  }
+
+  const handleSeatNumChange = (filter:React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedNum = filter.target.value;
+    setSelectedSeatNum(selectedNum);
+    setSelectedPrice('');
+  }
+
+  const handlePriceChange = (filter:React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedPrice = filter.target.value;
+    setSeatid(filter.target.value);
+    setSelectedPrice(selectedPrice);
+  }
+
 
   const handlesubmit = () => {
     const token = localStorage.getItem("access_token")
@@ -41,7 +89,7 @@ function Confirm_reserve() {
       seatid: seatid,
       authorization: `Bearer ${token}`,
     }).then((res) => res.data)
-    console.log("thhanjslkafjalfj")
+    
   }
 
   useEffect(() => {
@@ -84,50 +132,51 @@ function Confirm_reserve() {
 
             <form>
 
-             <select  >
-               <option value="" disabled selected>Seat-Class</option>
-               {seats.map(item => (
-              <option  value={item.type} key={item._id}>{item.type}</option>
-              ))}
-            </select>
+              <select value={selectedClass} onChange={handleClassChange}>
+                <option value="" disabled selected>Seat-Class</option>
+                {uniqueValues(seats.map(item => item.type)).map(type => (
+                  <option value={type} key={type}>{type}</option>
+                ))}
+              </select>
 
               <br/>
 
-            <select  >
-               <option value="" disabled selected>Seat-Section</option>
-               {seats.map(item => (
-              <option  value={item.section} key={item._id}>{item.section}</option>
-              ))}
-            </select>
+              <select value={selectedSection} onChange={handleSectionChange} disabled={!selectedClass}>
+                <option value="" disabled selected>Seat-Section</option>
+                {uniqueValues(seats.filter(item => item.type === selectedClass).map(item => item.section)).map(section => (
+                  <option value={section} key={section}>{section}</option>
+                      ))}
+              </select>
 
-            <br/>
+              <br/>
 
-            <select   >
-               <option value="" disabled selected>Seat-Row</option>
-               {seats.map(item => (
-              <option  value={item.row} key={item._id}>{item.row}</option>
-              ))}
-            </select>
+              <select value={selectedRow} onChange={handleRowChange} disabled={!selectedSection}>
+                <option value="" disabled selected>Seat-Row</option>
+                {uniqueValues(seats.filter(item => item.type === selectedClass && item.section === selectedSection).map(item => item.row)).map(row => (
+                  <option value={row} key={row}>{row}</option>
+                ))}
+              </select>
 
-            <br/>
+              <br/>
+              
 
-            <select  >
-               <option value="" disabled selected>Seat-Num</option>
-               {seats.map(item => (
-              <option  value={item.seat_num} key={item._id}>{item.seat_num}</option>
-              ))}
-            </select>
+              <select value={selectedSeatNum} onChange={handleSeatNumChange} disabled={!selectedRow}>
+                <option value="" disabled selected>Seat-Num</option>
+                {uniqueValues(seats.filter(item => item.type === selectedClass && item.section === selectedSection && item.row === selectedRow).map(item => item.seat_num)).map(seat_num => (
+                  <option value={seat_num} key={seat_num}>{seat_num}</option>
+                ))}
+              </select>
 
-            <br/>
+              <br/>
 
-            <select   onChange={handleseatid}>
-               <option value="" disabled selected>Seat-Price</option>
-               {seats.map(item => (
-              <option  value={item._id} key={item._id}>{item.price}</option>
-              ))}
-            </select>
+              <select value={selectedPrice} onChange={handlePriceChange} disabled={!selectedSeatNum}>
+                <option value="" disabled selected>Seat-Price</option>
+                {uniqueValues(seats.filter(item => item.type === selectedClass && item.section === selectedSection && item.row === selectedRow && item.seat_num === selectedSeatNum).map(item => ({price: item.price, id: item._id}))).map(item => (
+                  <option value={item.id} key={item.id}>{item.price}</option>
+                ))}
+              </select>
 
-            <br/>
+              <br/>
 
 
 
@@ -136,7 +185,9 @@ function Confirm_reserve() {
 
             <div className='Tone-2-button'>
                 <button id='back-1'>BACK</button>
+                <Link to="/receipt">
                 <button id='next-1'type='submit' onClick={handlesubmit}>NEXT</button>
+                </Link>
             </div>
             
         </div>
