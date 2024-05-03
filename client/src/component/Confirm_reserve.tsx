@@ -15,28 +15,12 @@ interface InputReserve {
 function Confirm_reserve() {
 
 
-  // const [userInfo, setUserinfo] = useState<EditState>({
-  //   username: "",
-  //   gender: "",
-  //   date_of_birth: {
-  //     day: 24,
-  //     month: 2,
-  //     year: 2000,
-  //   },
-  //   id_card: "",
-  //   phone_no: "",
-  //   address: "",
-  //   country: "",
-  //   province: "",
-  //   district: "",
-  //   postal_code: "",
-  //   error: null,
-  // })
-
   const params = useParams()
   const [event,setEvent] = useState([])
   const [seats,setSeats] = useState([])
   const [userinfo,setUserinfo] = useState([])
+  const [seatid,setSeatid] = useState("")
+
   console.log(params.Id)
 
   const [input, setInput] = useState<InputReserve>({
@@ -45,8 +29,19 @@ function Confirm_reserve() {
   })
   
 
-  const handleselect = () => {
+  const handleseatid = (filter:React.ChangeEvent<HTMLSelectElement>) => {
+    setSeatid(filter.target.value);
+  };
 
+  const handlesubmit = () => {
+    const token = localStorage.getItem("access_token")
+    axios.post("http://localhost:3001/reserve/create_reserve",
+    {
+      eventid: event[0]._id,
+      seatid: seatid,
+      authorization: `Bearer ${token}`,
+    }).then((res) => res.data)
+    console.log("thhanjslkafjalfj")
   }
 
   useEffect(() => {
@@ -59,8 +54,8 @@ function Confirm_reserve() {
     })
     .then((data) =>{ console.log("test"),console.log(data.data.user),setUserinfo(data.data.user)})
     setSeats(event[2])
-    console.log("master")
-    console.log(seats)
+    // console.log("master")
+    // console.log(seats)
   },[event])
 
   useEffect(()=>{
@@ -87,44 +82,61 @@ function Confirm_reserve() {
 
             <h2>Username: {userinfo.username}</h2>
 
-             <select  onChange={handleselect}>
+            <form>
+
+             <select  >
                <option value="" disabled selected>Seat-Class</option>
                {seats.map(item => (
               <option  value={item.type} key={item._id}>{item.type}</option>
               ))}
             </select>
 
-            <select   onChange={handleselect}>
+              <br/>
+
+            <select  >
                <option value="" disabled selected>Seat-Section</option>
                {seats.map(item => (
               <option  value={item.section} key={item._id}>{item.section}</option>
               ))}
             </select>
 
-            <select   onChange={handleselect}>
-               <option value="" disabled selected>Seat-Section</option>
+            <br/>
+
+            <select   >
+               <option value="" disabled selected>Seat-Row</option>
                {seats.map(item => (
               <option  value={item.row} key={item._id}>{item.row}</option>
               ))}
             </select>
 
-            <select   onChange={handleselect}>
-               <option value="" disabled selected>Seat-Section</option>
+            <br/>
+
+            <select  >
+               <option value="" disabled selected>Seat-Num</option>
                {seats.map(item => (
               <option  value={item.seat_num} key={item._id}>{item.seat_num}</option>
               ))}
             </select>
 
-            <select   onChange={handleselect}>
-               <option value="" disabled selected>Seat-Section</option>
+            <br/>
+
+            <select   onChange={handleseatid}>
+               <option value="" disabled selected>Seat-Price</option>
                {seats.map(item => (
-              <option  value={item.price} key={item._id}>{item.price}</option>
+              <option  value={item._id} key={item._id}>{item.price}</option>
               ))}
             </select>
 
+            <br/>
+
+
+
+            </form>
+
+
             <div className='Tone-2-button'>
                 <button id='back-1'>BACK</button>
-                <button id='next-1'type='submit'>NEXT</button>
+                <button id='next-1'type='submit' onClick={handlesubmit}>NEXT</button>
             </div>
             
         </div>

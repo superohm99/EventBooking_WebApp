@@ -7,16 +7,22 @@ import { EventSchedule } from 'src/schemas/Event_schedule.schema';
 import { Venue } from 'src/schemas/Venue.schema';
 import { Ticket } from 'src/schemas/Ticket.schema';
 import { Seat } from 'src/schemas/Seat.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
+import { jwtDecode } from 'jwt-decode';
+import { User } from 'src/schemas/User.schema';
+import { Reserve } from 'src/schemas/Reserve.schema';
+const { ObjectId } = require('mongodb');
 
 @Injectable()
 export class ReserveService {
   constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Seat.name) private seatModel: Model<Seat>,
     @InjectModel(Event.name) private eventModel: Model<Event>,
     @InjectModel(EventSchedule.name) private eventScheduleModel: Model<EventSchedule>,
     @InjectModel(Venue.name) private venue: Model<Venue>,
     @InjectModel(Ticket.name) private ticketModel: Model<Ticket>,
+    @InjectModel(Reserve.name) private reserveModel: Model<Reserve>
   ) { }
   
   async getdata_reserve(id:string){
@@ -33,23 +39,28 @@ export class ReserveService {
     return lst_resp
   }
 
-  create(createReserveDto: CreateReserveDto) {
-    return 'This action adds a new reserve';
-  }
+  async create_reserve(createReserveDto: CreateReserveDto) {
+    console.log("TestReserve")
+    console.log(createReserveDto)
+    const decode = jwtDecode(createReserveDto.authorization.split(" ")[1]);
+    console.log(decode)
+    const user = await this.userModel.findOne({_id:decode.sub}).exec();
+    console.log(user)
+    const new_ticket = new this.ticketModel({
+      event: new Types.ObjectId(createReserveDto.eventid)
+    })
 
-  findAll() {
-    return `This action returns all reserve`;
-  }
+    const seatID =new Types.ObjectId(createReserveDto.seatid)
+    const seat_obj = await this.seatModel.findById(seatID)
+    new_ticket.seats.push(seat_obj._id)
+    new_ticket.save()
 
-  findOne(id: number) {
-    return `This action returns a #${id} reserve`;
+    const new_reserve = new this.reserveModel({
+      users: decode.sub,
+      tickets: new_ticket,
+      status:true
+    })
+    return true;
   }
-
-  update(id: number, updateReserveDto: UpdateReserveDto) {
-    return `This action updates a #${id} reserve`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} reserve`;
-  }
+  
 }
