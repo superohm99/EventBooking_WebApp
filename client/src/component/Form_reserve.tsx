@@ -3,36 +3,47 @@ import '../style/Form_reserve.css'
 import axios from 'axios'
 
 
-function Form_reserve() {
-  const [data, setData] = useState([])
+function Form_reserve(props:any) {
+  // console.log(props.object)
+  const [rendered, setRendered] = useState(false);
+  const [event, setEvent] = useState([])
+  const [eventsch, setEventsch] = useState([])
+  const [venue, setVenue] = useState([])
+
+  // useEffect(() => {
+  //   console.log("5555")
+  //   setEventsch(props.object[0].eventschedules)
+  //   console.log(eventsch)
+  // },[event])
+
   useEffect(()=> {
-    // axios.get('https://jsonplaceholder.typicode.com/posts')
-    axios.get('http://localhost:3001/events/events_data')
-    .then(res => setData(res.data))
-    .catch(err => console.log(err));
+      setRendered(true);
+      setEvent(props.object[0])
+      setVenue(props.object[1])
+      setEventsch(props.object[0].eventschedules)
   },[])
+  
+  if (!rendered) {
+    return null;
+  }
   return (
     <div className='Tone'>
         <div className='Tone-1'>
 
                 <div className="Tone-card">
-                    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+                    <img src={event.image}/>
                     <div className='Tone-container'>
-                    <p>Concert Music The Talent</p>
-                    <p>Date: 26/08/2566</p>
+                    <p>{event.event_name}</p>
+                    {<p>Date: {event.eventschedules[0].start_date}</p>}
                     </div>
                 </div>
 
-                {/* <div>
-                {data.map(item => (
-                  <div>{item.event_name} {item.rating}</div>
-                ))}
-                </div> */}
 
                 <div className='Show-detail'>
-                    <p >Date: 26/08/2566</p>
+               
+                    <p>Date: {eventsch[0].start_date}</p>
                     <p >Time: 19.00</p>
-                    <p >Location: Bangkok Ladkrabang Street 12</p>
+                    <p >Location: {venue.location}</p>
                     <p >Reserve: 1020/2500</p>
                     <p >Budget: 450 ฿</p>
                 </div>

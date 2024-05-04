@@ -58,10 +58,9 @@ const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   let token = localStorage.getItem("access_token");
-  console.log("token", token);
 
   useEffect(() => {
-    if (token) {
+    if (token) {  
       const decoded: any = jwtDecode(token);
       const currentTime = Date.now() / 1000;
 
@@ -83,7 +82,7 @@ const Navbar = () => {
           },
         })
        .then((res) => {
-          setUsername(res.data.user.username);
+         setUsername(res.data.user.username);
         });
     } catch (err) {
       console.log("error", err);
@@ -130,15 +129,6 @@ const Navbar = () => {
         </Link>
         <a>Help</a>
       </div>
-
-      {/* <div className="Select-option">
-          <Link to="/Signin">
-            <button className="Signin">Login</button>
-          </Link>
-          <Link to="/Signup">
-            <button className="Signup">Register</button>
-          </Link>
-        </div> */}
 
       {isAuthenticated ? (
         <div className="Select-option">

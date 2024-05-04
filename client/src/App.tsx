@@ -35,7 +35,7 @@ function App() {
                 />
                 
                 <Route
-                    path="/Reserve/Confirm-reserve"
+                    path="/Reserve/Confirm-reserve/:Id"
                     element={ <Confirm_reserve /> }
                 />
 

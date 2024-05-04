@@ -9,6 +9,9 @@ export class Reserve {
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' }] })
   tickets: Ticket;
+
+  @Prop()
+  status: boolean
 }
 
 export const ReserveSchema = SchemaFactory.createForClass(Reserve);
