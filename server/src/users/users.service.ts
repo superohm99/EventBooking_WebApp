@@ -35,7 +35,7 @@ export class UsersService {
         const [at, rt] = await Promise.all([
           this.jwtService.signAsync(jwtPayload, {
             secret: 'at-secret',
-            expiresIn: '15s',
+            expiresIn: '1h',
           }),
           this.jwtService.signAsync(jwtPayload, {
             secret: 'rt-secret',
@@ -136,6 +136,7 @@ export class UsersService {
           console.error('Error updating users:', error);
         }
       } else {
+        console.log('Invalid user ID.');
         return false;
       }
     }

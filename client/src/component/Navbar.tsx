@@ -1,8 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import "../style/Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTicketSimple,
+  faClockRotateLeft,
+  faPenToSquare,
+  faLock,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface DropDownProps {
   username: string;
@@ -21,19 +29,26 @@ const DropDown = ({ username, handleLogout }: DropDownProps) => {
         </Link>
       </div>
       <div className="dropdown-content">
-        <Link to="/Profile/Myticket">
+        <Link to="/Profile/Myticket" className="menu-item">
+          <FontAwesomeIcon icon={faTicketSimple} />
           <a>My Ticket</a>
         </Link>
-        <Link to="/Profile/History">
+        <Link to="/Profile/History" className="menu-item">
+          <FontAwesomeIcon icon={faClockRotateLeft} />
           <a>Purchase History</a>
         </Link>
-        <Link to="/Profile">
+        <Link to="/Profile" className="menu-item">
+          <FontAwesomeIcon icon={faPenToSquare} />
           <a>Edit Profile</a>
         </Link>
-        <Link to="/Profile/Changepasswd">
+        <Link to="/Profile/Changepasswd" className="menu-item">
+          <FontAwesomeIcon icon={faLock} />
           <a>Change Password</a>
         </Link>
-        <a onClick={handleLogout}>Sign Out</a>
+        <div className="menu-item main-color" >
+          <FontAwesomeIcon icon={faRightFromBracket} />
+          <a onClick={handleLogout}>Sign Out</a>
+        </div>
       </div>
     </div>
   );
@@ -75,6 +90,7 @@ const Navbar = () => {
     }
   };
 
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       await axios.post("http://localhost:3001/users/logout", {
@@ -83,8 +99,8 @@ const Navbar = () => {
         },
       }).then((res) => {
         if (res.data) {
-          console.log("logout success", res.data);
           localStorage.removeItem("access_token");
+          navigate('/', { replace: true });
           setIsAuthenticated(false);
         }
       }).catch((err) => {
