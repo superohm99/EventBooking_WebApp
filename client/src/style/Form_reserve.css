@@ -12,7 +12,12 @@
 .Tone-1{
     width: 20vw;
     height: 80vh;
-    background: linear-gradient(180deg, rgba(129,122,122,1) 0%, rgb(255, 255, 255) 100%);
+    /* background-color:mistyrose; */
+    background: linear-gradient(180deg, rgb(206, 15, 15) 0%, rgb(57, 17, 17) 100%);
+}
+
+.Tone-1 p{
+    word-wrap: break-word;
 }
 
 .Tone-card{
@@ -56,7 +61,7 @@ p{
 
 .Show-detail p{
     width: 80%;
-    height: 30px;
+    height: 50px;
     margin-bottom: 20px;
     padding-left: 5%;
     padding-top: 3%;

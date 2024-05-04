@@ -39,7 +39,7 @@ function Reserve_container(props: Reserve_cont) {
                <h3>Date: {schedule.start_date}</h3>
               </div>
             ))}
-            <h3>Rating: {item.rating} </h3>
+            <h3 id='rating-show'>Rating: {item.rating} </h3>
           </div>
         </div>
 
