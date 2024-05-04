@@ -3,8 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faCalendarDay } from '@fortawesome/free-solid-svg-icons'
 import '../style/Receipt.css'
 import Navbar from './Navbar'
+import { useLocation } from 'react-router-dom'
+
 
 const Receipt = () => {
+  console.log("OGMM")
+  let { state } = useLocation();
+  console.log(state.object[2][0])
   const eventName: string = 'Drive in Senja: Back to the Future';
   const eventLocation: string = 'Parkiran Utama Mall @ Alam Sutera';
   const eventDate: Date = new Date();
@@ -31,12 +36,12 @@ const Receipt = () => {
         <div className="receipt">
           <h2>Event Detail</h2>
           <div className="event-description">
-            <img src={eventImage} alt="Event Image" />
+            <img src={state.object[0].image} alt="Event Image" />
             <div className="event-info">
-              <h3>{eventName}</h3>
+              <h3>{state.object[0].event_name}</h3>
               <div className="location-desc">
                 <i><FontAwesomeIcon icon={faLocationDot} /></i>
-                <p>{eventLocation}</p>
+                <p>{state.object[1].name} {state.object[1].location}</p>
               </div>
               <div className="date-desc">
                 <i><FontAwesomeIcon icon={faCalendarDay} /></i>
@@ -48,12 +53,12 @@ const Receipt = () => {
           <div className="order-summary">
             <div className="selected-seat">
               <p>Selected Seat</p>
-              <p>{selectedSeat.join(', ')}</p>
+              <p>Type {state.object[2][0].type}, Section {state.object[2][0].section}, Row {state.object[2][0].row}, Seat Num {state.object[2][0].seat_num}</p>
             </div>
             <div className="calculate-price">
               <div className="ticket-price">
                 <p>Ticket Price</p>
-                <p>50 $</p>
+                <p>{state.object[2][0].price} $</p>
               </div>
               <div className="fee-price">
                 <p>Admin Fee</p>
@@ -62,7 +67,7 @@ const Receipt = () => {
             </div>
             <div className="total-price">
               <p>Total</p>
-              <p>250 $</p>
+              <p>{state.object[2][0].price}$</p>
             </div>
           </div>
           <div className="button-option">
