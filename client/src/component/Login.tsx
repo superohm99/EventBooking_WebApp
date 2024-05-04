@@ -29,11 +29,6 @@ function Login () {
   }, []);
 
   const navigate = useNavigate();
-  const [redirect, setRedirect] = useState<boolean>(false);
-
-  if (redirect) {
-    navigate('/', { replace: true });
-  }
 
   const handleLogin = async () => {
     try {
@@ -47,9 +42,9 @@ function Login () {
         token = res.data.access_token;
         console.log('token', token);
         localStorage.setItem("access_token",token);
+        navigate('/', { replace: true });
       });
 
-      setRedirect(true);
     } catch (err) {
       console.error('error', err);
     }

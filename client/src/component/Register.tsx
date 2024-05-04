@@ -294,7 +294,7 @@ const Register = () => {
     const [redirect, setRedirect] = useState<boolean>(false);
 
     if (redirect) {
-        navigate('/profile', { replace: true });
+        navigate('/', { replace: true });
     }
 
     const handleRegister = async () => {
@@ -314,6 +314,7 @@ const Register = () => {
                 withCredentials: true,
                 headers: { "Content-Type": "application/json" },
             }).then((res) => {
+                // console.log(res);
                 token = res.data.access_token;
                 const user = jwtDecode(token);
                 user_id = user.sub;
@@ -332,7 +333,7 @@ const Register = () => {
                 postal_code: formData.zipCode,
                 user_id: user_id
             };
-        
+            
             await axios.post("http://localhost:3001/users/user_info", JSON.stringify(userInfoData), {
                 withCredentials: true,
                 headers: { 

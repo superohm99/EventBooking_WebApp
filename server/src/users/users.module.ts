@@ -26,8 +26,6 @@ import { User_info } from 'src/schemas/User_info.schema';
             name: User_info.name,
             schema: User_infoSchema,
         }
-
-
     ]),
 ],
   controllers: [UsersController],

@@ -2,6 +2,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { EventSchedule } from './Event_schedule.schema';
 import { Venue } from './Venue.schema';
+import { Seat } from './Seat.schema';
 @Schema()
 export class Event {
   @Prop()
@@ -23,8 +24,11 @@ export class Event {
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'Venue'}]})
   venue: Venue;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'EventSchedule'}]})
+  @Prop({ type: [{ type: EventSchedule }]})
   eventschedules: EventSchedule[];
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'Seat'}]})
+  seats: Seat[];
 
 }
 

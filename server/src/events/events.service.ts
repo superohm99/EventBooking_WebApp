@@ -23,8 +23,13 @@ export class EventsService {
   async createSeat(event_id: string, createSeatDto: CreateSeatDto): Promise<Seat> {
     const newSeat = new this.seatModel(createSeatDto);
     await newSeat.save();
-
     const event_id_obj = new Types.ObjectId(event_id);
+
+    const event = await this.eventModel.findOne({_id:event_id});
+
+    (await event).seats.push(newSeat);
+
+    (await event).save()
 
     const updatedTicket = await this.ticketModel.findOneAndUpdate(
       { event: event_id_obj }, 
@@ -53,8 +58,9 @@ export class EventsService {
   }
 
   async create_eventsch(eventschDto: CreateEventSchDto) {
+    const d = new Date();
     const new_eventSchedule = new this.eventScheduleModel({
-      start_date: eventschDto.start_date,
+      start_date: d,
       end_date: eventschDto.end_date,
       start_time: eventschDto.start_time,
       end_time: eventschDto.end_time
@@ -90,6 +96,21 @@ export class EventsService {
     return events
   }
 
+
+
+  async events_filter(filter:string){
+    console.log(filter)
+    let  data_filter = filter.split('$')
+    const venueID= await this.venue.find({ location: data_filter.pop()}).exec()
+    const description = data_filter.pop()
+
+    const venueIDs = venueID.map(venue => venue._id);
+
+    return this.eventModel.find({
+      $and:[{venue: {$in: venueIDs }},{event_description:description},{rating:data_filter.pop()}]
+    }).exec()
+  }
+
   async getEventsByName(name: string): Promise<Event[]> {
 
     const regex = new RegExp('^' + name);
@@ -107,5 +128,10 @@ export class EventsService {
     const events =  (await this.eventModel.findOne({ _id: id }));
     const object = events.venue
     return await this.venue.findOne({_id:object[0]}).exec()
+  }
+
+  async getallvenue(){
+    const venues = this.venue.find({}).exec();
+    return venues
   }
 }
