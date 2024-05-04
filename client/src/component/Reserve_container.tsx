@@ -25,19 +25,21 @@ function Reserve_container(props: Reserve_cont) {
   
   return (
     <div className='Center-container'>
-
+      
       {data.map(item => (
-        <Link to={{pathname:`/Reserve/Confirm-reserve/${item._id}`}} >
+        <Link to={{pathname:`/Reserve/Confirm-reserve/${item._id}`}} className='Link-form-reserve'>
 
         <div className="Card">
           <img src={item.image}/>
           <div className="Container">
-            <h3><b>{item.event_name}</b></h3>
+            <h1>Event: {item.event_name}</h1>
+            <h3>Description: {item.event_description}</h3>
             {item.eventschedules.map(schedule => (
               <div key={schedule._id}>
                <h3>Date: {schedule.start_date}</h3>
-            </div>
+              </div>
             ))}
+            <h3>Rating: {item.rating} </h3>
           </div>
         </div>
 
