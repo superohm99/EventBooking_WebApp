@@ -21,6 +21,7 @@ function Form_reserve(props:any) {
       setEvent(props.object[0])
       setVenue(props.object[1])
       setEventsch(props.object[0].eventschedules)
+      console.log(venue)
   },[])
   
   if (!rendered) {
@@ -42,10 +43,10 @@ function Form_reserve(props:any) {
                 <div className='Show-detail'>
                
                     <p>Date: {eventsch[0].start_date}</p>
-                    <p >Time: 19.00</p>
-                    <p >Location: {venue.location}</p>
-                    <p >Reserve: 1020/2500</p>
-                    <p >Budget: 450 ฿</p>
+                    <p >Time: {eventsch[0].start_date}</p>
+                    <p >Location: {venue.name} {venue.location}</p>
+                    <p >Reserve:     1500/{venue.capacity}</p>
+                    <p >Budget: {props.price} ฿</p>
                 </div>
 
         </div>

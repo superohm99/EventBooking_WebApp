@@ -75,8 +75,10 @@ function Confirm_reserve() {
   }
 
   const handlePriceChange = (filter:React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedPrice = filter.target.value;
-    setSeatid(filter.target.value);
+    const selectedOption = JSON.parse(filter.target.value);
+    const selectedPrice = selectedOption.price; 
+    const selectedSeatId = selectedOption.id; 
+    setSeatid(selectedSeatId);
     setSelectedPrice(selectedPrice);
   }
 
@@ -120,7 +122,7 @@ function Confirm_reserve() {
     <div>
         <Navbar/>
         <div className='Form-reserve'> 
-        {event.length > 0 && <Form_reserve object={event}/>}
+        {event.length > 0 && <Form_reserve object={event} price={selectedPrice}/>}
 
         <div className='Tone-2'>
             <div>
@@ -172,7 +174,7 @@ function Confirm_reserve() {
               <select value={selectedPrice} onChange={handlePriceChange} disabled={!selectedSeatNum}>
                 <option value="" disabled selected>Seat-Price</option>
                 {uniqueValues(seats.filter(item => item.type === selectedClass && item.section === selectedSection && item.row === selectedRow && item.seat_num === selectedSeatNum).map(item => ({price: item.price, id: item._id}))).map(item => (
-                  <option value={item.id} key={item.id}>{item.price}</option>
+                  <option value={JSON.stringify({ id: item.id, price: item.price })} key={item.id}>{item.price}</option>
                 ))}
               </select>
 
@@ -187,7 +189,7 @@ function Confirm_reserve() {
               <Link to="/reserve">
                 <button id='back-1'>BACK</button>
               </Link>
-                <Link to="/receipt" >
+                <Link to={`/receipt`} state={{ object: event }} >
                 <button id='next-1'type='submit' onClick={handlesubmit}>NEXT</button>
                 </Link>
             </div>
