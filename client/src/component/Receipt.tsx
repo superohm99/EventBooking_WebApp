@@ -2,16 +2,21 @@ import { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faCalendarDay } from '@fortawesome/free-solid-svg-icons'
 import '../style/Receipt.css'
-import Navbar from './Navbar'
 
-const Receipt = () => {
-  const eventName: string = 'Drive in Senja: Back to the Future';
-  const eventLocation: string = 'Parkiran Utama Mall @ Alam Sutera';
-  const eventDate: Date = new Date();
-  const eventTime: Date = eventDate;
-  const eventImage: string = 'https://www.shutterstock.com/shutterstock/photos/1423222013/display_1500/stock-vector-music-event-poster-design-template-on-colorful-background-with-flowing-shape-illustration-for-web-1423222013.jpg';
+type ReceiptProps = {
+  event: {
+    event_name: string;
+    event_location: string;
+    event_date: Date;
+    event_time: Date;
+    event_image: string;
+    seat: string;
+    price: number;
+  }
+}
 
-  const selectedSeat: string[] = ['A1', 'A2', 'A3', 'A4', 'A5'];
+const Receipt = ({ event }: ReceiptProps) => {
+
   useEffect(() => {
     // Apply gradient background to body when component mounts
     document.body.style.background = 'rgb(2,0,36)';
@@ -22,25 +27,22 @@ const Receipt = () => {
       document.body.style.background = '';
     };
   }, []);
-  const handleSubmit = (): void => {
-    alert('Thank you for your purchase!');
-  }
+
   return (
     <>
-      <Navbar />
         <div className="receipt">
           <h2>Event Detail</h2>
           <div className="event-description">
-            <img src={eventImage} alt="Event Image" />
+            <img src={event.event_image} alt="Event Image" />
             <div className="event-info">
-              <h3>{eventName}</h3>
+              <h3>{event.event_name}</h3>
               <div className="location-desc">
                 <i><FontAwesomeIcon icon={faLocationDot} /></i>
-                <p>{eventLocation}</p>
+                <p>{event.event_location}</p>
               </div>
               <div className="date-desc">
                 <i><FontAwesomeIcon icon={faCalendarDay} /></i>
-                <p>{eventDate.toDateString()} {eventTime.toLocaleTimeString()}</p>
+                <p>{event.event_date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} {event.event_time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
               </div>
             </div>
           </div>
@@ -48,12 +50,12 @@ const Receipt = () => {
           <div className="order-summary">
             <div className="selected-seat">
               <p>Selected Seat</p>
-              <p>{selectedSeat.join(', ')}</p>
+              <p>{event.seat}</p>
             </div>
             <div className="calculate-price">
               <div className="ticket-price">
                 <p>Ticket Price</p>
-                <p>50 $</p>
+                <p>{event.price} $</p>
               </div>
               <div className="fee-price">
                 <p>Admin Fee</p>
@@ -62,12 +64,8 @@ const Receipt = () => {
             </div>
             <div className="total-price">
               <p>Total</p>
-              <p>250 $</p>
+              <p>{event.price} $</p>
             </div>
-          </div>
-          <div className="button-option">
-            <button type="submit">Back</button>
-            <button type="submit" onClick={handleSubmit}>Continue</button>
           </div>
         </div>
     </>

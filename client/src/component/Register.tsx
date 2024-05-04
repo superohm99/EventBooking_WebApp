@@ -314,7 +314,6 @@ const Register = () => {
                 withCredentials: true,
                 headers: { "Content-Type": "application/json" },
             }).then((res) => {
-                console.log(res);
                 token = res.data.access_token;
                 const user = jwtDecode(token);
                 user_id = user.sub;

@@ -3,11 +3,14 @@ import "../style/Edit.css";
 import Profile from "./Profile";
 import Navbar from "./Navbar";
 import { DateOfBirth, range, getDaysInMonth, months, genders, provinces, districts } from "../constants";
+import axios, { AxiosError} from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface ProfileState{
   email: string;
   username: string;
 }
+
 interface EditState {
   username: string;
   gender: string;
@@ -59,40 +62,54 @@ function Edit() {
     postal_code: "",
   })
   
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token")
-    
-    fetch("http://localhost:3001/users/user_info/get",
-      {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-         },
-      })
-      .then((res) => res.json())
-      .then((data) => { 
+    const token = localStorage.getItem("access_token");
+
+    const fetchData = async () => {
+      try{
+        const response = await axios.get("http://localhost:3001/users/user_info/get", {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+        const data = response.data;
         setProfile({
           email: data.user.email,
           username: data.user.username,
         });
-        setUserinfo({
-          ...userInfo,
-          username: data.user.username,
-          gender:data.gender,
-          date_of_birth: {
-            day: new Date(data.date_of_birth).getDate().toString(),
-            month: new Date(data.date_of_birth).getMonth().toString(),
-            year: new Date(data.date_of_birth).getFullYear().toString(),
-          },
-          id_card: data.id_card,
-          phone_no: data.phone_no,
-          address: data.address,
-          country: data.country,
-          province: data.province,
-          district: data.district,
-          postal_code: data.postal_code,
-        });
-      });
+            setUserinfo({
+            ...userInfo,
+            username: data.user.username,
+            gender:data.gender,
+            date_of_birth: {
+              day: new Date(data.date_of_birth).getDate().toString(),
+              month: new Date(data.date_of_birth).getMonth().toString(),
+              year: new Date(data.date_of_birth).getFullYear().toString(),
+            },
+            id_card: data.id_card,
+            phone_no: data.phone_no,
+            address: data.address,
+            country: data.country,
+            province: data.province,
+            district: data.district,
+            postal_code: data.postal_code,
+          });
+  
+      
+      } catch (error) {
+        if ((error as AxiosError).response?.status === 401) {
+          console.error("Unauthorized, redirecting to login page");
+          navigate("/signin", { replace: true });
+        }
+        else{
+          console.error("Failed to fetch user info:", error);
+        }
+      }
+    };
+    fetchData();
+
   }, []);
 
   const updateUserInfo = async (updatedData: Partial<UpdateState>) => {
