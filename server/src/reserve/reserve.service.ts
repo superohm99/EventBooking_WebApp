@@ -44,21 +44,21 @@ export class ReserveService {
     const user = await this.userModel.findOne({_id:decode.sub}).exec();
   
     const new_ticket = new this.ticketModel({
-      event: new Types.ObjectId(createReserveDto.eventid)
+      event: new Types.ObjectId(createReserveDto.eventid),
+      status:true
     })
 
     const seatID =new Types.ObjectId(createReserveDto.seatid)
     const seat_obj = await this.seatModel.findById(seatID)
     new_ticket.seats.push(seat_obj._id)
-    // new_ticket.save()
+    new_ticket.save()
 
     const new_reserve = new this.reserveModel({
       users: new Types.ObjectId(decode.sub),
-      tickets: new_ticket,
-      status:true
+      tickets: new_ticket
     })
 
-    // new_reserve.save()
+    new_reserve.save()
     return true;
   }
   

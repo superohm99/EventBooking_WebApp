@@ -11,6 +11,9 @@ export class Ticket extends Document {
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Seat' }] })
   seats: Seat[];
+
+  @Prop()
+  status: boolean
 }
 
 export const TicketSchema = SchemaFactory.createForClass(Ticket);
