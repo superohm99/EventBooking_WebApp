@@ -82,15 +82,19 @@ function Confirm_reserve() {
     setSelectedPrice(selectedPrice);
   }
 
-
   const handlesubmit = () => {
-    const token = localStorage.getItem("access_token")
-    axios.post("http://localhost:3001/reserve/create_reserve",
-    {
-      eventid: event[0]._id,
-      seatid: seatid,
-      authorization: `Bearer ${token}`,
-    }).then((res) => res.data)
+    if (selectedPrice && userinfo.username)
+      {
+        const token = localStorage.getItem("access_token")
+        axios.post("http://localhost:3001/reserve/create_reserve",
+        {
+          eventid: event[0]._id,
+          seatid: seatid,
+          authorization: `Bearer ${token}`,
+        }).then((res) => res.data)
+      }
+    else
+      console.log("Not Success Reserve")    
     
   }
 
@@ -102,7 +106,7 @@ function Confirm_reserve() {
         "Authorization": `Bearer ${token}`,
       },
     })
-    .then((data) =>{ console.log("test"),console.log(data.data.user),setUserinfo(data.data.user)})
+    .then((data) =>{ setUserinfo(data.data.user)})
     setSeats(event[2])
     // console.log("master")
     // console.log(seats)
@@ -189,9 +193,12 @@ function Confirm_reserve() {
               <Link to="/reserve">
                 <button id='back-1'>BACK</button>
               </Link>
-                <Link to={`/receipt`} state={{ object: event }} >
-                <button id='next-1'type='submit' onClick={handlesubmit}>NEXT</button>
-                </Link>
+
+              <Link to={selectedPrice && userinfo.username ? `/receipt` : ''} state={{ object: event }} >
+              {
+              <button id='next-1'type='submit' onClick={handlesubmit}>NEXT</button>
+              }
+              </Link>
             </div>
             
         </div>
