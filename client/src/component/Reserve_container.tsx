@@ -7,10 +7,28 @@ interface Reserve_cont {
   filter: string
 }
 
+export type EventProps = {
+  event_name: string;
+  event_location: string;
+  event_date: Date;
+  event_time: Date;
+  image: string;
+  seats: string[];
+  venue: string;
+  eventschedules: {
+    start_date: Date;
+    end_date: Date;
+    start_time: Date;
+    end_time: Date;
+    _id: string;
+  }[];
+  _id: string;
+}
+
 
 function Reserve_container(props: Reserve_cont) {
 
-  const [data, setData] = useState([])
+  const [data, setData] = useState<EventProps[]>([])
   const [filterdata, setFilterData] = useState('')
 
   useEffect(() => {
@@ -22,6 +40,10 @@ function Reserve_container(props: Reserve_cont) {
     .then(res => setData(res.data))
     .catch(err => console.log(err));
   },[filterdata]);
+
+  useEffect(() => {
+    console.log("data", data)
+  },[data])
   
   return (
     <div className='Center-container'>
@@ -35,7 +57,7 @@ function Reserve_container(props: Reserve_cont) {
             <h3><b>{item.event_name}</b></h3>
             {item.eventschedules.map(schedule => (
               <div key={schedule._id}>
-               <h3>Date: {schedule.start_date}</h3>
+               <h3>Date: {schedule.start_date.toString().slice(0,10)}</h3>
             </div>
             ))}
           </div>

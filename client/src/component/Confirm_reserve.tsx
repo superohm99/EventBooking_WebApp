@@ -5,6 +5,7 @@ import Form_reserve from './Form_reserve'
 import '../style/Form_reserve.css'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { EventProps } from './Reserve_container'
 
 interface InputReserve {
   seat_class: string
@@ -16,7 +17,7 @@ function Confirm_reserve() {
 
 
   const params = useParams()
-  const [event,setEvent] = useState([])
+  const [event,setEvent] = useState<EventProps[]>([])
   const [seats,setSeats] = useState([])
   const [userinfo,setUserinfo] = useState([])
   const [seatid,setSeatid] = useState("")
@@ -86,6 +87,7 @@ function Confirm_reserve() {
     if (selectedPrice && userinfo.username)
       {
         const token = localStorage.getItem("access_token")
+        console.log("MyToken", token)
         axios.post("http://localhost:3001/reserve/create_reserve",
         {
           eventid: event[0]._id,
@@ -126,7 +128,7 @@ function Confirm_reserve() {
     <div>
         <Navbar/>
         <div className='Form-reserve'> 
-        {event.length > 0 && <Form_reserve object={event} price={selectedPrice}/>}
+        {/* {event.length > 0 && <Form_reserve object={event} price={selectedPrice}/>} */}
 
         <div className='Tone-2'>
             <div>
@@ -134,8 +136,8 @@ function Confirm_reserve() {
                 {/* {JSON.stringify(params)} */}
             </div>
 
-            <h2>Username: {userinfo.username}</h2>
-
+            {/* <h2>Username: {userinfo.username}</h2> */}
+{/* 
             <form className='form_select'>
 
               <select value={selectedClass} onChange={handleClassChange}>
@@ -186,10 +188,10 @@ function Confirm_reserve() {
 
 
 
-            </form>
+            </form> */}
 
 
-            <div className='Tone-2-button'>
+            {/* <div className='Tone-2-button'>
               <Link to="/reserve">
                 <button id='back-1'>BACK</button>
               </Link>
@@ -199,7 +201,7 @@ function Confirm_reserve() {
               <button id='next-1'type='submit' onClick={handlesubmit}>NEXT</button>
               }
               </Link>
-            </div>
+            </div> */}
             
         </div>
 

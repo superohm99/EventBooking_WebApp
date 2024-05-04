@@ -20,7 +20,8 @@ const Receipt = ({ event }: ReceiptProps) => {
 
   console.log("OGMM")
   let { state } = useLocation();
-  console.log(state.object[2][0])
+  // console.log(state)
+  // console.log(state.object[2][0])
 
   useEffect(() => {
     // Apply gradient background to body when component mounts
