@@ -17,7 +17,18 @@ function Leftbar(props: LeftsideProps) {
   const [filterthr, setFilterthr] = useState('')
 
   
+  const set_descript = [
+    {event_description:"Funny and Crazy"},
+    {event_description:"Education and Trend Social"},
+  
+  ]
+
   const {result} = props
+
+  const uniqueValues = (arr:any) => {
+    return Array.from(new Set(arr));
+  };
+
 
   useEffect(() => {
     axios.get('http://localhost:3001/events/event_venues')
@@ -59,8 +70,8 @@ function Leftbar(props: LeftsideProps) {
       <form>
       <select name="cars" id="cars" onChange={handlefilterone}>
         <option value=""disabled selected>Rating</option>
-        {events.map(item => (
-        <option value={item.rating} key={item._id}>{item.rating}</option>
+        {uniqueValues(events.map(item => item.rating)).map(rating => (
+        <option value={rating}>{rating}</option>
          ))}
       </select>
 
@@ -68,8 +79,8 @@ function Leftbar(props: LeftsideProps) {
 
       <select name="cars" id="cars" onChange={handlefiltertwo}>
         <option value="" disabled selected>Category</option>
-        {events.map(item => (
-        <option value={item.event_description} key={item._id}>{item.event_description}</option>
+        {set_descript.map(item => (
+        <option value={item.event_description}>{item.event_description}</option>
          ))}
       </select>
 
@@ -77,8 +88,8 @@ function Leftbar(props: LeftsideProps) {
 
       <select name="cars" id="cars" onChange={handlefilterthr}>
         <option value="" disabled selected>Location</option>
-        {venues.map(item => (
-        <option  value={item.location} key={item._id}>{item.location}</option>
+        {uniqueValues(venues.map(item => item.location)).map(location => (
+        <option  value={location} >{location}</option>
          ))}
       </select>
 
