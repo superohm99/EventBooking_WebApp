@@ -92,7 +92,11 @@ function Checkout() {
                         <PaymentForm userData={userData} />
                     </Elements>
                 </div>
+                <div className="payment-status">
+                    {paymentStatus ? <h1>Payment Success</h1> : <h1>Payment Failed</h1>}
+                </div>
             </div>
+
         </>
     )
 }
