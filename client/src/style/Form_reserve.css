@@ -16,12 +16,21 @@
     word-wrap: break-word;
 }
 
-.Tone-card{
+.Tone-card {
     background-color: black;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    color: white;
+    color:white;
 }
 
+.Tone-container h2{
+    color: brown;
+    font-size:x-large;
+}
+
+.Tone-container p{
+    color: white;
+    font-size: medium;
+}
 
 .Tone-card img{
     width: 20vw;
@@ -113,6 +122,12 @@ p{
     font-weight:bolder;
     font-size: large;
     background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(166,0,0,1) 100%);
+    cursor: pointer;
+}
+
+.form_select option{
+    background:brown;
+    cursor: pointer;
 }
 
 .Tone-2 input:focus{

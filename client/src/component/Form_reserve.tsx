@@ -37,7 +37,7 @@ function Form_reserve({data}: FormProps) {
                 <div className="Tone-card">
                     <img src={event.image}/>
                     <div className='Tone-container'>
-                    <p>{event.event_name}</p>
+                    <h2>{event.event_name}</h2>
                     <p>Date: {new Date(eventsch.start_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                     </div>
                 </div>
@@ -46,7 +46,7 @@ function Form_reserve({data}: FormProps) {
                 <div className='Show-detail'>
                
                     <p>Date: {new Date(eventsch.start_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-                    <p >Time: {new Date(eventsch.start_time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
+                    <p >Time: {new Date(eventsch.start_date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
                     <p >Location: {venue.name} {venue.location}</p>
                     <p >Reserve:     1500/{venue.capacity}</p>
                     <p >Budget: {data.price}</p>
