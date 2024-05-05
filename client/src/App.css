@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Quicksand:wght@300..700&display=swap");
 
 body {
-  background: -webkit-linear-gradient(#ff0000, #4f3f3f);
+  background: -webkit-linear-gradient(#960000, #000000);
   /* background: rgb(0,0,0);
     background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(166,0,0,1) 100%); */
   min-height: 100vh;

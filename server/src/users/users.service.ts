@@ -14,6 +14,8 @@ import generateUniqueId from 'generate-unique-id';
 import { CreateUserInfoDto } from './dto/User.dto';
 import { User_info } from 'src/schemas/User_info.schema';
 import { UpdateUserInfoDto } from './dto/User.dto';
+import { jwtDecode } from 'jwt-decode';
+const { ObjectId } = require('mongodb');
 
 
 @Injectable()
@@ -36,7 +38,7 @@ export class UsersService {
         const [at, rt] = await Promise.all([
           this.jwtService.signAsync(jwtPayload, {
             secret: 'at-secret',
-            expiresIn: '3h',
+            expiresIn: '10M',
           }),
           this.jwtService.signAsync(jwtPayload, {
             secret: 'rt-secret',
@@ -115,7 +117,6 @@ export class UsersService {
         return tokens;
     }
 
-
     async updateRtHash(userId: Types.ObjectId, rt: string): Promise<void> {
         const hash = await bcrypt.hash(rt,10);
         try {
@@ -127,27 +128,24 @@ export class UsersService {
         }
     }
 
-    async logout(userId: Types.ObjectId): Promise<boolean>{
-      if (userId)
-      try {
-  
-        // await this.userModel.updateMany(userId,{ hashedRt: { $ne: null } }, { $set: { hashedRt: null } });
-        const filter = { hashedRt: null }; // สร้างอ็อบเจ็กต์ filter ที่ใช้ในการค้นหาข้อมูลที่ต้องการอัปเดต
-        await this.userModel.updateMany(userId,filter, { $set: { hashedRt: null } }).exec(); // ทำการอัปเดตข้อมูลผู้ใช้
-        console.log('Users updated successfully.');
-        return true
-      } catch (error) {
-        console.error('Error updating users:', error);
+    async logout(userId): Promise<boolean> {
+      if (userId) {
+        try {
+          const filter = { _id: userId };
+          await this.userModel.updateMany(filter, { $set: { hashedRt: null } }).exec();
+          console.log('Users updated successfully.');
+          return true;
+        } catch (error) {
+          console.error('Error updating users:', error);
+        }
+      } else {
+        return false;
       }
-      else
-        return false
     }
-
 
     deleteUser(id: string){
         return this.userModel.findByIdAndDelete(id)
     }
-
 
     //user_info
     async createUserInfo(UserInfoDto: CreateUserInfoDto){

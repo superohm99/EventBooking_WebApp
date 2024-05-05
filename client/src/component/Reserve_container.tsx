@@ -1,145 +1,87 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../style/Reserve_container.css'
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-function Reserve_container() {
+interface Reserve_cont {
+  filter: string
+}
+
+export type VenueProps = {
+  venue_name: string;
+  venue_location: string;
+  capacity: number;
+  _id: string;
+}
+
+export type EventScheduleProps = {
+  start_date: Date;
+  end_date: Date;
+  start_time: Date;
+  end_time: Date;
+  _id: string;
+}
+
+export type SeatProps = {
+  class: string;
+  type: string;
+  section: string;
+  row: number;
+  seat_num: number;
+  price: number;
+}
+
+export type EventProps = {
+  event_name: string;
+  event_description: string;
+  image: string;
+  rating: number;
+  eventschedules: EventScheduleProps[];
+  venue: VenueProps;
+  seats: SeatProps[];
+  _id: string;
+}
+
+
+function Reserve_container(props: Reserve_cont) {
+
+  const [data, setData] = useState<EventProps[]>([])
+  const [filterdata, setFilterData] = useState('')
+
+  useEffect(() => {
+      setFilterData(props.filter)
+  } , [props.filter])
+
+  useEffect(() => {
+    axios.post('http://localhost:3001/events/events_data',{filter :filterdata})
+    .then(res => setData(res.data))
+    .catch(err => console.log(err));
+  },[filterdata]);
+  
   return (
     <div className='Center-container'>
+      
+      {data.map(item => (
+        <Link to={{pathname:`/Reserve/Confirm-reserve/${item._id}`}} className='Link-form-reserve'>
 
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3DD"/>
-        <div className="Container">
-          <h3><b>Concert Music Bangkok</b></h3>
-          <p>Date: 22/05/2566</p>
+        <div className="Card">
+          <img src={item.image}/>
+          <div className="Container">
+            <h1>Event: {item.event_name}</h1>
+            <h3>Description: {item.event_description}</h3>
+            {item.eventschedules.map(schedule => (
+              <div key={schedule._id}>
+               <h3>Date: {schedule.start_date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</h3>
+              </div>
+            ))}
+            <h3 id='rating-show'>Rating: {item.rating} </h3>
+          </div>
         </div>
-      </div>
 
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-        <div className="Container">
-          <h3><b>Music Banner</b></h3>
-          <p>Date: 15/09/2566</p>
-        </div>
-      </div>
+          </Link>
+      ))}
 
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-        <div className="Container">
-          <h3><b>Lover Concert Music</b></h3>
-          <p>Date: 07/01/2566</p>
-        </div>
-      </div>
 
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1563841930606-67e2bce48b78?q=80&w=2054&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
-
-      <div className="Card">
-        <img src="https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJlbmR8ZW58MHx8MHx8fDA%3D"/>
-        <div className="Container">
-          <h4><b>John Doe</b></h4>
-          <p>Architect & Engineer</p>
-        </div>
-      </div>
   
       <div className='test-text'>
       </div>

@@ -27,4 +27,3 @@ export class CreateVenueDto{
 
     event_id: string
 }
-

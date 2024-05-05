@@ -17,7 +17,7 @@ function Slider({ events }: SliderProps) {
     const [autoPlay, setAutoplay] = useState(true)
     let timeOut: number | null = null;
 
-    console.log(imageIndex)
+    // console.log(imageIndex)
 
     useEffect(() => {
         if (autoPlay) {
