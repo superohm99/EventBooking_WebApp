@@ -21,9 +21,10 @@
 }
 
 .Tone-card{
-    background-color: white;
+    background-color: black;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     /* border-bottom: solid 5px red; */
+    color: white;
 }
 
 
@@ -35,9 +36,15 @@
 
 
 .Tone-container{
-    background-color: white;
-    margin-top: 0;
+    background-color: black;
+    margin-top: 10px;
     height: 7vh;
+    margin-left: 10px;
+    /* font-size:medium; */
+}
+.Tone-container h3{
+    color: brown;
+    font-size: large;
 }
 
 .Tone-container p{
@@ -83,6 +90,7 @@ p{
     align-items: center;
     width: 80%;
     height: 100%;
+    /* background-color:maroon; */
 }
 
 .Tone-2 h1{
