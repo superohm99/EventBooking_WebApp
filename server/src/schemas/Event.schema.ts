@@ -23,7 +23,7 @@ export class Event {
   @Prop({ type: mongoose.Schema.Types.ObjectId , ref:'Venue'})
   venue: Venue;
 
-  @Prop([{ type: mongoose.Schema.Types.ObjectId , ref:'EventSchedule'}])
+  @Prop([{ type: Object , ref:'EventSchedule'}])
   eventschedules: EventSchedule[];
 
   @Prop([{ type: mongoose.Schema.Types.ObjectId , ref:'Seat'}])
