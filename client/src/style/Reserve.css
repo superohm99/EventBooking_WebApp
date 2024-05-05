@@ -8,9 +8,8 @@ body{
 }
 
 .colunm-container{
-    margin-top: 10px;
-    margin-left: 60px;
     width: 75%;
     display: flex;
     flex-direction: column;
+    padding-block: 3rem;
 }

@@ -21,6 +21,7 @@
     font-weight: 600;
     color: white;
     background-color: #AF0000;
+    outline: none;
 }
 
 .part-container .list-container option {
@@ -37,7 +38,6 @@
 
 li{
     list-style: none;
-    /* text-decoration: none; */
     text-decoration-style: none;
     font-size: large;
     margin-bottom: 5px;

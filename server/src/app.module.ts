@@ -8,12 +8,13 @@ import { AtGuard } from './users/common/guards';
 import { EventsModule } from './events/events.module';
 import { HistoryModule } from './history/history.module';
 import { ReserveModule } from './reserve/reserve.module';
-
+import { PaymentModule } from './payment/payment.module';
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 
 @Module({
-  imports: [MongooseModule.forRoot("mongodb+srv://thanasuksongsriohm:IV3OE0pdQVwKVSbB@myticketdb.vs5a23w.mongodb.net/"), UsersModule, EventsModule, HistoryModule,ReserveModule],
+  imports: [MongooseModule.forRoot(process.env.MONGODB_URL), UsersModule, EventsModule, HistoryModule,ReserveModule, PaymentModule],
   controllers: [AppController],
   providers: [
     AppService,

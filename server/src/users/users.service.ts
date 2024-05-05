@@ -38,7 +38,7 @@ export class UsersService {
         const [at, rt] = await Promise.all([
           this.jwtService.signAsync(jwtPayload, {
             secret: 'at-secret',
-            expiresIn: '10M',
+            expiresIn: '20M',
           }),
           this.jwtService.signAsync(jwtPayload, {
             secret: 'rt-secret',

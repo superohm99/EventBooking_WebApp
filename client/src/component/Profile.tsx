@@ -1,4 +1,3 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTicketSimple,
@@ -10,15 +9,21 @@ import {
 import { Link } from "react-router-dom";
 import "../style/Profile.css";
 
-function Profile() {
+interface profielProps {
+  username: string;
+  email: string
+}
+
+function Profile(props: profielProps) {
+
   return (
     <>
       <div className="menu-bar">
         <div className="menu-header">
           <div className="profile">
             <p className="profile-pic">B</p>
-            <h1 className="heading">Ben Tennyson</h1>
-            <p>ben10@gmail.com</p>
+            <h1 className="heading">{props.username}</h1>
+            <p>{props.email}</p>
           </div>
           <ul className="menu-list">
             <li>

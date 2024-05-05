@@ -1,18 +1,14 @@
 .Form-reserve{
-    /* display: flex;
-    justify-content: center; */
-    margin-left: 10%;
     width: 80vw;
-    height: 80vh;
+    height: max-content;
     background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(166,0,0,1) 100%);
     display: flex;
-    flex-direction: row;
+    margin-inline: auto;
 }
 
 .Tone-1{
     width: 20vw;
     height: 80vh;
-    /* background-color:mistyrose; */
     background: linear-gradient(180deg, rgb(206, 15, 15) 0%, rgb(57, 17, 17) 100%);
 }
 
@@ -23,7 +19,6 @@
 .Tone-card{
     background-color: black;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    /* border-bottom: solid 5px red; */
     color: white;
 }
 
@@ -40,7 +35,6 @@
     margin-top: 10px;
     height: 7vh;
     margin-left: 10px;
-    /* font-size:medium; */
 }
 .Tone-container h3{
     color: brown;
@@ -78,9 +72,6 @@ p{
     background-color: black;
     border-radius: 2%;
     color:white;
-    /* overflow: scroll; */
-
-    /* margin-left: 20%; */
 }
 
 .Tone-2{
@@ -88,19 +79,15 @@ p{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 80%;
-    height: 100%;
-    /* background-color:maroon; */
+    width: 100%;
+    gap: 2rem;
+    overflow-y: auto;
 }
 
 .Tone-2 h1{
     background-color: white;
     color: black;
-    margin-bottom: 20%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding: 1rem;
     border-radius: 10px;
 }
 
@@ -125,7 +112,6 @@ p{
     color:cadetblue;
     font-weight:bolder;
     font-size: large;
-    /* color: white; */
     background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(166,0,0,1) 100%);
 }
 
@@ -136,35 +122,20 @@ p{
 }
 
 .Tone-2-button{
-    margin-top: 100px;
-    margin-left: 2px;
-    width: 50%;
-    height: 4%;
+    margin-top: 4rem;
     display: flex;
     justify-content: space-between;
+    width: 60%;
 }
 
 .Tone-2-button button,#next-1,#back-1{
-    height: 100%;
     border-radius: 5px;
     border-color: wheat;
     font-size: medium;
     font-weight: 600;
     background-color: white;
     cursor: pointer;
-}
-
-#back-1{
-    background-color: white;
-    width: 150%;
-    margin-left: 10%;
-}
-
-#next-1{
-    background-color: black;
-    width: 150%;
-    margin-left: 10%;
-    color: white;
+    padding: 1rem 2rem;
 }
 
 .Tone-2-button button:hover{
