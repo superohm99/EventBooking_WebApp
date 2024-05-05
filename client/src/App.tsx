@@ -54,7 +54,7 @@ function App() {
                 />
 
                 <Route
-                    path="/Checkout"
+                    path="/Checkout/:Id"
                     element={ <Checkout /> }
                 />
 

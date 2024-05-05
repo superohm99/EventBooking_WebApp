@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../style/Reserve_container.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -7,21 +7,37 @@ interface Reserve_cont {
   filter: string
 }
 
+export type VenueProps = {
+  name: string;
+  location: string;
+  capacity: number;
+  _id: string;
+}
+
+export type EventScheduleProps = {
+  start_date: Date;
+  end_date: Date;
+  start_time: Date;
+  end_time: Date;
+  _id: string;
+}
+
+export type SeatProps = {
+  type: string;
+  section: string;
+  row: string;
+  seat_num: string;
+  price: number;
+}
+
 export type EventProps = {
   event_name: string;
-  event_location: string;
-  event_date: Date;
-  event_time: Date;
+  event_description: string;
   image: string;
-  seats: string[];
-  venue: string;
-  eventschedules: {
-    start_date: Date;
-    end_date: Date;
-    start_time: Date;
-    end_time: Date;
-    _id: string;
-  }[];
+  rating: number;
+  eventschedules: EventScheduleProps[];
+  venue: VenueProps;
+  seats: SeatProps[];
   _id: string;
 }
 
@@ -42,24 +58,24 @@ function Reserve_container(props: Reserve_cont) {
   },[filterdata]);
 
   useEffect(() => {
-    console.log("data", data)
-  },[data])
+    console.log(data)
+  }, [data])
   
   return (
     <div className='Center-container'>
-
-      {data.map(item => (
-        <Link to={{pathname:`/Reserve/Confirm-reserve/${item._id}`}} >
+      
+      {data.map((item, index) => (
+        <Link key={index} to={{pathname:`/Reserve/Confirm-reserve/${item._id}`}} className='Link-form-reserve'>
 
         <div className="Card">
           <img src={item.image}/>
           <div className="Container">
-            <h3><b>{item.event_name}</b></h3>
-            {item.eventschedules.map(schedule => (
-              <div key={schedule._id}>
-               <h3>Date: {schedule.start_date.toString().slice(0,10)}</h3>
-            </div>
+            <h1>Event: {item.event_name}</h1>
+            <h3>Description: {item.event_description}</h3>
+            {item.eventschedules.map(schedules => (schedules)).map((schedule, index) => (
+              <h3 key={index}>Date: {new Date(schedule.start_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} Time: {new Date(schedule.start_time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</h3>
             ))}
+            <h3 id='rating-show'>Rating: {item.rating} </h3>
           </div>
         </div>
 

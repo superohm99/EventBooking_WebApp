@@ -7,7 +7,7 @@
 }
 
 .Center-container img{
-    width: 350px;
+    width: 100%;
     height: 250px;
 }
 
@@ -24,5 +24,30 @@
 
 .Container{
     padding: 2px 16px;
-    background-color: white;
+    width: 400px;
+    min-height: 100px;
+    background-color: black;
+    overflow-wrap: break-word;
+}
+
+.Container h3{
+    color:white;
+    font-weight: bolder;
+    font-family: 'Courier New', Courier, monospace;
+    font-size:medium;
+    /* word-wrap: break-word; */
+}
+
+.Container h1{
+    font-weight:900;
+    font-family: 'Courier New', Courier, monospace;
+    color:brown;
+}
+
+.Link-form-reserve{
+    text-decoration: none;
+}
+
+#rating-show{
+    color:goldenrod;
 }
