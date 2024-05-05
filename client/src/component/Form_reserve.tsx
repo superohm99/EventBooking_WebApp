@@ -34,7 +34,7 @@ function Form_reserve(props:any) {
                 <div className="Tone-card">
                     <img src={event.image}/>
                     <div className='Tone-container'>
-                    <p>{event.event_name}</p>
+                    <h3>{event.event_name}</h3>
                     {<p>Date: {event.eventschedules[0].start_date}</p>}
                     </div>
                 </div>

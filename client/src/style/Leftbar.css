@@ -25,6 +25,15 @@
     height: 30px;
     margin-bottom: 30px;
     border-radius: 5%;
+    background-color:darkred;
+    font-size: large;
+    font-weight: 900;
+    color: cadetblue;
+}
+
+.filter-container option{
+    color: aquamarine;
+    
 }
 
 .filter-container button{
@@ -33,6 +42,7 @@
     font-weight: 600;
     font-size:large;
     margin-left: 3px;
+    margin-bottom: 15px;
     background-color: black;
     color: white;
     cursor: pointer;
