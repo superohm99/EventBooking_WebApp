@@ -131,9 +131,11 @@ function PaymentForm({ userData }: UserProps) {
     return (
         <>
             <div className="payment-form">
-                <h1>Username: {userData.name}</h1>
-                <h1>Email: {userData.email}</h1>
                 <h1>Payment Information</h1>
+                {/* <div className="user-details">
+                    <p>Name: {userData.name}</p>
+                    <p>Email: {userData.email}</p>
+                </div> */}
                 <div className="card-element">
                     <div className="card-number">
                         <p>Card number</p>

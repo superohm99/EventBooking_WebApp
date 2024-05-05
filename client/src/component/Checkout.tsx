@@ -114,8 +114,9 @@ function Checkout() {
                 })
 
             const data = await response.data
+            console.log("data: ", data)
             setEvent(data)
-            setUserData({ ...userData, price: data.seat.price })
+            setUserData({ ...data, price: data.seat.price })
         }
         getEventDetails()
     }, [params.Id])

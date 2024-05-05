@@ -81,11 +81,6 @@ function Reserve_container(props: Reserve_cont) {
 
           </Link>
       ))}
-
-
-  
-      <div className='test-text'>
-      </div>
     </div>
   )
 }

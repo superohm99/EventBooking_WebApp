@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../style/Leftbar.css'
 import axios from 'axios';
 import { EventProps, VenueProps, SeatProps, EventScheduleProps } from './Reserve_container'
+import { Link } from 'react-router-dom';
 
 interface LeftsideProps {
   result: (name: string) => void;
@@ -64,6 +65,14 @@ function Leftbar(props: LeftsideProps) {
     result(filterone+"$"+filtertwo+"$"+filterthr);
   }
 
+  const handlerefresh =(event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+    result("");
+    setFilterone("");
+    setFiltertwo("");
+    setFilterthr("");
+  }
+
 
   return (
     <div className='Leftbar-container'>
@@ -96,7 +105,11 @@ function Leftbar(props: LeftsideProps) {
 
 
 
-      <button type='submit' onClick={handlesubmit}>FILTER</button>
+      <button type='submit' onClick={handlesubmit}>Filter</button>
+
+      <Link onClick={handlerefresh}>
+      <button>Refresh</button>
+      </Link>
       </form>
   
       </div>
