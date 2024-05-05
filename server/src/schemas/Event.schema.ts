@@ -17,17 +17,16 @@ export class Event {
   @Prop()
   rating: string
 
-
   @Prop()
   image:string
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'Venue'}]})
+  @Prop({ type: mongoose.Schema.Types.ObjectId , ref:'Venue'})
   venue: Venue;
 
-  @Prop({ type: [{ type: EventSchedule }]})
+  @Prop([{ type: mongoose.Schema.Types.ObjectId , ref:'EventSchedule'}])
   eventschedules: EventSchedule[];
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId , ref:'Seat'}]})
+  @Prop([{ type: mongoose.Schema.Types.ObjectId , ref:'Seat'}])
   seats: Seat[];
 
 }

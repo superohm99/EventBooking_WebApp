@@ -5,48 +5,45 @@ import "../style/History.css";
 import Profile from "./Profile";
 import Navbar from "./Navbar";
 import axios from "axios";
+import { ReceiptProps } from "./Checkout";
+import { Link } from "react-router-dom";
 
-interface HistoryElementProps {
-    historyData: HistoryProps;
+type PurchaseProps = ReceiptProps & {
+  status: boolean,
+  reserveId: string,
 }
 
-interface HistoryProps {
-    event_image: string;
-    event_name: string;
-    event_location: string;
-    event_date: Date;
-    event_time: Date;
-    payment_status: boolean;
-    user_id: string;
-    section: string,
-    row: string;
-    seat: string;
-    price: number;
+interface HistoryElementProps {
+  historyData: PurchaseProps;
 }
 
 interface ProfileProps {
-    username: string;
-    email: string;
+  username: string;
+  email: string;
 }
 
 const HistoryElement: React.FC<HistoryElementProps> = ({ historyData }) => {
   return (
     <>
       <div className="history">
-        <img src={historyData.event_image}
+        <img src={historyData.image}
           alt="IMG" className="history__image" />
         <div className="history__pos">
+          <div className="history__type">
+            <span>Type</span>
+            <span>{historyData.seat.type}</span>
+          </div>
           <div className="history__section">
             <span>Sec</span>
-            <span>{historyData.section}</span>
+            <span>{historyData.seat.section}</span>
           </div>
           <div className="history__row">
             <span>Row</span>
-            <span>{historyData.row}</span>
+            <span>{historyData.seat.row}</span>
           </div>
           <div className="history__seat">
             <span>Seat</span>
-            <span>{historyData.seat}</span>
+            <span>{historyData.seat.seat_num}</span>
           </div>
         </div>
         <div className="history__info">
@@ -56,25 +53,26 @@ const HistoryElement: React.FC<HistoryElementProps> = ({ historyData }) => {
           </div>
           <div className="history__date">
             <span>Date</span>
-            <span>{historyData.event_date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+            <span>{new Date(historyData.event_schedule.start_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
           </div>
           <div className="history__time">
             <span>Time</span>
-            <span>{historyData.event_time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</span>
+            <span>{new Date(historyData.event_schedule.start_time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</span>
           </div>
           <div className="history__location">
             <span>Location</span>
-            <span>{historyData.event_location}</span>
+            <span>{historyData.venue.location}</span>
           </div>
           <div className="history__price">
             <span>Price</span>
-            <span>฿{historyData.price}</span>
+            <span>฿{historyData.seat.price}</span>
           </div>
-          {historyData.payment_status ?
+          {historyData.status ?
             <button className="payment__button payment__button--success">PAY</button> :
-            <button className="payment__button payment__button--pending">PAY</button>}
+            <Link style={{ textDecoration: 'none', textAlign: 'center', }} to={`/checkout/${historyData.reserveId}`} className="payment__button payment__button--pending">PAY</Link>
+          }
         </div>
-        {historyData.payment_status ? 
+        {historyData.status ?
           <div className="history__payment-status payment-status__success">Completed</div> :
           <div className="history__payment-status payment-status__pending">Pending</div>
         }
@@ -90,39 +88,26 @@ function History() {
     console.log("search...");
   };
   const [isSearch, setIsSearch] = useState<boolean>(false);
-  const [histories, setHistories] = useState<HistoryProps[]>([]);
   const [profile, setProfile] = useState<ProfileProps>({ username: "", email: "" });
+
+  const [purchaseList, setPurchaseList] = useState<PurchaseProps[]>([] as PurchaseProps[]);
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:3001/history", {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-      });
-      const data = await response.data;
-      const historyResData = data.history;
-      const userResData = data.user;
-      const historyList: HistoryProps[] = historyResData.map((element: any) => {
-        const date = new Date(element.event_date);
-        const time = new Date(element.event_time);
-        return {
-          event_image: element.event_image,
-          event_name: element.event_name,
-          event_location: element.event_location,
-          event_date: date,
-          event_time: time,
-          payment_status: element.payment_status,
-          user_id: element.user_id,
-          section: element.section,
-          row: element.row,
-          seat: element.seat,
-          price: element.price,
-        };
-    });
-    setHistories(historyList);
-    setProfile(userResData); 
+      try {
+        const response = await axios.post("http://localhost:3001/reserve/get_reserve_by_user", {}, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+        const data = await response.data;
+        // console.log("datalist", data)
+        setProfile(data.user);
+        setPurchaseList(data.history);
+      } catch (error) {
+        console.log("error", error);
+      }
     };
     fetchData();
   }, []);
@@ -136,6 +121,11 @@ function History() {
       setIsSearch(false);
     };
   }, [isSearch]);
+
+  useEffect(() => {
+    console.log("purchaseList", purchaseList);
+    console.log("user", profile);
+  }, [purchaseList]);
 
   return (
     <>
@@ -160,7 +150,7 @@ function History() {
               </button>
             </div>
             <div className="history-list">
-              {histories.map((data, index) => (
+              {purchaseList.map((data, index) => (
                 <HistoryElement key={index} historyData={data} />
               ))}
             </div>

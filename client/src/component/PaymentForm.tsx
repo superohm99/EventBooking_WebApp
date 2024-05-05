@@ -1,11 +1,14 @@
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import '../style/PaymentForm.css'
 
 type UserProps = {
     userData: {
         name: string;
         email: string;
+        price: number;
+        reserveId: string;
         handlePayment: (data: { status: boolean, paymentIntendId: string }) => void;
     }
 }
@@ -42,13 +45,13 @@ function PaymentForm({ userData }: UserProps) {
     }
 
     const getSecret = async () => {
-        const response = await fetch('http://localhost:3001/payment/507f1f77bcf86cd799439042/create-payment-intent', {
+        const response = await fetch(`http://localhost:3001/payment/${userData.reserveId}/create-payment-intent`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                amount: 20
+                amount: userData.price,
             }),
         });
         const data = await response.json();
@@ -62,8 +65,6 @@ function PaymentForm({ userData }: UserProps) {
 
         try {
             const { clientSecret, paymentIntendId } = await getSecret();
-            console.log("secret", clientSecret);
-            console.log("payment", paymentIntendId);
 
             const cardElement = elements.getElement(CardNumberElement);
 
@@ -74,7 +75,6 @@ function PaymentForm({ userData }: UserProps) {
 
             if (paymentMethodReq.error) {
                 console.log('error');
-                console.log(paymentMethodReq.error.message);
                 return;
             }
 
@@ -84,21 +84,15 @@ function PaymentForm({ userData }: UserProps) {
                 return;
             }
 
-            console.log('paymentMethod', paymentMethod);
-
-            const { error , paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+            const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: paymentMethod.id,
             });
-
-            console.log('paymentIntent', paymentIntent);
 
             if (error) {
                 console.log(error.message);
                 alert('Payment Failed');
                 return;
             }
-
-            console.log('paymentIntent2 ', paymentIntent);
 
             if (paymentIntent.status === 'succeeded') {
                 userData.handlePayment({ status: true, paymentIntendId });
@@ -121,10 +115,10 @@ function PaymentForm({ userData }: UserProps) {
                     console.log('after payment');
                 }
             };
-            if (isCardNumberValid && isExpiryValid && isCvcValid){
+            if (isCardNumberValid && isExpiryValid && isCvcValid) {
                 processPayment();
             }
-            else{
+            else {
                 alert('Invalid Card Information');
             }
         }
@@ -155,7 +149,7 @@ function PaymentForm({ userData }: UserProps) {
                     </div>
                 </div>
                 <div className="button-option">
-                    <button type="submit">Back</button>
+                    <Link to="/profile/history"><button type="button">Pay Later</button></Link>
                     <button type="submit" onClick={handleClick}>Pay Now</button>
                 </div>
 

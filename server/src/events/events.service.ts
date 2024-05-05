@@ -25,19 +25,21 @@ export class EventsService {
     await newSeat.save();
     const event_id_obj = new Types.ObjectId(event_id);
 
-    const event = await this.eventModel.findOne({_id:event_id});
-
-    (await event).seats.push(newSeat);
-
-    (await event).save()
-
-    const updatedTicket = await this.ticketModel.findOneAndUpdate(
-      { event: event_id_obj }, 
-      { $push: { seats: newSeat._id } }, 
+    const event = await this.eventModel.findOneAndUpdate(
+      { _id: event_id_obj },
+      { $push: { seats: newSeat._id } },
       { new: true }
     );
 
-    console.log("updated ticket", updatedTicket);
+    console.log("event", event);
+
+    // const updatedTicket = await this.ticketModel.findOneAndUpdate(
+    //   { event: event_id_obj }, 
+    //   { $push: { seats: newSeat._id } }, 
+    //   { new: true }
+    // );
+
+    // console.log("updated ticket", updatedTicket);
     
     return newSeat;
   }
@@ -58,12 +60,15 @@ export class EventsService {
   }
 
   async create_eventsch(eventschDto: CreateEventSchDto) {
-    const d = new Date();
+    const start_date = new Date(eventschDto.start_date);
+    const end_date = new Date(eventschDto.end_date);
+    const start_time = new Date(eventschDto.start_time);
+    const end_time = new Date(eventschDto.end_time);
     const new_eventSchedule = new this.eventScheduleModel({
-      start_date: d,
-      end_date: eventschDto.end_date,
-      start_time: eventschDto.start_time,
-      end_time: eventschDto.end_time
+      start_date,
+      end_date,
+      start_time,
+      end_time
     })
 
     const event = await this.eventModel.findById(eventschDto.event_id);
@@ -83,17 +88,21 @@ export class EventsService {
       capacity: venueDto.capacity
     })
 
-
-    const event = await this.eventModel.findByIdAndUpdate(venueDto.event_id, { venue: new_venue._id });
-
-    (await event).save();
     await new_venue.save();
+
+    const event = await this.eventModel.findByIdAndUpdate(new Types.ObjectId(venueDto.event_id), { venue: new_venue._id }, { new: true });
+    console.log("event", event);
+    console.log("new_venue", new_venue);
     return true
   }
 
   async events_data(){
-    const events = this.eventModel.find({}).exec();
-    console.log("evn",  events)
+    const events = await this.eventModel.find()
+  .populate('venue')
+  .populate('eventschedules')
+  .populate('seats')
+  .exec();
+
     return events
   }
 

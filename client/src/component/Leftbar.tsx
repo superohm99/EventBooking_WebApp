@@ -70,7 +70,7 @@ function Leftbar(props: LeftsideProps) {
       <div className='filter-container'>
       <form>
       <select name="cars" id="cars" onChange={handlefilterone}>
-        <option value=""disabled selected>Rating</option>
+        <option value="">Rating</option>
          {uniqueValues(events.map(item => item.rating)).map((rating, index) => (
           <option key={index} value={rating}>{rating}</option>
           ))}
@@ -79,17 +79,17 @@ function Leftbar(props: LeftsideProps) {
       <br/>
 
       <select name="cars" id="cars" onChange={handlefiltertwo}>
-        <option value="" disabled selected>Category</option>
-        {set_descript.map(item => (
-        <option value={item.event_description}>{item.event_description}</option>
+        <option value="">Category</option>
+        {set_descript.map((item, index) => (
+        <option key={index} value={item.event_description}>{item.event_description}</option>
          ))}
       </select>
 
       <br/>
 
       <select name="cars" id="cars" onChange={handlefilterthr}>
-        <option value="" disabled selected>Location</option>
-        {uniqueValues(venues.map(item => item.venue_location)).map((location, index) => (
+        <option value="">Location</option>
+        {uniqueValues(venues.map(item => item.location)).map((location, index) => (
         <option key={index} value={location}>{location}</option>
          ))}
       </select>

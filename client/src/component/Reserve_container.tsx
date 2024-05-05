@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../style/Reserve_container.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -8,8 +8,8 @@ interface Reserve_cont {
 }
 
 export type VenueProps = {
-  venue_name: string;
-  venue_location: string;
+  name: string;
+  location: string;
   capacity: number;
   _id: string;
 }
@@ -23,11 +23,10 @@ export type EventScheduleProps = {
 }
 
 export type SeatProps = {
-  class: string;
   type: string;
   section: string;
-  row: number;
-  seat_num: number;
+  row: string;
+  seat_num: string;
   price: number;
 }
 
@@ -57,22 +56,24 @@ function Reserve_container(props: Reserve_cont) {
     .then(res => setData(res.data))
     .catch(err => console.log(err));
   },[filterdata]);
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
   
   return (
     <div className='Center-container'>
       
-      {data.map(item => (
-        <Link to={{pathname:`/Reserve/Confirm-reserve/${item._id}`}} className='Link-form-reserve'>
+      {data.map((item, index) => (
+        <Link key={index} to={{pathname:`/Reserve/Confirm-reserve/${item._id}`}} className='Link-form-reserve'>
 
         <div className="Card">
           <img src={item.image}/>
           <div className="Container">
             <h1>Event: {item.event_name}</h1>
             <h3>Description: {item.event_description}</h3>
-            {item.eventschedules.map(schedule => (
-              <div key={schedule._id}>
-               <h3>Date: {schedule.start_date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</h3>
-              </div>
+            {item.eventschedules.map(schedules => (schedules)).map((schedule, index) => (
+              <h3 key={index}>Date: {new Date(schedule.start_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} Time: {new Date(schedule.start_time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</h3>
             ))}
             <h3 id='rating-show'>Rating: {item.rating} </h3>
           </div>
