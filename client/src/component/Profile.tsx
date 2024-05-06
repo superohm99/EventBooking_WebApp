@@ -15,42 +15,21 @@ interface EditState {
   email: string;
 }
 
-function Profile() {
-  const [userInfo, setUserinfo] = useState<EditState>({
-    username: "",
-    email: "",
-  });
+interface profielProps {
+  username: string;
+  email: string
+}
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-
-    fetch("http://localhost:3001/users/user_info/get", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUserinfo({
-          ...userInfo,
-          username: data.user.username,
-          email: data.user.email,
-        });
-        console.log("Username", userInfo);
-        console.log(data);
-      });
-  }, []);
-
-  const isLong = useMemo(() => userInfo.username.length > 14, [userInfo.username]);
+function Profile(props: profielProps) {
 
   return (
     <>
       <div className="menu-bar">
         <div className="menu-header">
           <div className="profile">
-            <p className="profile-pic">{userInfo.username[0]}</p>
-            <h1 className="heading">{isLong? `${userInfo.username.slice(0, 14)}...`: userInfo.username}</h1>
-            <p>{userInfo.email}</p> 
+            <p className="profile-pic">B</p>
+            <h1 className="heading">{props.username}</h1>
+            <p>{props.email}</p>
           </div>
           <ul className="menu-list">
             <li>

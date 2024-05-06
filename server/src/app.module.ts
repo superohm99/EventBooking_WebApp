@@ -8,8 +8,9 @@ import { AtGuard } from './users/common/guards';
 import { EventsModule } from './events/events.module';
 import { HistoryModule } from './history/history.module';
 import { ReserveModule } from './reserve/reserve.module';
-
+import { PaymentModule } from './payment/payment.module';
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 
 @Module({

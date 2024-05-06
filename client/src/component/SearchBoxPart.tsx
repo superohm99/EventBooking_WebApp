@@ -89,14 +89,14 @@ function SearchBoxPart(props: SearchBoxPartProps) {
                     onFocus={focus}
                     placeholder="Enter event name"
                 />
-                <ul>
+                {/* <ul>
 
                     {check ?filteredEvents.map((event) => (
                     <li key={event._id} onClick={() => handleEventSelect(event._id,event.event_name)}>{event.event_name}</li>
                     )): <li onClick={() => handleEventSelect(filteredEvents._id,filteredEvents.name)}>{filteredEvents.name} {filteredEvents.location}</li>}
 
 
-                </ul>
+                </ul> */}
                 <hr />
             </div>
         </div>

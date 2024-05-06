@@ -1,14 +1,15 @@
 .Center-container{
     width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    
-}
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 4rem;
+    padding-bottom: 5rem;
+}   
 
 .Center-container img{
     width: 100%;
-    height: 250px;
+    height: 25rem;
+    object-fit: cover;
 }
 
 .Card:hover{
@@ -18,16 +19,14 @@
 .Card{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    margin-right: 50px;
-    margin-top: 30px;
 }
 
 .Container{
-    padding: 2px 16px;
-    width: 400px;
-    min-height: 100px;
     background-color: black;
-    overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: .5rem;
 }
 
 .Container h3{
@@ -35,13 +34,21 @@
     font-weight: bolder;
     font-family: 'Courier New', Courier, monospace;
     font-size:medium;
-    /* word-wrap: break-word; */
 }
 
 .Container h1{
     font-weight:900;
     font-family: 'Courier New', Courier, monospace;
     color:brown;
+}
+
+.Container h1, h3{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 2lh;
 }
 
 .Link-form-reserve{

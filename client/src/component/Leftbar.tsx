@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import '../style/Leftbar.css'
 import axios from 'axios';
+import { EventProps, VenueProps, SeatProps, EventScheduleProps } from './Reserve_container'
+import { Link } from 'react-router-dom';
 
 interface LeftsideProps {
   result: (name: string) => void;
@@ -9,8 +11,8 @@ interface LeftsideProps {
 
 function Leftbar(props: LeftsideProps) {
 
-  const [venues, setVenues] = useState([])
-  const [events, setEvents] = useState([])
+  const [venues, setVenues] = useState<VenueProps[]>([])
+  const [events, setEvents] = useState<EventProps[]>([])
 
   const [filterone, setFilterone] = useState('')
   const [filtertwo, setFiltertwo] = useState('')
@@ -63,39 +65,51 @@ function Leftbar(props: LeftsideProps) {
     result(filterone+"$"+filtertwo+"$"+filterthr);
   }
 
+  const handlerefresh =(event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+    result("");
+    setFilterone("");
+    setFiltertwo("");
+    setFilterthr("");
+  }
+
 
   return (
     <div className='Leftbar-container'>
       <div className='filter-container'>
       <form>
       <select name="cars" id="cars" onChange={handlefilterone}>
-        <option value=""disabled selected>Rating</option>
-        {uniqueValues(events.map(item => item.rating)).map(rating => (
-        <option value={rating}>{rating}</option>
-         ))}
+        <option value="">Rating</option>
+         {uniqueValues(events.map(item => item.rating)).map((rating, index) => (
+          <option key={index} value={rating}>{rating}</option>
+          ))}
       </select>
 
       <br/>
 
       <select name="cars" id="cars" onChange={handlefiltertwo}>
-        <option value="" disabled selected>Category</option>
-        {set_descript.map(item => (
-        <option value={item.event_description}>{item.event_description}</option>
+        <option value="">Category</option>
+        {set_descript.map((item, index) => (
+        <option key={index} value={item.event_description}>{item.event_description}</option>
          ))}
       </select>
 
       <br/>
 
       <select name="cars" id="cars" onChange={handlefilterthr}>
-        <option value="" disabled selected>Location</option>
-        {uniqueValues(venues.map(item => item.location)).map(location => (
-        <option  value={location} >{location}</option>
+        <option value="">Location</option>
+        {uniqueValues(venues.map(item => item.location)).map((location, index) => (
+        <option key={index} value={location}>{location}</option>
          ))}
       </select>
 
 
 
-      <button type='submit' onClick={handlesubmit}>FILTER</button>
+      <button type='submit' onClick={handlesubmit}>Filter</button>
+
+      <Link onClick={handlerefresh}>
+      <button>Refresh</button>
+      </Link>
       </form>
   
       </div>

@@ -5,22 +5,48 @@ import Form_reserve from './Form_reserve'
 import '../style/Form_reserve.css'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { EventProps, SeatProps, VenueProps } from './Reserve_container'
+import { useNavigate } from 'react-router-dom'
 
 interface InputReserve {
   seat_class: string
   seat_number: number
 }
 
+type UserProps = {
+  username: string
+  email: string
+  _id: string
+}
+
+type EventConfirmProps = {
+  event: EventProps;
+  seats: SeatProps[];
+  venue: VenueProps;
+}
+
+type ReceiptProps = {
+  event_name: string;
+  event_description: string;
+  image: string;
+  event_location: string;
+  event_date: string;
+  event_time: string;
+  seat_type: string;
+  seat_section: string;
+  seat_row: string;
+  seat_num: string;
+  seat_price: string;
+}
+
 
 function Confirm_reserve() {
 
-
   const params = useParams()
-  const [event,setEvent] = useState([])
-  const [seats,setSeats] = useState([])
-  const [userinfo,setUserinfo] = useState([])
+  const [event,setEvent] = useState<EventProps>({} as EventProps)
+  const [seats,setSeats] = useState<SeatProps[]>([] as SeatProps[])
+  const [userinfo,setUserinfo] = useState<UserProps>({} as UserProps)
   const [seatid,setSeatid] = useState("")
-
 
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedSection, setSelectedSection] = useState('');
@@ -28,16 +54,10 @@ function Confirm_reserve() {
   const [selectedSeatNum, setSelectedSeatNum] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
 
-  console.log(params.Id)
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+  const [receipt, setReceipt] = useState<ReceiptProps>({} as ReceiptProps)
 
-  const [input, setInput] = useState<InputReserve>({
-    seat_class: " ",
-    seat_number: 0,
-  })
-  
-  // const handleseatid = (filter:React.ChangeEvent<HTMLSelectElement>) => {
-  //   setSeatid(filter.target.value);
-  // };
+  const navigate = useNavigate()
 
   const uniqueValues = (arr:any) => {
     return Array.from(new Set(arr));
@@ -82,19 +102,11 @@ function Confirm_reserve() {
   }
 
   const handlesubmit = () => {
-    if (selectedPrice && userinfo.username)
-      {
-        const token = localStorage.getItem("access_token")
-        axios.post("http://localhost:3001/reserve/create_reserve",
-        {
-          eventid: event[0]._id,
-          seatid: seatid,
-          authorization: `Bearer ${token}`,
-        }).then((res) => res.data)
-      }
-    else
-      console.log("Not Success Reserve")    
-    
+    console.log("submit")
+    console.log("selectedPrice", selectedPrice)
+    console.log("userinfo", userinfo.username)
+    if(!selectedPrice || !userinfo.username) return
+    setIsSubmitted(true)  
   }
 
   useEffect(() => {
@@ -105,16 +117,60 @@ function Confirm_reserve() {
         "Authorization": `Bearer ${token}`,
       },
     })
-    .then((data) =>{ setUserinfo(data.data.user)})
-    setSeats(event[2])
-    // console.log("master")
-    // console.log(seats)
+    .then((data) =>{ 
+      setUserinfo(data.data.user)
+    })
+      setSeats(event.seats)
+      console.log("event", event)
   },[event])
 
   useEffect(()=>{
     axios.get(`http://localhost:3001/reserve/${params.Id}`)
-    .then(res => setEvent(res.data))
+    .then(res => res.data)
+    .then(data => {
+      setEvent(data)
+      setSeats(data.seats)
+    })
   },[params.Id])
+
+
+  useEffect(() => {
+    if(isSubmitted){
+      const createReserve = async () => {
+          try{
+            const token = localStorage.getItem("access_token")
+            const response = await axios.post(
+              `http://localhost:3001/reserve/${params.Id}/create_reserve`,
+              JSON.stringify({seat_id: seatid}),
+              {
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+              },
+            })
+            const data = await response.data
+            console.log("data", data)
+            console.log("reserveId", data.reserveId)
+            const reserveId = data.reserveId
+            if(reserveId){
+              console.log("Success")
+              navigate(`/checkout/${reserveId}`, { state: { eventId: params.Id } })
+            } else {
+              console.log("Error")
+            }
+            
+          } catch(err){
+            console.log("Error", err)
+          }
+      }
+
+      createReserve()
+    }
+
+    return () => {
+      setIsSubmitted(false)
+    }
+}, [isSubmitted])
 
   if (!seats && true)
     {
@@ -124,13 +180,11 @@ function Confirm_reserve() {
   return (
     <div>
         <Navbar/>
-        <div className='Form-reserve'> 
-        {event.length > 0 && <Form_reserve object={event} price={selectedPrice}/>}
-
+         <div className='Form-reserve'> 
+        { Object.keys(event).length > 0 && <Form_reserve data={{ event, price: selectedPrice }}/> }
         <div className='Tone-2'>
             <div>
                 <h1>RESERVE TICKET</h1>
-                {/* {JSON.stringify(params)} */}
             </div>
 
             <h2>Username: {userinfo.username}</h2>
@@ -139,8 +193,8 @@ function Confirm_reserve() {
 
               <select value={selectedClass} onChange={handleClassChange}>
                 <option value="" disabled selected>Seat-Class</option>
-                {uniqueValues(seats.map(item => item.type)).map(type => (
-                  <option value={type} key={type}>{type}</option>
+                {uniqueValues(seats.map(item => item.type)).map((type, index) => (
+                  <option value={type} key={index}>{type}</option>
                 ))}
               </select>
 
@@ -148,8 +202,8 @@ function Confirm_reserve() {
 
               <select value={selectedSection} onChange={handleSectionChange} disabled={!selectedClass}>
                 <option value="" disabled selected>Seat-Section</option>
-                {uniqueValues(seats.filter(item => item.type === selectedClass).map(item => item.section)).map(section => (
-                  <option value={section} key={section}>{section}</option>
+                {uniqueValues(seats.filter(item => item.type === selectedClass).map(item => item.section)).map((section, index) => (
+                  <option value={section} key={index}>{section}</option>
                       ))}
               </select>
 
@@ -157,8 +211,8 @@ function Confirm_reserve() {
 
               <select value={selectedRow} onChange={handleRowChange} disabled={!selectedSection}>
                 <option value="" disabled selected>Seat-Row</option>
-                {uniqueValues(seats.filter(item => item.type === selectedClass && item.section === selectedSection).map(item => item.row)).map(row => (
-                  <option value={row} key={row}>{row}</option>
+                {uniqueValues(seats.filter(item => item.type === selectedClass && item.section === selectedSection).map(item => item.row)).map((row, index) => (
+                  <option value={row} key={index}>{row}</option>
                 ))}
               </select>
 
@@ -167,8 +221,8 @@ function Confirm_reserve() {
 
               <select value={selectedSeatNum} onChange={handleSeatNumChange} disabled={!selectedRow}>
                 <option value="" disabled selected>Seat-Num</option>
-                {uniqueValues(seats.filter(item => item.type === selectedClass && item.section === selectedSection && item.row === selectedRow).map(item => item.seat_num)).map(seat_num => (
-                  <option value={seat_num} key={seat_num}>{seat_num}</option>
+                {uniqueValues(seats.filter(item => item.type === selectedClass && item.section === selectedSection && item.row === selectedRow).map(item => item.seat_num)).map((seat_num, index) => (
+                  <option value={seat_num} key={index}>{seat_num}</option>
                 ))}
               </select>
 
@@ -180,28 +234,16 @@ function Confirm_reserve() {
                   <option value={JSON.stringify({ id: item.id, price: item.price })} key={item.id}>{item.price}</option>
                 ))}
               </select>
-
               <br/>
-
-
-
             </form>
-
 
             <div className='Tone-2-button'>
               <Link to="/reserve">
                 <button id='back-1'>BACK</button>
               </Link>
-
-              <Link to={selectedPrice && userinfo.username ? `/receipt` : ''} state={{ object: event }} >
-              {
-              <button id='next-1'type='submit' onClick={handlesubmit}>NEXT</button>
-              }
-              </Link>
-            </div>
-            
+              <button type='button' onClick={handlesubmit}>RESERVE</button>
+            </div>    
         </div>
-
         </div>
       <div className='Bottombar'>
         <Bottombar hideContainer={true}/>

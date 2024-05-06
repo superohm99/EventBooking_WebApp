@@ -45,5 +45,6 @@ import { User, UserSchema } from 'src/schemas/User.schema';
   ],
   controllers: [ReserveController],
   providers: [ReserveService],
+  exports: [ReserveService],
 })
 export class ReserveModule {}
