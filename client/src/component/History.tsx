@@ -4,9 +4,9 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "../style/History.css";
 import Profile from "./Profile";
 import Navbar from "./Navbar";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ReceiptProps } from "./Checkout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type PurchaseProps = ReceiptProps & {
   status: boolean,
@@ -77,14 +77,8 @@ const HistoryElement: React.FC<HistoryElementProps> = ({ historyData }) => {
 }
 
 function History() {
-  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setIsSearch(true);
-    console.log("search...");
-  };
-  const [isSearch, setIsSearch] = useState<boolean>(false);
-
   const [purchaseList, setPurchaseList] = useState<PurchaseProps[]>([] as PurchaseProps[]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -106,16 +100,6 @@ function History() {
   }, []);
 
   useEffect(() => {
-    if (isSearch) {
-      console.log("searching...");
-    }
-
-    return () => {
-      setIsSearch(false);
-    };
-  }, [isSearch]);
-
-  useEffect(() => {
     console.log("purchaseList", purchaseList);
   }, [purchaseList]);
 
@@ -127,20 +111,6 @@ function History() {
           <Profile/>
           <div className="content">
             <h1 className="heading">Purchase History</h1>
-            <div className="input-horizontal">
-              <input
-                type="text"
-                placeholder="Search by events, name, location, and more"
-              />
-              <button
-                type="submit"
-                onClick={handleSubmit}
-                className="search-btn"
-              >
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-                Search
-              </button>
-            </div>
             <div className="history-list">
               {purchaseList.map((data, index) => (
                 <HistoryElement key={index} historyData={data} />
