@@ -30,6 +30,8 @@ const options = {
 
 function PaymentForm({ userData }: UserProps) {
 
+    console.log(userData)
+
     const [isCardNumberValid, setIsCardNumberValid] = useState(false);
     const [isExpiryValid, setIsExpiryValid] = useState(false);
     const [isCvcValid, setIsCvcValid] = useState(false);
