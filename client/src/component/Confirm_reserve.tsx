@@ -35,7 +35,6 @@ function Confirm_reserve() {
     seat_number: 0,
   })
   
-
   // const handleseatid = (filter:React.ChangeEvent<HTMLSelectElement>) => {
   //   setSeatid(filter.target.value);
   // };

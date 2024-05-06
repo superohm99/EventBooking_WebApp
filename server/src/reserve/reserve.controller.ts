@@ -19,7 +19,4 @@ export class ReserveController {
   create_reserve(@Body() create_reserve:CreateReserveDto){
     return this.reserveService.create_reserve(create_reserve);
   }
-
-
-  
 }

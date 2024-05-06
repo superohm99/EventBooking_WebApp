@@ -60,6 +60,10 @@
   font-weight: normal;
 }
 
+.ticket-card .title {
+  font-weight: bold;
+}
+
 @media (max-width: 820px) {
   .ticket-container {
     display: flex;

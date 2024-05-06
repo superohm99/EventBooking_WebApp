@@ -23,7 +23,6 @@ export class UsersService {
     constructor(
         @InjectModel(User.name) private userModel: Model<User>,
         @InjectModel(UserSettings.name) private userSettingsModel: Model<UserSettings>,
-
         @InjectModel(User_info.name) private userInfoModel: Model<User_info>,
 
         private jwtService: JwtService,
@@ -193,5 +192,4 @@ export class UsersService {
       console.log('new_User_info:',updateUserInfoDto);
       return updatedUserInfo;
     }
-    
 }

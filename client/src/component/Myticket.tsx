@@ -18,7 +18,7 @@ class Ticket extends Component<TicketProps> {
     return (
       <div className="ticket-card">
         <img src={this.props.img} alt="ticket" />
-        <div>Concert: {this.props.title}</div>
+        <div className="title">{this.props.title}</div>
         <div>Venue: {this.props.info}</div>
         <div>Show Time: {this.props.time}</div>
         <div>Show Date: {this.props.date.toLocaleDateString()}</div>
