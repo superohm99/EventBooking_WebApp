@@ -5,7 +5,6 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faTicketSimple,
   faClockRotateLeft,
   faPenToSquare,
   faLock,
@@ -29,10 +28,6 @@ const DropDown = ({ username, handleLogout }: DropDownProps) => {
         </Link>
       </div>
       <div className="dropdown-content">
-        <Link to="/Profile/Myticket" className="menu-item">
-          <FontAwesomeIcon icon={faTicketSimple} />
-          <a>My Ticket</a>
-        </Link>
         <Link to="/Profile/History" className="menu-item">
           <FontAwesomeIcon icon={faClockRotateLeft} />
           <a>Purchase History</a>
@@ -45,7 +40,7 @@ const DropDown = ({ username, handleLogout }: DropDownProps) => {
           <FontAwesomeIcon icon={faLock} />
           <a>Change Password</a>
         </Link>
-        <div className="menu-item main-color" >
+        <div className="menu-item main-color">
           <FontAwesomeIcon icon={faRightFromBracket} />
           <a onClick={handleLogout}>Sign Out</a>
         </div>

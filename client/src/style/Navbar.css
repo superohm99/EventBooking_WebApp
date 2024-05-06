@@ -123,5 +123,6 @@
 
 .Navbar-container .dropdown .dropdown-content .main-color,
 .Navbar-container .dropdown .dropdown-content .main-color a {
+  font-size: medium;
   color: #f94144;
 }
