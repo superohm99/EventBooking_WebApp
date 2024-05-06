@@ -17,11 +17,6 @@ interface HistoryElementProps {
   historyData: PurchaseProps;
 }
 
-interface ProfileProps {
-  username: string;
-  email: string;
-}
-
 const HistoryElement: React.FC<HistoryElementProps> = ({ historyData }) => {
   return (
     <>
@@ -88,7 +83,6 @@ function History() {
     console.log("search...");
   };
   const [isSearch, setIsSearch] = useState<boolean>(false);
-  const [profile, setProfile] = useState<ProfileProps>({ username: "", email: "" });
 
   const [purchaseList, setPurchaseList] = useState<PurchaseProps[]>([] as PurchaseProps[]);
 
@@ -103,7 +97,6 @@ function History() {
         });
         const data = await response.data;
         // console.log("datalist", data)
-        setProfile(data.user);
         setPurchaseList(data.history);
       } catch (error) {
         console.log("error", error);
@@ -124,7 +117,6 @@ function History() {
 
   useEffect(() => {
     console.log("purchaseList", purchaseList);
-    console.log("user", profile);
   }, [purchaseList]);
 
   return (
@@ -132,7 +124,7 @@ function History() {
       <Navbar />
       <div className="box-container">
         <div className="history-container">
-          <Profile username={profile.username} email={profile.email} />
+          <Profile/>
           <div className="content">
             <h1 className="heading">Purchase History</h1>
             <div className="input-horizontal">

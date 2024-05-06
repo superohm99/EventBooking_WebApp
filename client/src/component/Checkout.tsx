@@ -77,7 +77,7 @@ function Checkout() {
         reserveId: params.Id as string,
         handlePayment: handlePayment
     })
-
+    
     const [paymentStatus, setPaymentStatus] = useState(false)
 
     useEffect(() => {
@@ -116,7 +116,7 @@ function Checkout() {
             const data = await response.data
             console.log("data: ", data)
             setEvent(data)
-            setUserData({ ...data, price: data.seat.price })
+            setUserData({ ...userData, price: data.seat.price })
         }
         getEventDetails()
     }, [params.Id])
