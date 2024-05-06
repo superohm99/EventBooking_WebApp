@@ -1,8 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import "../style/Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faClockRotateLeft,
+  faPenToSquare,
+  faLock,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface DropDownProps {
   username: string;
@@ -21,19 +28,22 @@ const DropDown = ({ username, handleLogout }: DropDownProps) => {
         </Link>
       </div>
       <div className="dropdown-content">
-        <Link to="/Profile/Myticket">
-          <a>My Ticket</a>
-        </Link>
-        <Link to="/Profile/History">
+        <Link to="/Profile/History" className="menu-item">
+          <FontAwesomeIcon icon={faClockRotateLeft} />
           <a>Purchase History</a>
         </Link>
-        <Link to="/Profile">
+        <Link to="/Profile" className="menu-item">
+          <FontAwesomeIcon icon={faPenToSquare} />
           <a>Edit Profile</a>
         </Link>
-        <Link to="/Profile/Changepasswd">
+        <Link to="/Profile/Changepasswd" className="menu-item">
+          <FontAwesomeIcon icon={faLock} />
           <a>Change Password</a>
         </Link>
-        <a onClick={handleLogout}>Sign Out</a>
+        <div className="menu-item main-color">
+          <FontAwesomeIcon icon={faRightFromBracket} />
+          <a onClick={handleLogout}>Sign Out</a>
+        </div>
       </div>
     </div>
   );
@@ -43,10 +53,9 @@ const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   let token = localStorage.getItem("access_token");
-  console.log("token", token);
 
   useEffect(() => {
-    if (token) {
+    if (token) {  
       const decoded: any = jwtDecode(token);
       const currentTime = Date.now() / 1000;
 
@@ -68,13 +77,14 @@ const Navbar = () => {
           },
         })
        .then((res) => {
-          setUsername(res.data.user.username);
+         setUsername(res.data.user.username);
         });
     } catch (err) {
       console.log("error", err);
     }
   };
 
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       await axios.post("http://localhost:3001/users/logout", {
@@ -83,8 +93,8 @@ const Navbar = () => {
         },
       }).then((res) => {
         if (res.data) {
-          console.log("logout success", res.data);
           localStorage.removeItem("access_token");
+          navigate('/', { replace: true });
           setIsAuthenticated(false);
         }
       }).catch((err) => {
@@ -114,15 +124,6 @@ const Navbar = () => {
         </Link>
         <a>Help</a>
       </div>
-
-      {/* <div className="Select-option">
-          <Link to="/Signin">
-            <button className="Signin">Login</button>
-          </Link>
-          <Link to="/Signup">
-            <button className="Signup">Register</button>
-          </Link>
-        </div> */}
 
       {isAuthenticated ? (
         <div className="Select-option">

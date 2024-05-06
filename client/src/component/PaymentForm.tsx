@@ -46,6 +46,8 @@ function PaymentForm({ userData }: UserProps) {
         setIsSubmitted(true)
     }
 
+    console.log("reserve id = ", userData.reserveId)
+
     const getSecret = async () => {
         const response = await fetch(`http://localhost:3001/payment/${userData.reserveId}/create-payment-intent`, {
             method: 'POST',

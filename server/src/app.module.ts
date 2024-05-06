@@ -14,7 +14,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 @Module({
-  imports: [MongooseModule.forRoot(process.env.MONGODB_URL), UsersModule, EventsModule, HistoryModule,ReserveModule, PaymentModule],
+  imports: [MongooseModule.forRoot(process.env.URI), UsersModule, EventsModule, HistoryModule,ReserveModule, PaymentModule],
   controllers: [AppController],
   providers: [
     AppService,

@@ -1,7 +1,7 @@
 .menu-bar {
   font-size: 1.5rem;
-  width: 30rem;
-  margin: 3rem 3rem 3rem 8rem;
+  min-width: 30rem;
+  margin: 3rem 3rem 3rem 10rem;
   border-right: 1px solid #fff;
   display: flex;
   justify-content: center;
@@ -22,6 +22,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-right: 3rem;
 }
 
 .menu-bar .profile .profile-pic {
@@ -58,6 +59,7 @@
   align-items: center;
   text-decoration: none;
   color: #000;
+  cursor: pointer;
 }
 
 .menu-bar .menu-item :hover {

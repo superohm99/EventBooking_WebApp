@@ -52,6 +52,7 @@ export class UsersController {
   @Post('logout')
   async logout(@Req() req): Promise<boolean> {
     const authHeader = req.body.headers.Authorization;
+    // console.log(authHeader);
     
     if (!authHeader) {
       throw new Error('Authorization header not found');

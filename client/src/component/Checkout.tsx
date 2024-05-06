@@ -77,7 +77,7 @@ function Checkout() {
         reserveId: params.Id as string,
         handlePayment: handlePayment
     })
-
+    
     const [paymentStatus, setPaymentStatus] = useState(false)
 
     useEffect(() => {

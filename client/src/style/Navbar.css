@@ -93,7 +93,14 @@
   margin-top: 1rem;
 }
 
+.Navbar-container .dropdown .dropdown-content .menu-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
 .Navbar-container .dropdown .dropdown-content a {
+  font-weight: 600;
   font-size: 1.5rem;
   text-decoration: none;
   color: black;
@@ -101,8 +108,8 @@
   cursor: pointer;
 }
 
-.Navbar-container .dropdown .dropdown-profile:hover,
-.Navbar-container .dropdown .dropdown-content a:hover {
+.Navbar-container .dropdown .dropdown-profile :hover,
+.Navbar-container .dropdown .dropdown-content :hover {
   background-color: #f1f1f1;
 }
 
@@ -112,4 +119,10 @@
 
 .no-underline {
   text-decoration: none;
+}
+
+.Navbar-container .dropdown .dropdown-content .main-color,
+.Navbar-container .dropdown .dropdown-content .main-color a {
+  font-size: medium;
+  color: #f94144;
 }
