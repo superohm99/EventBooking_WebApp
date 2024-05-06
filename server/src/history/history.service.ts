@@ -1,25 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Req } from '@nestjs/common';
 import { CreateHistoryDto } from './dto/create-history.dto';
 import { UpdateHistoryDto } from './dto/update-history.dto';
 import { History } from 'src/schemas/History.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { User } from 'src/schemas/User.schema';
 import { Types } from 'mongoose';
 @Injectable()
 export class HistoryService {
 
-  constructor(@InjectModel(History.name) private historyModel: Model<History>) {}
+  constructor(
+    @InjectModel(History.name) private historyModel: Model<History>,
+    @InjectModel(User.name) private userModel: Model<User>
+  ) {}
 
   private readonly histories = [
     {
       id: 1,
       event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/da6a1c12016011ef911101117567899b.jpg?opt=mild&resize=w200,h290",
-      event_name: "Event Name 5",
+      event_name: "SORNRAM FIRST MEETING",
       event_location: "Event Location 5",
       event_date: new Date(),
       event_time: new Date(),
       payment_status: true,
-      user_id: "user_id_5",
+      user_id: "663356b951a4421ff792fe02",
       section: "E",
       row: "5",
       seat: "E5",
@@ -33,7 +37,7 @@ export class HistoryService {
       event_date: new Date(),
       event_time: new Date(),
       payment_status: false,
-      user_id: "user_id_4",
+      user_id: "663356b951a4421ff792fe02",
       section: "D",
       row: "4",
       seat: "D4",
@@ -47,7 +51,7 @@ export class HistoryService {
       event_date: new Date(),
       event_time: new Date(),
       payment_status: true,
-      user_id: "user_id_3",
+      user_id: "663356b951a4421ff792fe02",
       section: "C",
       row: "3",
       seat: "C3",
@@ -61,21 +65,87 @@ export class HistoryService {
       event_date: new Date(),
       event_time: new Date(),
       payment_status: false,
-      user_id: "user_id_2",
+      user_id: "663356b951a4421ff792fe02",
       section: "B",
       row: "2",
       seat: "B2",
       price: 200,
     },
+    {
+      id: 5,
+      event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/aaa0b51005d011ef911101117567899b.png?opt=mild&resize=w200,h290",
+      event_name: "Together Festival 2024",
+      event_location: "Bitec Convention Center @Thailand",
+      event_date: new Date(),
+      event_time: new Date(),
+      payment_status: true,
+      user_id: "663356b951a4421ff792fe02",
+      section: "A",
+      row: "1",
+      seat: "A1",
+      price: 100,
+    },
+    {
+      id: 6,
+      event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/057542a0fd3c11ee911101117567899b.png?opt=mild&resize=w200,h290",
+      event_name: "SUNSET by NEON",
+      event_location: "Resorts World AWANA",
+      event_date: new Date(),
+      event_time: new Date(),
+      payment_status: true,
+      user_id: "66334685cdc825b37826929a",
+      section: "E",
+      row: "5",
+      seat: "E5",
+      price: 500,
+    },
+    {
+      id: 7,
+      event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/b64290409c9111ed911101117567899b.jpg?opt=mild&resize=w200,h290",
+      event_name: "Siam Niramit Phuket",
+      event_location: "Siam Niramit Phuket",
+      event_date: new Date(),
+      event_time: new Date(),
+      payment_status: false,
+      user_id: "66334685cdc825b37826929a",
+      section: "D",
+      row: "4",
+      seat: "D4",
+      price: 400,
+    },
+    {
+      id: 8,
+      event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/2c83f492077811ef911101117567899b.png?opt=mild&resize=w200,h290",
+      event_name: "Ultra Beach Bali 2024",
+      event_location: "Bali @Indonesia",
+      event_date: new Date(),
+      event_time: new Date(),
+      payment_status: true,
+      user_id: "66334685cdc825b37826929a",
+      section: "C",
+      row: "3",
+      seat: "C3",
+      price: 300,
+    },
+    {
+      id: 9,
+      event_image: "https://s3-ap-southeast-1.amazonaws.com/tm-img-poster-event/e9a990108da811ee911101117567899b.png?opt=mild&resize=w200,h290",
+      event_name: "Space K@Next Tech",
+    }
     
   ];
   async create(createHistoryDto: CreateHistoryDto) {
     return 'This action adds a new history';
   }
 
-  async findAll() {
-    // return this.historyModel.find().exec();
-    return this.histories;
+  async findAll(user_id: string) {
+    const user_id_obj = new Types.ObjectId(user_id);
+    const user = await this.userModel.findById(user_id_obj);
+    if (!user) throw new Error('User not found');
+    return { history: this.histories.filter(history => history.user_id === user_id), user: {
+      username: user.username,
+      email: user.email,
+    } };
   }
 
   findOne(id: number) {

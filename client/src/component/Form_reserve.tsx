@@ -1,27 +1,31 @@
 import React , {useEffect, useState} from 'react'
 import '../style/Form_reserve.css'
 import axios from 'axios'
+import { EventProps, VenueProps, EventScheduleProps } from './Reserve_container'
 
+type FormProps = {
+  data: {
+    event: EventProps,
+    price: string
+  }
+}
 
-function Form_reserve(props:any) {
-  console.log(props.object)
+function Form_reserve({data}: FormProps) {
   const [rendered, setRendered] = useState(false);
-  const [event, setEvent] = useState([])
-  const [eventsch, setEventsch] = useState([])
-  const [venue, setVenue] = useState([])
-
-  // useEffect(() => {
-  //   console.log("5555")
-  //   setEventsch(props.object[0].eventschedules)
-  //   console.log(eventsch)
-  // },[event])
+  const [event, setEvent] = useState<EventProps>({} as EventProps)
+  const [eventsch, setEventsch] = useState<EventScheduleProps>({} as EventScheduleProps)
+  const [venue, setVenue] = useState<VenueProps>({} as VenueProps)
 
   useEffect(()=> {
       setRendered(true);
-      setEvent(props.object[0])
-      setVenue(props.object[1])
-      setEventsch(props.object[0].eventschedules)
+      setEvent(data.event)
+      setVenue(data.event.venue)
+      setEventsch(data.event.eventschedules[0])
   },[])
+
+  useEffect(() => {
+    console.log(eventsch)
+  },[event,venue,eventsch])
   
   if (!rendered) {
     return null;
@@ -33,19 +37,19 @@ function Form_reserve(props:any) {
                 <div className="Tone-card">
                     <img src={event.image}/>
                     <div className='Tone-container'>
-                    <p>{event.event_name} {console.log(event)}</p>
-                    {<p>Date: {event.eventschedules[0].start_date}</p>}
+                    <h2>{event.event_name}</h2>
+                    <p>Date: {new Date(eventsch.start_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                     </div>
                 </div>
 
 
                 <div className='Show-detail'>
                
-                    <p>Date: {eventsch[0].start_date}</p>
-                    <p >Time: 19.00</p>
-                    <p >Location: {venue.location}</p>
-                    <p >Reserve: 1020/2500</p>
-                    <p >Budget: 450 ฿</p>
+                    <p>Date: {new Date(eventsch.start_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                    <p >Time: {new Date(eventsch.start_date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
+                    <p >Location: {venue.name} {venue.location}</p>
+                    <p >Reserve:     1500/{venue.capacity}</p>
+                    <p >Budget: {data.price}</p>
                 </div>
 
         </div>

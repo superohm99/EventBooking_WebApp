@@ -27,14 +27,6 @@ function Reserve() {
       
         <div className='colunm-container'>
           <Reserve_container filter={filter}/>
-          <div>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-          </div>
         </div>
 
       <Rightbar/>

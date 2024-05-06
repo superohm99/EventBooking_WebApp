@@ -6,7 +6,7 @@ import Reserve from './component/Reserve';
 import Confirm_reserve from './component/Confirm_reserve';
 import Saveticket from './component/Saveticket';
 import Login from './component/Login';
-import Receipt from './component/Receipt';
+import Checkout from './component/Checkout';
 import Register from './component/Register';
 
 import Myticket from "./component/Myticket";
@@ -54,8 +54,8 @@ function App() {
                 />
 
                 <Route
-                    path="/Receipt"
-                    element={ <Receipt /> }
+                    path="/Checkout/:Id"
+                    element={ <Checkout /> }
                 />
 
                 <Route path="/Profile/Myticket" element={<Myticket />} />

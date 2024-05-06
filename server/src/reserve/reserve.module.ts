@@ -7,6 +7,8 @@ import { EventSchema } from 'src/schemas/Event.schema';
 import { Venue, VenueSchema } from 'src/schemas/Venue.schema';
 import { Seat, SeatSchema } from 'src/schemas/Seat.schema';
 import { Ticket, TicketSchema } from 'src/schemas/Ticket.schema';
+import { Reserve, ReserveSchema } from 'src/schemas/Reserve.schema';
+import { User, UserSchema } from 'src/schemas/User.schema';
 
 @Module({
   imports: [
@@ -31,9 +33,18 @@ import { Ticket, TicketSchema } from 'src/schemas/Ticket.schema';
         name: Ticket.name,
         schema: TicketSchema,
       },
+      {
+        name: Reserve.name,
+        schema: ReserveSchema
+      },
+      {
+        name: User.name,
+        schema: UserSchema
+      }
     ]),
   ],
   controllers: [ReserveController],
   providers: [ReserveService],
+  exports: [ReserveService],
 })
 export class ReserveModule {}
