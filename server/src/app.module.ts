@@ -9,6 +9,9 @@ import { EventsModule } from './events/events.module';
 import { HistoryModule } from './history/history.module';
 import { ReserveModule } from './reserve/reserve.module';
 
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 @Module({
   imports: [MongooseModule.forRoot('mongodb+srv://teeruth2546:7mawijIAr3yW510N@ruth.jtq6v9f.mongodb.net/'), UsersModule, EventsModule, HistoryModule,ReserveModule],
   controllers: [AppController],
