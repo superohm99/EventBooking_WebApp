@@ -1,4 +1,4 @@
-# Readme
+# Code WepApplication EventBooking
 
 Code WepApplication EventBooking
 Tech Stack
@@ -7,4 +7,4 @@ Tech Stack
 
 You can reserve and payment event 
 , checking event , update event , Login Register (access token, refresh token)
-, filter event
+, filter event , and you can collect event in history
